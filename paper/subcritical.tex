@@ -1,0 +1,621 @@
+In this section we prove \Cref{thm:main-almostall} \ref{item:thm:main-almostall-sub}. We first present definitions and parameter choices that recur in our proofs. Throughout the section, fix $k\geq3$, let $\Delta:=k-2$, fix $\gamma\in(0,\gamma_k)$, and let $m\sim\gamma\binom{n}{2}$. We write $p_k\in(0,1)$ for the unique solution to $p_k=(1-p_k)^{k-1}$, and set $L_k:=\log\frac{1-p_k}{p_k}=-\Delta\log(1-p_k)$. All graphs are on a vertex set $V$ of size $n$.
+
+The parameters below are chosen in the following order. First let $\omega>0$ be arbitrary; all asymptotic notation in this section is with respect to the $\omega\to0$ limit. Let $g=g(k,\gamma,\omega)>0$ be the separation constant from \Cref{lemma:sub-retained-mass-gap-K1k}. Next choose $0<\eta=o(\min\{\omega,g\})$, and $R_0>0$ sufficiently large with $R_0^{-1}=o(\eta)$. Let $\lambda:=\eta/(4R_0)$ and $\rho:=\min\{p_k,1-p_k\}$. Define
+$$\kappa:=\left\lceil\frac{10R_0^2}{\eta^2}\right\rceil$$
+and let $c_\matsf=c_\matsf(k,\gamma,\eta,R_0)>0$ be the constant from \Cref{lemma:residual-matching-estimate-K1k}. After $\eta$ and $R_0$ are fixed, choose $\theta>0$ such that
+\begin{equation}\label{eqn:sub-theta-parameter-condition-K1k}
+\theta=o\!\left(\min\left\{\frac{\eta}{R_0^2},\frac{c_\matsf}{\kappa^2}\right\}\right)\,.
+\end{equation}
+After $\theta$ is fixed, choose $\alpha>0$ such that
+\begin{equation}\label{eqn:sub-matching-parameter-condition-K1k}
+\alpha<\frac{\theta}{100k}\,,\qquad H(D)+D=o(c_\matsf/\kappa^2)\,,\qquad D=o(\lambda^{k-1})\,,
+\end{equation}
+where $D:=C_k(\alpha+\theta)$ bounds the residual degree divided by $n$; $\theta$ is chosen small enough that these conditions can hold. Next, choose $\delta>0$ and then $\epsilon>0$ such that all inequalities below hold. Let
+$$\beta:=\frac{\epsilon^6}{2^{22}\Delta^2}\,,\qquad\tau:=\frac{1}{2}\left(\frac{\beta}{32}\right)^3\,.$$
+Writing $C_{k,\theta}>0$ for the constant depending on $k$ and $\theta$ appearing in the proof of \Cref{lemma:WtoWtildeMetricsK1k}, the parameters are chosen so that
+\begin{equation}\label{eqn:sub-smaller-components-params}
+\epsilon=o\bigg(\bigg(\frac{\alpha\delta\theta}{C_{k,\theta}}\bigg)^3\bigg)\,,\qquad \frac{\beta}{\alpha^2\theta^2}=o(\delta)\,,\qquad \epsilon=o(\alpha^{4k-4}\theta^2)\,.
+\end{equation}
+Throughout the section, we write $C_k>0$ for a constant depending only on $k$ that may vary from line to line.
+Finally, recalling the notation from \Cref{sec:graphon-prob}, we let
+$$\mu:=\left(\frac{\gamma(k-1)}{1+(k-2)p_k}\right)^{1/2},\qquad \blambda_\ast:=((\mu,K_{k-1}))\,,\qquad W^\ast:=W_{\blambda_\ast}\,.$$
+According to \Cref{prop:graphon-char-fixed-gamma}, among the optimizers of the variational problem $\Phi_k(\gamma)$ stated in \eqref{eqn:var-prob-fixed-gamma}, $W^\ast$ is the unique one satisfying both $\abs{\blambda}=1$ and $G_1=K_{k-1}$.
+
+The following definition introduces the combinatorial object that will model the graphs close to a graphon $W\in\cV_\gamma$.
+
+\begin{definition}[Division]\label{dfn:division}
+For any integer $\ell\geq1$, a \emph{division} of $V$ is a set
+$$\Pi=\{\Pi_1,\dots,\Pi_\ell\}\,,$$
+where for every $i\in[\ell]$ we have $\Pi_i=(Q_i,\cP_i)$, called a \emph{component} of $\Pi$, with the following properties:
+\begin{itemize}[leftmargin=\parindent, topsep=4pt]
+  \item $Q_i$ is a connected $\Delta$-regular graph on $[q_i]$ for some $q_i\geq\Delta+1$\,;
+  \item $\cP_i=\{P_{i,1},\dots,P_{i,q_i}\}$ is a collection of pairwise disjoint nonempty subsets of $V$ called the \emph{parts} of the component $\Pi_i$\,;
+  \item the sets $V_i:=\bigcup_{j=1}^{q_i}P_{i,j}$ are pairwise disjoint.
+\end{itemize}
+We always assume the components $\Pi_i$ with $q_i\leq R_0$ appear first in the ordering $\Pi_1,\dots,\Pi_\ell$, and within each of the sets $\{i:q_i\leq R_0\}$ and $\{i:q_i>R_0\}$, the numbers $v_i:=|V_i|$ are nonincreasing in $i$. Let $\sD$ denote the set of all divisions of $V$. For every $\Pi\in\sD$, define
+$$V(\Pi):=\bigcup_{i=1}^\ell V_i\,,\qquad \Pi_\sparse:=V\setminus V(\Pi)\,.$$
+We call an edge of $Q_i$ an \emph{active pair}. In this section, we will routinely invoke the various data associated to a division $\Pi$, including $\Pi_i$, $Q_i$, $\cP_i$, $\ell$, and so on, without redefining them every time; the division these data correspond to is always clear from the context.
+\end{definition}
+
+Fix $\blambda=((\lambda_1,G_1),(\lambda_2,G_2),\dots)\in\bLambda$ and let $W=W_\blambda\in\cV_\gamma$. For all $1\leq i\leq|\blambda|$, let
+$$\mu_i:=\lambda_i-\lambda_{i-1}\,,\qquad r_i:=v(G_i)\,,$$
+where $\lambda_0:=0$. Let $L$ be the set $\{1,\dots,|\blambda|\}$ if $|\blambda|<\infty$ and $\N$ otherwise. Fix a division $\Pi=\{\Pi_1,\dots,\Pi_\ell\}$ and define the set of indices
+$$I:=\left\{i\in[\ell]:v_i\geq\frac{\eta n}{2}\,,\ q_i\leq R_0\right\}\,.$$
+Let us say that $\Pi$ is \emph{$W$-compatible} if there exists an injection $\varphi:I\to L$ such that $Q_i\cong G_{\varphi(i)}$, $|v_i-\mu_{\varphi(i)}n|\leq\delta n$ for all $i\in I$, and for all $j\in L\setminus\varphi(I)$ we have either $\mu_j<\eta$ or $r_j>R_0$. Define the set of $W$-compatible divisions
+$$\sD_W:=\left\{\Pi\in\sD:\Pi\text{ is $W$-compatible}\right\}\,.$$
+
+\begin{definition}[$\Delta$-regular blow-up]\label{dfn:D-reg-blowup}
+A graph $G$ on $n$ vertices is called a \emph{$\Delta$-regular blow-up} if there exists a division $\Pi=\{\Pi_1,\dots,\Pi_\ell\}\in\sD$ such that the following conditions hold: for all $i\in[\ell]$ and $j\in[q_i]$, the induced subgraph $G[P_{i,j}]$ is a clique; for all $i\in[\ell]$ and distinct $j,j'\in[q_i]$, the induced bipartite graph $G[P_{i,j},P_{i,j'}]$ is nonempty only if $jj'\in E(Q_i)$; for all distinct $i,i'\in[\ell]$, the induced bipartite graph $G[V_i,V_{i'}]$ is empty; and $G$ has no edges incident to $\Pi_\sparse$.
+\end{definition}
+
+For all graphs $G$ on $n$ vertices and divisions $\Pi=\{\Pi_1,\dots,\Pi_\ell\}\in\sD$, define the graph $T(G,\Pi)$ on vertex set $V$ by
+\begin{align*}
+E(T(G,\Pi)) &:= \bigcup_{i=1}^\ell\left(\bigcup_{j=1}^{q_i}E(G^c[P_{i,j}])\cup\bigcup_{jj'\in E(Q_i^c)}E(G[P_{i,j},P_{i,j'}])\right) \\
+&\hspace{4cm}\cup\left(\bigcup_{1\leq i<j\leq\ell}E(G[V_i,V_j])\right)\cup E(G[V(\Pi),\Pi_\sparse]) \,.
+\end{align*}
+We note that $T(G,\Pi)$ has no edges contained in $\Pi_\sparse$.
+Let
+$$b(G,\Pi):=e(T(G,\Pi))+e(G[\Pi_\sparse])\,,$$
+and let $\Pi(G)\in\sD$ be a canonically chosen division minimizing $b(G,\,\cdot\,)$. Let us define
+$$T(G):=T(G,\Pi(G))\,,\qquad b(G):=b(G,\Pi(G))\,.$$
+We call $T(G)$ the \emph{defect graph} of $G$, and the edges of $T(G)$ are called \emph{defects}. We note that $b(G)$ is the minimum edit distance from $G$ to a $\Delta$-regular blow-up.
+
+For a division $\Pi$ and two parts $P_{i,j},P_{i',j'}$ of $\Pi$, define
+$$w_\Pi(P_{i,j},P_{i',j'}):=\begin{cases}1,&i=i'\text{ and }j=j'\,,\\p_k,&i=i'\text{ and }jj'\in E(Q_i)\,,\\0,&\text{otherwise}
+\end{cases}\,.$$
+Let $H_\Pi$ be the weighted graph on $V$ which has edge weight $w_\Pi(P_{i,j},P_{i',j'})$ on $P_{i,j}\times P_{i',j'}$, and has edge weight $0$ on all pairs incident with $\Pi_\sparse$. Also define
+$$I_\theta(\Pi):=\left\{i\in[\ell]:\max_{j\in[q_i]}|P_{i,j}|\geq\theta n\right\}\,,\qquad \cY_\Pi:=\{P_{i,j}:i\in I_\theta(\Pi),\ j\in[q_i]\}\,.$$
+We call the parts in $\cY_\Pi$ \emph{$\theta$-visible}.
+
+For all $n,m\in\N$, $W\in\cW$, and $r>0$, define the set of graphs
+$$\cB_{n,m}(W,r):=\{G\in\cF^\ast_{n,m}(K_{1,k}):\delta_\square(G,W)<r\}\,,$$
+as well as the set
+\[\arraycolsep=1.4pt
+\begin{array}{ll}
+\cF_{W,\Pi} &:= \{G\in\cB_{n,m}(W,\tau):b(G,\Pi)=b(G)\}\,. \\[7pt]
+\end{array}\]
+The next lemma is the bridge between $\cB_{n,m}(W,r)$ and the combinatorial objects that will be counted below.
+
+\begin{lemma}\label{lemma:WtoWtildeMetricsK1k}
+For all $W\in\cV_\gamma$ and large enough $n$, every graph $G\in\cB_{n,m}(W,\tau)$ and every minimizing division $\Pi$ satisfy the following conditions:
+\begin{enumerate}[
+ label=\textit{(\roman*)},
+ ref=(\textit{\roman*}),
+ topsep=5pt
+]
+  \item\label{item:bgleqen2} $b(G)\leq \epsilon n^2$.
+  \item\label{item:SubCloseK1k-compatible} $\Pi$ is $W$-compatible.
+  \item\label{item:SubCloseK1k-balanced} For all $\Pi'=(Q,\{P_1,\dots,P_r\})\in\Pi$ such that $|V(\Pi')|\geq\eta n/(4R_0)$ and $r\leq R_0$, we have
+  $$\abs{P_j}\in\left(\frac{1}{r}\pm\min\left\{\alpha,\frac{\omega}{4r}\right\}\right)|V(\Pi')|\,,\qquad |P_j|\geq \frac{|V(\Pi')|}{2R_0}$$
+  for all $j\in[r]$.
+  \item\label{item:SubCloseK1k-theta} For every component $\Pi_h=(Q_h,\{P_{h,1},\dots,P_{h,q_h}\})\in\Pi$, if $|P_{h,u}|\geq\theta n$ for some $u\in[q_h]$ then $|P_{h,v}|\leq(1+\omega)|P_{h,w}|$ for all $v,w\in[q_h]$.
+  \item\label{item:SubCloseK1k-cut} Let $P_{i,a},P_{h,b}\in\cY_{\Pi}$, and let $X\subseteq P_{i,a}$ and $Y\subseteq P_{h,b}$ be disjoint sets with $|X|,|Y|\geq \alpha\theta n/4$. Then
+  $$\left|d_G(X,Y)-w_{\Pi}(P_{i,a},P_{h,b})\right|\leq\delta\,.$$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Fix $\blambda=((\lambda_i,G_i))_{i\in L}\in\bLambda$ such that $W_\blambda=W$, where $L=\{1,\dots,\abs{\blambda}\}$ if $\abs{\blambda}<\infty$ and $L=\N$ otherwise. Let $H_n$ initially be the weighted graph on $V=[n]$ with edge weight $W(i/n,j/n)$ on $ij$, and let $W_n:=W_{H_n}$. Since $W_n\to W$ pointwise almost everywhere, we have $\delta_\square(W_n,W)\to0$. Hence for all sufficiently large $n$, we have $\delta_\square(G,W_n)<2\tau$. By \cite[Lemma~8.9]{lovasz2012large} and \cite[Theorem~2.3]{borgs2008convergent}, together with the remark on p.~1831 there,
+$$\widehat\delta_\square(G,H_n)\leq32\delta_\square(G,H_n)^{1/3}\leq\beta\,,$$
+by the definition of $\tau$. Choose one permutation $\pi$ of $H_n$ giving $d_\square(G,H_n)\leq\beta$, and transport its cells by this permutation; all subsequent comparisons use these fixed coordinates.
+
+Write $\mu_i:=\lambda_i-\lambda_{i-1}$ and $r_i:=v(G_i)$, where $\lambda_0:=0$. Let $\ell$ be the greatest index such that $\mu_\ell\geq\epsilon/4$, taking $\ell=0$ if no such index exists, and set $R:=8\Delta\epsilon^{-1}$. For $i\in L$ and $j\in[r_i]$, define the sets of vertices
+$$C_{i,j}:=\left\{\pi(t):t\in[n],\ \frac{t}{n}\in\left(\lambda_{i-1}+\frac{j-1}{r_i}\mu_i,\lambda_{i-1}+\frac{j}{r_i}\mu_i\right)\right\}\,,\qquad C_i:=\bigcup_{j=1}^{r_i}C_{i,j}\,.$$
+Define the set of vertices
+$$J:=V\setminus\bigcup_{i\in[\ell],\,r_i\leq R}C_i\,.$$
+Only $o(n)$ vertices of $J$ lie on the boundary of one of the intervals defining the sets $C_{i,j}$.
+
+Define the graph $G'$ from $G$ as follows. For all $i\in[\ell]$ with $r_i\leq R$, add all missing edges inside the sets $C_{i,j}$ and delete all edges between $C_{i,j}$ and $C_{i,j'}$ whenever $jj'\in E(G_i^c)$. Delete all edges between distinct $C_i,C_{i'}$ with $i,i'\in[\ell]$ and $r_i,r_{i'}\leq R$, and delete all edges incident to $J$. For large enough $n$, $G'$ is a $\Delta$-regular blow-up, hence $b(G)\leq \frac{n^2}{2}d_1(G,G')$.
+
+Since $d_\square(G,H_n)\leq\beta$, the edit distance between $G$ and $G'$ inside one set $C_i$ with $r_i\leq R$ is at most $r_i^2\beta n^2$, and the edit distance between two distinct sets $C_i$ and $C_j$ blocks is at most $\beta n^2$. The total edge weight of $H_n$ incident to the nonexceptional vertices of $J$ is at most $\epsilon n^2/2$. Indeed, each block with index larger than $\ell$ contains total edge weight at most $\sum_{i>\ell}\mu_i^2n^2\leq\epsilon n^2/4$, while each block with $i\in[\ell]$ and $r_i>R$ contains total edge weight at most
+$$\sum_{i\in[\ell],\,r_i>R}\left(r_i+2e(G_i)\right)\left(\frac{\mu_i n}{r_i}\right)^2\leq\frac{1+\Delta}{R}n^2\leq\frac{\epsilon n^2}{4}\,.$$
+Thus the number of edges of $G$ incident to $J$ is at most $3\epsilon n^2/4$ for all sufficiently large $n$. Since $\ell\leq4\epsilon^{-1}$, the definition of $\beta$ gives
+$$b(G)\leq \frac{n^2}{2}d_1(G,G')\leq\ell R^2\beta n^2+\ell^2\beta n^2+\frac{3\epsilon n^2}{4}\leq\epsilon n^2\,,$$
+proving \ref{item:bgleqen2}.
+
+Let us write
+$$\Pi=\{\Pi_1,\dots,\Pi_t\}\,,\qquad \Pi_a=(Q_a,\{P_{a,1},\dots,P_{a,q_a}\})\,,\qquad V_a:=\bigcup_{b=1}^{q_a}P_{a,b}\,.$$
+Define the graph $H$ on $V$ with edge set
+$$E(H):=(E(G)\,\triangle\,E(T(G,\Pi)))\setminus E(G[\Pi_\sparse])\,,$$
+so $H$ is obtained from $G$ by toggling the defect edges of the minimizing division and deleting the edges in the sparse part $\Pi_\sparse$. Since $d_1(G,H)=2b(G)/n^2$, \ref{item:bgleqen2} and $d_\square(G,H_n)\leq\beta$ give
+\begin{equation}\label{eqn:sub-HHn-close-K1k}
+d_\square(H,H_n)\leq d_\square(H,G)+d_\square(G,H_n)\leq2\epsilon+\beta\leq3\epsilon\,.
+\end{equation}
+
+We will repeatedly use the following elementary observation. Let $S$ be a finite set partitioned into parts, and let $m>0$. If $|S|\geq3m$ and no part has size greater than $|S|-m$ then there are disjoint unions $X,Y\subseteq S$ of whole parts such that $|X|,|Y|\geq m$. Indeed, if one part has size in $[m,|S|-m]$ then take this part and its complement; otherwise every part has size less than $m$, and a greedy union has size in $[m,2m)$.
+
+Define the parameters
+$$m_0:=\epsilon^{1/3}n,\qquad m_1:=\frac{\theta n}{20}\,.$$
+By the choice of our parameters above,
+\begin{equation}\label{eqn:sub-bridge-parameter-display-K1k}
+\rho m_0^2>4\epsilon n^2\,,\qquad m_1\geq6(\Delta+1)m_0\,,\qquad \frac{m_0}{\alpha\theta n}=o(\delta)\,,\qquad R_0\frac{m_0}{n}=o(\delta)\,.
+\end{equation}
+The first inequality has the following consequence. If $X,Y\subseteq V$ satisfy $|X|,|Y|\geq m_0$ then the difference $H-H_n$ cannot be at least $\rho$ throughout $X\times Y$, or at most $-\rho$ throughout it, apart from diagonal pairs, since then \eqref{eqn:sub-HHn-close-K1k} would be contradicted.
+
+We now compare the cells $C_{i,j}$ of $H_n$ with the parts of the minimizing division $\Pi$. Suppose first that $C=C_{i,j}$ satisfies $|C|\geq m_1$. Partition $C$ by the sets $P_{a,b}$ and by $\Pi_\sparse$. Define a graph $\Gamma_C$ on the nonempty pieces of this partition by joining two pieces if they lie in adjacent parts of the same component of $\Pi$. Since $\Delta(\Gamma_C)\leq\Delta$, if every piece had size less than $m_0$ then some color class of $\Gamma_C$ would have size at least $|C|/(\Delta+1)\geq6m_0$. The observation above gives disjoint unions $X,Y\subseteq C$ of whole pieces with $|X|,|Y|\geq m_0$ and $H[X,Y]=0$, while every edge weight of $H_n[X,Y]$ equals $1$, a contradiction. Hence some part of $\Pi$ or $\Pi_\sparse$ meets $C$ in at least $m_0$ vertices. The set $\Pi_\sparse$ cannot do so by the same argument, and therefore there is a part of $\Pi$, denoted $P(C)$, such that $|C\cap P(C)|\geq m_0$.
+Moreover, we have $|P(C)\setminus C|<m_0$, since otherwise with $X=C\cap P(C)$ and $Y=P(C)\setminus C$, the graph $H[X,Y]$ is complete while every edge weight of $H_n[X,Y]$ is at most $1-\rho$. In particular, distinct cells $C$ of size at least $m_1$ have distinct associated parts $P(C)$.
+
+We next record the converse alignment for large parts of $\Pi$. Suppose that $P=P_{a,b}$ satisfies $|P|\geq\theta n$. Partition $P$ by the cells $C_{i,j}$ and by the boundary vertices of the intervals defining them. Since the boundary contributes $o(n)<m_0$ vertices, we ignore it below. If no cell $C_{i,j}$ satisfies $|P\setminus C_{i,j}|<m_0$ then the above observation gives disjoint unions $X,Y\subseteq P$ of whole intersections $P\cap C_{i,j}$ with $|X|,|Y|\geq m_0$ and such that no pair in $X\times Y$ lies inside a single cell. On the one hand, $H[X,Y]$ is complete, since $X,Y\subseteq P$. On the other hand, every edge weight of $H_n[X,Y]$ is at most $1-\rho$. This contradicts \eqref{eqn:sub-HHn-close-K1k}, hence there is a cell, denoted $C(P)$, such that $|P\setminus C(P)|<m_0$.
+
+Let $\Pi_h=(Q_h,\{P_{h,1},\dots,P_{h,q_h}\})$ be a component of $\Pi$ containing a part $P_{h,u}$ with $|P_{h,u}|\geq\theta n$, and write $C(P_{h,u})=C_{i,j}$. Since $|P_{h,u}\setminus C_{i,j}|<m_0$, the cell $C_{i,j}$ has size at least $\theta n/2\geq m_1$. If $j'\in N_{G_i}(j)$ then $|C_{i,j'}|\geq\theta n/2$, and so $C_{i,j'}$ has an associated part $P(C_{i,j'})$. The cut between $P_{h,u}$ and $P(C_{i,j'})$ has $H_n$-weight $p_k$ on all but $O(m_0n)$ pairs. If these two parts were not adjacent in $Q_h$ then $H$ would have no edges between them, contradicting \eqref{eqn:sub-HHn-close-K1k}. Thus $P(C_{i,j'})$ is adjacent to $P_{h,u}$ in $Q_h$ for every $j'\in N_{G_i}(j)$. Since both $G_i$ and $Q_h$ are $\Delta$-regular and $P_{h,u}$ has exactly $\Delta$ neighbors, these are precisely the neighbors of $P_{h,u}$.
+
+We now claim that no other part of $\Pi_h$ has intersection at least $m_0$ with $C_{i,j}$. Indeed, such a part would have to be adjacent to $P_{h,u}$, since otherwise $H$ would have no edges between two $m_0$-sets on which $H_n$ has weight $1$. But all $\Delta$ neighbors of $P_{h,u}$ have already been identified, and they are associated to the distinct neighboring cells $C_{i,j'}$, $j'\in N_{G_i}(j)$. Hence $C_{i,j}$ is contained in $P_{h,u}$ up to an error of at most $(\Delta+2)m_0$. Applying the same argument after moving to each neighbor and then iterating along paths in the connected graph $G_i$, we see that the whole component $\Pi_h$ is isomorphic to $G_i$, and every part of $\Pi_h$ is within $C_{k,\theta}m_0$ of the corresponding cell of $H_n$, where $C_{k,\theta}>0$ depends only on $k$ and $\theta$. This proves \ref{item:SubCloseK1k-theta}, because $m_0/(\theta n)=o(\omega)$ and $m_0/(\theta n)+\beta/\theta^2=o(\delta)$.
+
+We now consider components with at most $R_0$ parts. If $i\in L$ satisfies $\mu_i\geq\eta$ and $r_i\leq R_0$ then every cell $C_{i,j}$ has size at least $\eta n/(2R_0)\geq m_1$, and the preceding paragraphs associate these cells to a component of $\Pi$ isomorphic to $G_i$ whose total size differs from $\mu_i n$ by at most $\delta n$. Conversely, if $\Pi_h$ has $q_h\leq R_0$ and $|V_h|\geq\eta n/2$ then some part has size at least $\eta n/(2R_0)\geq\theta n$, so the preceding paragraph aligns $\Pi_h$ with a graphon block $G_i$ satisfying $r_i\leq R_0$ and $\mu_i\geq\eta/2-O(\delta)$. This completes the proof of \ref{item:SubCloseK1k-compatible}. The balance assertion \ref{item:SubCloseK1k-balanced} follows in the same way from the cell alignment, since any component $\Pi_h$ with $q_h\leq R_0$ and $|V_h|\geq\eta n/(4R_0)$ has some part of size at least $\eta n/(4R_0^2)\gg\theta n$.
+
+It remains to prove \ref{item:SubCloseK1k-cut}. Let $P_{i,a},P_{h,b}\in\cY_{\Pi}$, and let $X\subseteq P_{i,a}$ and $Y\subseteq P_{h,b}$ be disjoint sets with $|X|,|Y|\geq \alpha\theta n/4$. By \ref{item:SubCloseK1k-theta}, the two parts are each within $C_{k,\theta}m_0$ of their corresponding graphon cells. After deleting at most $C_{k,\theta}m_0$ vertices from each of $X$ and $Y$, we get sets $X'\subseteq X$ and $Y'\subseteq Y$ lying in the corresponding cells, with $|X'|,|Y'|\geq \alpha\theta n/8$. On $X'\times Y'$, the weight of $H_n$ is exactly $w_{\Pi}(P_{i,a},P_{h,b})$. Consequently, $d_\square(G,H_n)\leq\beta$ gives $\left|e_G(X',Y')-w_{\Pi}(P_{i,a},P_{h,b})|X'||Y'|\right|\leq\beta n^2$. Adding back the deleted vertices and using $\beta/(\alpha^2\theta^2)=o(\delta)$ and $m_0/(\alpha\theta n)=o(\delta)$ proves the required result.
+\end{proof}
+
+\begin{corollary}\label{cor:cut-closeness}
+Fix a graph $G\in\cF_{W,\Pi}$. Fix sets $Y_1,\dots,Y_r\in\cY_\Pi$, not necessarily distinct, along with pairwise disjoint subsets $A_i\subseteq Y_i$, each of size $|A_i|\geq\alpha\theta n/4$. Writing $A:=A_1\cup\cdots\cup A_r$, we have $d_\square(G[A],H_\Pi[A])=o(1)$ as $\omega\to0$.
+\end{corollary}
+\begin{proof}
+This follows immediately from the last paragraph of the proof of \Cref{lemma:WtoWtildeMetricsK1k}. Indeed, after deleting at most $C_{k,\theta}m_0$ vertices from each set $A_i$, the edge weights of $H_\Pi$ agree with those of $H_n$, and we further have $d_\square(G,H_n)\leq\beta$. It follows that
+$$d_\square(G[A],H_\Pi[A])\leq O_{k,r}\!\left(\frac{\beta}{\alpha^2\theta^2}+\frac{m_0}{\alpha\theta n}\right)=o(1)\,,$$
+where we used $\beta/(\alpha^2\theta^2)=o(\delta)$ and $m_0/(\alpha\theta n)=o(\delta)$.
+\end{proof}
+
+Using \Cref{lemma:WtoWtildeMetricsK1k}, we now establish two constraints on the adjacency profiles of vertices. For $i\in[\ell]$ and $j\in[q_i]$, write
+$$N_{i,j}:=\bigcup_{j'\in N_{Q_i}(j)}P_{i,j'}\,.$$
+For all $v\in V$, define
+$$\cN_{\Pi,G}(v):=\{(i,j):i\in I_\theta(\Pi),\ j\in[q_i],\ d_G(v,P_{i,j})\geq\alpha |P_{i,j}|\}\,.$$
+
+\begin{lemma}\label{lemma:deterministic-nonlow-bound-K1k}
+For every $G\in\cF_{W,\Pi}$ and every $v\in V$, we have $|\cN_{\Pi,G}(v)|\leq k-1$.
+\end{lemma}
+\begin{proof}
+Suppose there are distinct pairs $(i_1,j_1),\dots,(i_k,j_k)\in\cN_{\Pi,G}(v)$. Choose sets $A_a\subseteq N_G(v)\cap P_{i_a,j_a}$ of size $\lceil\alpha\theta n/4\rceil$ for $a\in[k]$. These sets exist because every visible part has size at least $\theta n/(1+\omega)$.
+
+By the cut estimate in the proof of \Cref{cor:cut-closeness}, the proportion of independent transversals of $A_1,\dots,A_k$ differs by $o(1)$ from the corresponding weighted proportion in $H_\Pi$. To see this directly, express the proportion as the average of a product of nonedge indicators, and replace the factors by their $H_\Pi$ counterparts one at a time. After fixing all vertices except the two in the factor being replaced, the remaining factors separate into $[0,1]$-valued functions of those two vertices. Writing these functions as integrals of indicators bounds each replacement error by the normalized cut error. Since the $A_a$ lie in distinct parts, every required nonedge has $H_\Pi$-weight at least $1-p_k$. Thus the independent-transversal proportion is at least $(1-p_k)^{\binom{k}{2}}-o(1)>0$. Such a transversal, together with $v$, induces a copy of $K_{1,k}$, a contradiction.
+\end{proof}
+
+\begin{lemma}\label{lemma:deterministic-medium-companion-K1k}
+Let $G\in\cF_{W,\Pi}$, $i\in I_\theta(\Pi)$, $j\in[q_i]$, and $v\in V$. If
+$$\alpha |P_{i,j}|\leq d_G(v,P_{i,j})\leq(1-\alpha)|P_{i,j}|$$
+then there exists $j'\in N_{Q_i}(j)$ such that $d_G(v,P_{i,j'})\geq(1-\alpha)|P_{i,j'}|$.
+\end{lemma}
+\begin{proof}
+Suppose the conclusion does not hold. Choose disjoint sets $X\subseteq N_G(v)\cap P_{i,j}$ and $Y\subseteq P_{i,j}\setminus(N_G(v)\cup\{v\})$, and, for each $t\in N_{Q_i}(j)$, choose $Y_t\subseteq P_{i,t}\setminus(N_G(v)\cup\{v\})$, all of size $\lceil\alpha\theta n/4\rceil$. These sets exist by the hypotheses and the lower bound on visible part sizes.
+
+Choose $x\in X$, $y\in Y$, and $y_t\in Y_t$ for $t\in N_{Q_i}(j)$. The adjacencies involving $v$ already have the pattern of an induced star centered at $x$, with leaves $v,y$, and the $y_t$. Every remaining required adjacency or non-adjacency has $H_\Pi$-weight at least $\rho$. Applying the same product expansion as in the proof of \Cref{lemma:deterministic-nonlow-bound-K1k}, now allowing both edge and nonedge factors, shows that the proportion of choices inducing this star is at least $\rho^{\binom{k}{2}}-o(1)>0$. This contradicts induced-$K_{1,k}$-freeness.
+\end{proof}
+
+\subsection{The counting argument}\label{subsec:counting}
+In this subsection, we fix $W\in\cV_\gamma$ and a $W$-compatible division $\Pi=\{\Pi_1,\dots,\Pi_\ell\}$. All estimates also hold for any subfamily of $\cF_{W,\Pi}$. For graphs in such a family, write $T(G):=T(G,\Pi)$; only minimality of $\Pi$, rather than the canonical choice, will be used. We use all the same notation relating to $\Pi$ as established in \Cref{dfn:division}. Let $\ell_\ast=\ell_\ast(\Pi)$ be the number of components $\Pi_i$ with $|V_i|\geq \eta n$ and $q_i\leq R_0$, and define
+$$\Pi_\ast:=\{\Pi_i:i\in[\ell_\ast]\}\,,\qquad V_\ast:=\bigcup_{i=1}^{\ell_\ast}V_i\,,\qquad S_\Pi:=V\setminus V_\ast\,,\qquad s(\Pi):=|S_\Pi|\,.$$
+We call the components $\Pi_i$ with $i\in[\ell_\ast]$, as well as all the vertices and parts these components contain, \emph{retained}. Recall that
+$$I_\theta(\Pi):=\left\{i\in[\ell]:\max_{j\in[q_i]}|P_{i,j}|\geq\theta n\right\}\,,\qquad \cY_\Pi:=\{P_{i,j}:i\in I_\theta(\Pi),\ j\in[q_i]\}\,.$$
+We also define the retained target set $\cY^\ast_\Pi:=\{P_{i,j}:i\in[\ell_\ast],\ j\in[q_i]\}$,
+and split the sparse side into the $\theta$-visible and $\theta$-small portions
+$$S_\lgsf(\Pi):=\bigcup_{i\in I_\theta(\Pi)\setminus[\ell_\ast]}V_i\,,\qquad S_\smsf(\Pi):=S_\Pi\setminus S_\lgsf(\Pi)=\Pi_\sparse\cup\bigcup_{i\notin I_\theta(\Pi)}V_i\,.$$
+Define $\cI_\Pi:=\{(i,uv):i\in[\ell_\ast],\ uv\in E(Q_i)\}$.
+For $e=(i,uv)\in\cI_\Pi$, write
+$$N_e:=|P_{i,u}||P_{i,v}|\,,\qquad C_\Pi:=\sum_{i=1}^{\ell_\ast}\sum_{a=1}^{q_i}\binom{|P_{i,a}|}{2}\,.$$
+Also define
+$$\Omega_\Pi:=\bigcup_{(i,uv)\in\cI_\Pi}E(K_{P_{i,u},P_{i,v}})\,,\qquad \binom{\Pi}{\bsm}:=\prod_{e\in\cI_\Pi}\binom{N_e}{\bsm_e}\,.$$
+For an integer $u$, define
+$$\cM_{\Pi,u} := \left\{\bsm\in\N^{\cI_\Pi}:
+\begin{array}{l}
+C_\Pi+\sum_{e\in\cI_\Pi}\bsm_e+u=m\text{ and} \\[8pt]
+p_k-2\delta\leq \frac{\bsm_e}{N_e}\leq p_k+2\delta\text{ for all }e\in\cI_\Pi
+\end{array}\right\}\,.$$
+Let $\cM^\nar_{\Pi,u}$ be defined in the same way, except with the narrower density window $p_k\pm\delta$. We also define
+$$\cM^\nar_\Pi:=\bigcup_{-2\epsilon n^2\leq u\leq C_k\eta n^2+2\epsilon n^2}\cM^\nar_{\Pi,u}\,,$$
+and
+$$Z_\Pi(u):=\sum_{\bsm\in\cM_{\Pi,u}}\binom{\Pi}{\bsm}\,,\qquad Z^\nar_\Pi(u):=\sum_{\bsm\in\cM^\nar_{\Pi,u}}\binom{\Pi}{\bsm}\,.$$
+The retained data $K:=\Pi_\ast$ determine $S_\Pi$, $C_\Pi$, $\cI_\Pi$, and $Z_\Pi(u)$; we use subscripts $K$ for these quantities when forgetting the rest of $\Pi$. Let $\cK_W:=\{\Pi_\ast:\Pi\in\sD_W\}$. Since $K$ has at most $R_0/\eta$ parts, $|\cK_W|\leq e^{Cn}$, with $C$ depending only on the fixed parameters. Define the clean retained partition function
+\begin{equation}\label{eqn:clean-partition-function-K1k}
+\cZ_\Pi:=\sum_{0\leq b\leq C_k\eta n^2}N^\ast_{s(\Pi),b}(K_{1,k})Z_\Pi(b)\,.
+\end{equation}
+
+\begin{lemma}\label{lemma:SubCompareSparseSideEdgesK1k}
+There exists a constant $C_k>0$ depending only on $k$ such that, for every $G\in\cB_{n,m}(W,\tau)$ and any minimizing division $\Pi$, the following hold:
+\begin{enumerate}[label=\textit{(\roman*)}, ref=(\textit{\roman*}), topsep=5pt]
+  \item\label{item:SubCompareSparseSideEdgesK1k-total} $e_G(S_\Pi)\leq C_k\eta n^2$.
+  \item\label{item:SubCompareSparseSideEdgesK1k-small} For every $A\subseteq S_\smsf(\Pi)$, we have $e_G(A)\leq C_k\theta n|A|+\epsilon n^2$.
+  \item\label{item:SubCompareSparseSideEdgesK1k-row} For every $x\in V$, we have $d_G(x,S_\smsf(\Pi))\leq C_k\theta n$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Let $J$ be the $\Delta$-regular blow-up obtained from $G$ by toggling the defect graph $T(G,\Pi)$ and deleting all edges of $G[\Pi_\sparse]$. Since $b(G)\leq\epsilon n^2$ by \Cref{lemma:WtoWtildeMetricsK1k}, it suffices to prove the corresponding estimates for $J$, at the cost of increasing $C_k$.
+
+We first prove \ref{item:SubCompareSparseSideEdgesK1k-total}. A component $V_h\subseteq S_\Pi$ with $|V_h|<\eta n$ contributes at most $|V_h|^2$ edges, and hence all such components together contribute at most $\eta n^2$. Now suppose $V_h\subseteq S_\Pi$ and $q_h>R_0$. Since $Q_h$ has maximum degree $\Delta$, we have $e_J(V_h)\leq C_k\sum_{a=1}^{q_h}|P_{h,a}|^2$. If every part $P_{h,a}$ has size less than $\theta n$ then $\sum_{a=1}^{q_h}|P_{h,a}|^2\leq \theta n|V_h|$. Otherwise, \Cref{lemma:WtoWtildeMetricsK1k} \ref{item:SubCloseK1k-theta} gives balance throughout the component, and therefore $\sum_{a=1}^{q_h}|P_{h,a}|^2\leq 2|V_h|^2/q_h\leq 2|V_h|^2/R_0$.
+Summing over all components with $q_h>R_0$, and using $\theta=o(\eta)$ and $R_0^{-1}=o(\eta)$, gives $e_J(S_\Pi)\leq C_k\eta n^2$. Adding back the defect graph and the edges of $G[\Pi_\sparse]$ contributes at most $\epsilon n^2$, proving \ref{item:SubCompareSparseSideEdgesK1k-total}.
+
+We next prove \ref{item:SubCompareSparseSideEdgesK1k-small}. Let $A\subseteq S_\smsf(\Pi)$ and decompose $A$ over the components of $\Pi$ contained in $S_\Pi$. If $A_h:=A\cap V_h$ then every part intersecting $A_h$ has size less than $\theta n$. Hence in the $\Delta$-regular blow-up $J$,
+\begin{align*}
+e_J(A_h) \leq \sum_{a=1}^{q_h}|A_h\cap P_{h,a}|\cdot|P_{h,a}|+\sum_{ab\in E(Q_h)}|A_h\cap P_{h,a}|\cdot|P_{h,b}| \leq C_k\theta n|A_h|\,.
+\end{align*}
+Summing over $h$ yields $e_J(A)\leq C_k\theta n\,|A|$, and adding back the defect graph contributes at most $\epsilon n^2$, proving \ref{item:SubCompareSparseSideEdgesK1k-small}.
+
+Finally, let $A:=N_G(x,S_\smsf(\Pi))$. Since $G$ is induced-$K_{1,k}$-free, $G[A]$ has independence number less than $k$. Tur\'an's theorem then implies $e_G(A)\geq (k-1)^{-1}\binom{|A|}{2}-O_k(|A|)$. On the other hand, by \ref{item:SubCompareSparseSideEdgesK1k-small} we have $e_G(A)\leq C_k\theta n|A|+\epsilon n^2$. Combining the two estimates gives $|A|\leq C_k\theta n+C_k\sqrt{\epsilon}\,n$.
+Since $\epsilon=o(\theta^2)$, this proves \ref{item:SubCompareSparseSideEdgesK1k-row} after increasing $C_k$.
+\end{proof}
+
+
+\subsubsection{Profiles}\label{subsec:subcritical-profiles-K1k}
+For $v\in P_{i,j}\subseteq V_\ast$, let us write $P_v:=P_{i,j}$ and
+$$\cY_{\Pi,v}:=\{P_{i',j'}\in\cY_\Pi:i'=i\,\Rightarrow j'\not\in N_{Q_i}(j)\cup\{j\}\}\,.$$
+We now introduce a bookkeeping device called a profile, which records the local defect data relative to a fixed division that will be needed in the entropy and large-deviation estimates.
+
+\begin{definition}[Profile]\label{def:profile-datum-K1k}
+A profile for $\Pi$, denoted $\frp$, consists of the following data:
+\begin{enumerate}[label=\textit{(\roman*)}, ref=(\textit{\roman*}), topsep=5pt]
+  \item integers $0\leq b(\frp)\leq\binom{s(\Pi)}{2}$ and $0\leq\ell(\frp)\leq n/2$;
+  \item disjoint sets $B_\ret(\frp)\subseteq V_\ast$ and $B_\outsf(\frp)\subseteq S_\Pi$;
+  \item for every $v\in B_\ret(\frp)$, a collection $\cR_v(\frp)$ of pairs $(Y,r)$, where $Y\in\cY_{\Pi,v}$, $0\leq r\leq |Y\setminus B(\frp)|$, and no $Y$ appears more than once;
+  \item for every $v\in B_\ret(\frp)$, an integer $0\leq I_v(\frp)\leq |P_v\setminus B(\frp)|$;
+  \item for every $v\in B_\outsf(\frp)$, a collection $\cR_v(\frp)$ of pairs $(Y,r)$, where $Y\in\cY^\ast_\Pi$, $0\leq r\leq |Y\setminus B(\frp)|$, and no $Y$ appears more than once;
+  \item a collection $\Tail(\frp)$ of triples $(v,j',t)$, where $v\in B_\ret(\frp)\cap P_{i,j}$, $j'\in N_{Q_i}(j)$, and $t\in\{\Upper,\Lower\}$; for every pair $(v,j')$, at most one of the two triples $(v,j',\Upper)$ and $(v,j',\Lower)$ belongs to $\Tail(\frp)$.
+\end{enumerate}
+Here and below,
+$$B(\frp):=B_\ret(\frp)\cup B_\outsf(\frp)\,.$$
+For all $v\in B(\frp)$, an element $(Y,r)\in\cR_v(\frp)$ is called a \emph{row}, $Y$ is called the \emph{target} of the row, and $v$ is called the \emph{root} of the row. Let $\frP_\Pi$ denote the set of all profiles for $\Pi$.
+\end{definition}
+
+For a graph $G\in\cF_{W,\Pi}$, write $B_\ret(G)\subseteq V_\ast$ for the set of vertices $v$ such that $d_G(v,Y)\geq4\alpha|Y|$ for some $Y\in\cY_{\Pi,v}$ or $d_G^c(v,P_v)\geq4\alpha|P_v|$. Also write $B_\outsf(G)\subseteq S_\Pi$ for the set of vertices $v\in S_\Pi$ such that $d_G(v,Y)\geq4\alpha|Y|$ for some retained part $Y\in\cY^\ast_\Pi$. Define $B(G):=B_\ret(G)\cup B_\outsf(G)$.
+
+The \emph{residual defect graph} of $G$, denoted $T_\res(G)$, is obtained from $T(G)[V_\ast,V]$ by deleting all edges incident with $B(G)$. The \emph{rooted defect graph} of $G$, denoted $T_B(G)$, is the subgraph of $T:=T(G)[V_\ast,V]$ with the edge set consisting of the recorded rows incident with $B(G)$, namely:
+\begin{itemize}[leftmargin=\parindent,topsep=5pt]
+  \item for $v\in B_\ret(G)$, the edges from $v$ to $Y\setminus B(G)$ for all $Y\in\cY_{\Pi,v}$ such that $d_G(v,Y)\geq4\alpha|Y|$, together with the edges of $T(G)$ from $v$ to $P_v\setminus B(G)$;
+  \item for $v\in B_\outsf(G)$, the edges from $v$ to $Y\setminus B(G)$ for all retained parts $Y\in\cY^\ast_\Pi$ such that $d_G(v,Y)\geq4\alpha|Y|$.
+\end{itemize}
+Edges with both endpoints in $B(G)$, and all low unrecorded rows incident with $B(G)$, are not included in $T_B(G)$.
+
+\begin{definition}[Profile class]\label{def:profile-class-K1k}
+For $\frp\in\frP_\Pi$, define $\cF_{\Pi,\frp}$ to be the set of all graphs $G\in\cF_{W,\Pi}$ satisfying the following conditions:
+\begin{enumerate}[label=\textit{(\roman*)}, ref=(\textit{\roman*}), topsep=5pt]
+  \item $e(G[S_\Pi])=b(\frp)$;
+  \item $B_\ret(\frp)=B_\ret(G)$ and $B_\outsf(\frp)=B_\outsf(G)$;
+  \item for every $v\in B_\ret(\frp)$, we have
+  $$\cR_v(\frp)=\{(Y,d_G(v,Y\setminus B(\frp))):Y\in\cY_{\Pi,v},\ d_G(v,Y)\geq4\alpha |Y|\}\,;$$
+  \item $I_v(\frp)=d_G^c(v,P_v\setminus B(\frp))$ for every $v\in B_\ret(\frp)$;
+  \item for every $v\in B_\outsf(\frp)$, we have
+  $$\cR_v(\frp)=\{(Y,d_G(v,Y\setminus B(\frp))):Y\in\cY^\ast_\Pi,\ d_G(v,Y)\geq4\alpha |Y|\}\,;$$
+  \item $(v,j',\Upper)\in\Tail(\frp)$ if and only if $d_G(v,P_{i,j'})\geq(1-\alpha)|P_{i,j'}|$, and $(v,j',\Lower)\in\Tail(\frp)$ if and only if $d_G(v,P_{i,j'})\leq\alpha |P_{i,j'}|$;
+  \item the residual graph $T_\res(G)$ has a maximum matching of size $\ell(\frp)$.
+\end{enumerate}
+\end{definition}
+
+For $\frp\in\frP_\Pi$, define
+$$\cT_{W,\Pi} := \{T(G)[V_\ast,V]:G\in\cF_{W,\Pi}\}\,,\qquad\cT^\root_{\Pi,\frp}:=\{T_B(G):G\in\cF_{\Pi,\frp}\}\,,$$
+and, for $T_B\in\cT^\root_{\Pi,\frp}$,
+$$\cT^\res_{\Pi,\frp}(T_B):=\{T_\res(G):G\in\cF_{\Pi,\frp}\,,\ T_B(G)=T_B\}\,.$$
+
+\begin{lemma}\label{lemma:profile-covering-K1k}
+For all $W$-compatible divisions, we have
+\begin{equation}\label{eqn:fwpihigh-covering}
+\cF_{W,\Pi}\subseteq\bigcup_{\frp\in\frP_\Pi}\cF_{\Pi,\frp}\,.
+\end{equation}
+Moreover, if $G\in\cF_{\Pi,\frp}$ then $|B(\frp)|\leq \rho_B n$ where $\rho_B:=2\epsilon/(\alpha\theta)$.
+\end{lemma}
+\begin{proof}
+For every $G\in\cF_{W,\Pi}$, the data specified in \Cref{def:profile-class-K1k} define a profile $\frp\in\frP_\Pi$ with $G\in\cF_{\Pi,\frp}$, proving \eqref{eqn:fwpihigh-covering}. Next, if $v\in B(\frp)$ then $v$ is incident with at least $2\alpha\theta n$ defect edges after decreasing $\alpha$ by a constant factor and using \Cref{lemma:WtoWtildeMetricsK1k} \ref{item:SubCloseK1k-theta}. Since $e(T(G))\leq\epsilon n^2$ by \Cref{lemma:WtoWtildeMetricsK1k}, and every defect edge is counted at most twice in this incidence count, we have $|B(\frp)|\leq \rho_Bn$.
+\end{proof}
+
+\begin{lemma}\label{lemma:profile-residual-low-rows-K1k}
+Let $\frp\in\frP_\Pi$ and let $G\in\cF_{\Pi,\frp}$. If $v\in V_\ast\setminus B(\frp)$ and $Y\in\cY_{\Pi,v}$ then $d_G(v,Y)<4\alpha |Y|$. If $i\leq\ell_\ast$ and $v\in P_{i,j}\setminus B(\frp)$ then $d_G^c(v,P_{i,j})<4\alpha |P_{i,j}|$. Finally, if $v\in S_\Pi\setminus B(\frp)$ and $Y\in\cY^\ast_\Pi$ then $d_G(v,Y)<4\alpha |Y|$.
+\end{lemma}
+\begin{proof}
+This is immediate from the definitions of $B_\ret(G)$, $B_\outsf(G)$, and $\cR_v(\frp)$.
+\end{proof}
+
+\subsubsection{Random graph model}
+Here we introduce the random graph that models graphs with a given subgraph on $S_\Pi$, a given defect graph $T$, and edge-count vector $\bsm$. This random graph along with its binomial counterpart play an important role in the remainder, as it allows us to obtain explicit penalties that constrain the count $|\cF_{\Pi,\frp}|$ for profiles $\frp\in\frP$.
+
+\begin{definition}\label{def:active-random-models-K1k}
+Fix a graph $H$ on $S_\Pi$, an integer $u$, a vector $\bsm\in\cM^\nar_{\Pi,u}$, and a graph $T\in\cT_{W,\Pi}$. The random graph $G_{\Pi,H,T,\bsm}$ is obtained by choosing, independently for each $e=(i,ab)\in\cI_\Pi$, a uniformly random $\bsm_e$-element subset of edges $A_e\subseteq E(K_{P_{i,a},P_{i,b}})$, and then setting
+$$E(G_{\Pi,H,T,\bsm}) := \left(\bigcup_{i\in[\ell_\ast]}\bigcup_{j\in[q_i]}\binom{P_{i,j}}{2}\cup E(H) \cup \bigcup_{e\in\cI_\Pi}A_e\right)\triangle\,E(T)\,.$$
+The graph $G^{\bin}_{\Pi,H,T,\bsm}$ is defined in the same way, except that now each $A_e$ is a random subset of $E(K_{P_{i,a},P_{i,b}})$ in which every edge is included independently with probability $\frac{\bsm_e}{|P_{i,a}|\cdot|P_{i,b}|}$.
+\end{definition}
+
+In the proofs below, we pass to the binomial version $G^{\bin}_{\Pi,H,T,\bsm}$ for the independence of its edges; this only introduces polynomial overhead, as the following lemma shows.
+
+\begin{lemma}\label{lemma:fixed-count-transfer-K1k}
+There exists an absolute constant $C>0$ such that the following holds. For all $\bsm\in\cM^\nar_{\Pi,u}$ and every event $\cE$, we have
+$$\bbP\{G_{\Pi,H,T,\bsm}\in\cE\}\leq n^{C|\cI_\Pi|}\,\bbP\{G^\bin_{\Pi,H,T,\bsm}\in\cE\}\,.$$
+\end{lemma}
+\begin{proof}
+In the binomial model, the number of chosen edges in the pair indexed by $e$ has distribution $\Bin(N_e,\bsm_e/N_e)$. Since $\bsm_e/N_e\in p_k\pm2\delta\subseteq[\rho/2,1-\rho/2]$ and $N_e\leq n^2$, Stirling's formula gives $\bbP\{\Bin(N_e,\bsm_e/N_e)=\bsm_e\}\geq n^{-C}$ for an absolute constant $C>0$ and for all $e\in\cI_\Pi$. Conditioning on these events over all $e\in\cI_\Pi$ recovers the fixed-count model $G_{\Pi,H,T,\bsm}$, completing the proof.
+\end{proof}
+
+\subsubsection{Local exponents}\label{subsec:local-exponents-K1k}
+All logarithms and the exponents $\Ent_v,J_v,\Psi_v,\Psi_\matsf$ below use base two; accordingly, their counting bounds use powers of $2$. To bound $|\cF_{W,\Pi}|$, it follows from \eqref{eqn:fwpihigh-covering} that it suffices to bound the sizes of the profile classes $\cF_{\Pi,\frp}$. Since $\delta=o(1)$ and $\rho=\Theta(1)$, uniformly for $p\in[p_k-2\delta,p_k+2\delta]$, we have $\big|\!\log\frac{1-p}{p}-L_k\big|=O_k(\delta)$ and $\big|\!\log\frac{p}{1-p}+L_k\big|=O_k(\delta)$.
+For a profile $\frp\in\frP_\Pi$ and a vertex $v\in B(\frp)$, let us write $B=B(\frp)$ and define
+\begin{align*}
+\Ent_v(\frp) &:= \sum_{(Y,r)\in\cR_v(\frp)}\left(|Y\setminus B|\,H\!\left(\frac{r}{|Y\setminus B|}\right)-L_kr\right)\\
+&\hspace{2cm}+\bsone\{v\in B_\ret(\frp)\}\left(|P_v\setminus B|\,H\!\left(\frac{I_v(\frp)}{|P_v\setminus B|}\right)+L_kI_v(\frp)\right)\,.
+\end{align*}
+
+For a profile $\frp\in\frP_\Pi$ and a vertex $v\in B_\ret(\frp)\cap P_{i,j}$, define
+$$\Tail_v(\frp):=\{(v,j',t)\in\Tail(\frp)\}\,.$$
+For $\frt=(v,j',\Upper)\in\Tail_v(\frp)$, define the event
+$$E_\frt:=\{G:d_G(v,P_{i,j'}\setminus B(\frp))\geq(1-2\alpha)|P_{i,j'}|\}\,,$$
+and for $\frt=(v,j',\Lower)\in\Tail_v(\frp)$, define
+$$E_\frt:=\{G:d_G(v,P_{i,j'}\setminus B(\frp))\leq2\alpha|P_{i,j'}|\}\,.$$
+If $v\in B_\ret(\frp)$ and $\Tail_v(\frp)\neq\emptyset$ then define the exponent
+$$J_v(\frp):=-\max\left\{\log\bbP_{G\sim G^\bin_{\Pi,H,T,\bsm}}\left\{\bigcap_{\frt\in\Tail_v(\frp)}E_\frt\right\}:\bsm\in\cM^\nar_\Pi\right\}\,,$$
+while if $v\in B_\outsf(\frp)$ or $\Tail_v(\frp)=\emptyset$ then set $J_v(\frp):=0$. Here $\log0=-\infty$; empty maxima have value $-\infty$. Thus an impossible tail has $J_v=+\infty$. Note that $J_v(\frp)$ is independent of $H$ and $T$. Finally, for all $v\in B(\frp)$ let us define
+$$\Psi_v(\frp):=\Ent_v(\frp)-J_v(\frp)\,.$$
+
+We write $A:=L_k/\Delta$ and $U:=L_k+A=\log(1/p_k)$. We will use the elementary estimates
+\begin{equation}\label{eqn:local-ent-estimates-K1k}
+\max_{0\leq x\leq1}\{H(x)-L_kx\}=A\,,\qquad \max_{0\leq x\leq1}\{H(x)+L_kx\}=U\,.
+\end{equation}
+Also, if $x\geq1-2\alpha$ then we have
+\begin{equation}\label{eqn:high-row-ent-K1k}
+H(x)-L_kx\leq -L_k+H(2\alpha)+2L_k\alpha\,.
+\end{equation}
+For all $Y\in\cY_\Pi$, \Cref{lemma:profile-covering-K1k} and \Cref{lemma:WtoWtildeMetricsK1k} \ref{item:SubCloseK1k-theta} imply that $|Y\setminus B|\geq(1-o(1))|Y|$, so in the estimates below we may replace $|Y|$ by $|Y\setminus B|$ after losing an error $o(|Y|)$, uniformly over all profiles. Our parameter choices ensure $|B|=o(|Y|)$ since $\rho_B=o(\theta)$ and $|Y|\geq\theta n/2$.
+
+For a vertex $v\in V$ and a part $P_{i,j}$, define
+\begin{equation}\label{eqn:sub-placement-score-K1k}
+S_{i,j}(v):=2d_G(v,P_{i,j})+d_G(v,N_{i,j})-|P_{i,j}\setminus\{v\}|\,.
+\end{equation}
+The contribution of pairs incident with $v$ to $b(G,\Pi)$ is $d_G(v)-S_{i,j}(v)$ when $v\in P_{i,j}$, and is $d_G(v)$ when $v\in\Pi_\sparse$. Consequently, a move that does not empty the source part changes $b(G,\Pi)$ by the old score minus the new score, with score $0$ for the sparse part.
+
+\begin{lemma}\label{lemma:sparse-retained-row-budget-K1k}
+Let $G\in\cF_{W,\Pi}$ and let $v\in S_\Pi$. Suppose $d_G(v,Y)\geq4\alpha |Y|$ for some retained part $Y\in\cY^\ast_\Pi$. Then there exists a part $P_{h,a}\in\cY_\Pi$ such that $v\in V_h$ and $d_G(v,P_{h,a})\geq\alpha |P_{h,a}|$. Moreover,
+$$|\{(i,j)\in\cN_{\Pi,G}(v):i\in[\ell_\ast]\}|\leq\Delta\,.$$
+\end{lemma}
+\begin{proof}
+By \Cref{lemma:deterministic-medium-companion-K1k}, the retained component containing $Y$ has a part $P_{i,t}$ with $d_G(v,P_{i,t})\geq(1-\alpha)|P_{i,t}|$. Its score satisfies $S_{i,t}(v)\geq(1-2\alpha)|P_{i,t}|\geq\lambda n/2$. Thus $v\notin\Pi_\sparse$, since moving $v$ to $P_{i,t}$ would decrease $b(G,\Pi)$. Write $v\in P_{h,a}$.
+
+We first show that $h\in I_\theta(\Pi)$. Otherwise all parts of $\Pi_h$ have size less than $\theta n$, so $S_{h,a}(v)\leq(\Delta+2)\theta n$. Moving $v$ to $P_{i,t}$ therefore decreases $b(G,\Pi)$ by at least $\lambda n/2-(\Delta+2)\theta n$, provided that the source remains a division. If $P_{h,a}$ is a singleton but another part of $\Pi_h$ has at least two vertices, move one of those vertices into the vacated part. This changes the defect count by at most $O_k(\theta n)$, since only its old and new internal and active rows change.
+
+If all parts of $\Pi_h$ are singletons, the source can instead be repaired at cost $O_k(1)$. For $q_h\leq4\Delta+6$, move the remaining vertices of $V_h$ to $\Pi_\sparse$. Otherwise, delete $v$ from $Q_h$, and, if $\Delta$ is odd, delete one further vertex and move it to $\Pi_\sparse$. The remaining graph has more than $4\Delta+4$ vertices, maximum degree $\Delta$, and even total degree deficit at most $2\Delta$. Restore regularity by adding an edge between nonadjacent deficient vertices whenever possible. If the deficient vertices form a clique, choose two of them, say $a,b$, allowing $a=b$ if its deficit is at least two. Every vertex outside $N[a]\cup N[b]$ has degree $\Delta$, and there is an edge $xy$ outside this union: otherwise the larger outside set would send $\Delta$ edges per vertex into a set of size at most $2\Delta+2$ and maximum degree $\Delta$. Replace $xy$ by $ax,by$, or by $ax,ay$ when $a=b$. Each step reduces the total deficit by two. The connected components of the resulting $\Delta$-regular graph, with their singleton parts, give a valid division. Only $O_k(1)$ pairs change status; edges from any additional vertex moved to $\Pi_\sparse$ were already counted by $b(G,\Pi)$ except possibly its $\Delta$ active pairs. In all cases the repair costs $O_k(\theta n+1)$, less than the gain at the retained target. This contradicts optimality and proves $h\in I_\theta(\Pi)$.
+
+The source parts now have linear size, so ordinary vertex moves are admissible. Optimality gives $S_{h,a}(v)\geq S_{i,t}(v)>0$. If the degree of $v$ into each of $P_{h,a}$ and its active neighbors were less than $\alpha$ times the part size, the balance of these parts would give $S_{h,a}(v)<0$. Thus some part of $V_h$ contributes to $\cN_{\Pi,G}(v)$. Since $h\notin[\ell_\ast]$, \Cref{lemma:deterministic-nonlow-bound-K1k} leaves at most $k-2=\Delta$ retained parts in $\cN_{\Pi,G}(v)$.
+\end{proof}
+
+For any graph $T$ on $V$ with $E(T)\subseteq E(K_{V_\ast,V})$, define its signed size by
+$$\sigma(T):=e(T)-2\sum_{i=1}^{\ell_\ast}\sum_{j=1}^{q_i}e(T[P_{i,j}])\,,$$
+so positive defect edges are counted with weight $1$, while missing defect edges are counted with weight $-1$. Define
+$$\Err(\frp):=C\,|B(\frp)|\,\bigl(H(5\alpha)n+\theta n+\delta n+\rho_Bn+\log n\bigr)\,,$$
+where $C=C(k,R_0)>0$ is sufficiently large.
+
+\subsubsection{The profile bound}\label{subsec:profile-count-K1k}
+Throughout each counting fiber, fix the entire graph $H=G[S_\Pi]$. A triple $(T_B,R,L)$ is \emph{compatible with $H$} if some $G\in\cF_{\Pi,\frp}$ with $G[S_\Pi]=H$ satisfies
+$$T_B=T_B(G)\,,\qquad R=T_\res(G)\,,\qquad L=T(G)[V_\ast,V]\setminus(T_B\cup R)\,.$$
+Write $\cT^\leftsf_{\Pi,\frp}(T_B,R;H)$ for the possible graphs $L$ in this definition. For a graph $R$ with no vertex in $B:=B(\frp)$, let $\cE_\matsf(R)$ be the event that there is no induced $K_{1,k}$ avoiding $B$ whose vertex set contains both endpoints of a pair in $E(R)$. This includes missing-edge defects as well as present-edge defects. Define
+\begin{equation}\label{eqn:Psi-mat-definition-K1k}
+\Psi_\matsf(\frp):=\log\max_{H,T_B}\sum_{R\in\cT^\res_{\Pi,\frp}(T_B)}2^{C_ke(R)}\max_{L,\bsm}\bbP_{G^\bin_{\Pi,H,T_B\cup R\cup L,\bsm}}\{\cE_\matsf(R)\}\,,
+\end{equation}
+where $H$ is induced-$K_{1,k}$-free on $S_\Pi$, $T_B\in\cT^\root_{\Pi,\frp}$, $L\in\cT^\leftsf_{\Pi,\frp}(T_B,R;H)$, and $\bsm\in\cM^\nar_\Pi$. An empty inner maximum is $0$, and an empty outer maximum gives $\Psi_\matsf=-\infty$. The constant $C_k$ is sufficiently large to absorb the signed-size weights below.
+
+\begin{lemma}\label{lemma:active-level-comparison-K1k}
+Suppose $\cF_{W,\Pi}\neq\emptyset$. There exists $C=C(k,\gamma)>0$ such that, writing $A_\Pi:=\sum_{e\in\cI_\Pi}N_e$, if $|u'-u|\leq\delta A_\Pi/4$ and $u'-u=a_+-a_-$ with $a_+,a_-\geq0$, then
+$$Z^\nar_\Pi(u')\leq n^{C|\cI_\Pi|}2^{-(L_k-C\delta)a_++(L_k+C\delta)a_-}Z_\Pi(u)\,.$$
+\end{lemma}
+\begin{proof}
+For $d:=u'-u\geq0$, extend each $\bsm\in\cM^\nar_{\Pi,u'}$ by a nonnegative integer vector $\bsa$ of total size $d$ so that $\bsm+\bsa\in\cM_{\Pi,u}$. The wider window supplies at least $\delta A_\Pi-O(|\cI_\Pi|)$ available positions, so such a vector exists for large $n$. Adjacent binomial ratios give
+$$\binom{\Pi}{\bsm}\binom{\Pi}{\bsm+\bsa}^{-1}=\prod_e\prod_{q=1}^{a_e}\frac{\bsm_e+q}{N_e-\bsm_e-q+1}\leq2^{-(L_k-C\delta)d}\,.$$
+There are at most $n^{C|\cI_\Pi|}$ possible vectors $\bsa$, and each translation is injective. Summing proves the assertion for $d\geq0$; subtracting such a vector proves it for $d<0$.
+\end{proof}
+
+\begin{lemma}\label{lemma:profile-root-leftover-bound-K1k}
+For fixed $H,T_B,R$, we have
+$$\sum_{L\in\cT^\leftsf_{\Pi,\frp}(T_B,R;H)}2^{(L_k+C\delta)|\sigma(L)|}\leq2^{\Err(\frp)}\,,$$
+after increasing the constant in $\Err$. In particular, $|\sigma(L)|\leq\Err(\frp)$ for every such $L$.
+\end{lemma}
+\begin{proof}
+Every edge of $L$ is incident with $B$. For each $v\in B$, an unrecorded visible row has density at most $5\alpha$ after deleting $B$, so all such rows have at most $2^{H(5\alpha)n}$ possibilities and at most $5\alpha n$ edges. If $v$ is retained, its neighbors in $S_\smsf(\Pi)$ have independence number less than $k$. A maximal independent subset of those neighbors has at most $k-1$ vertices, whose closed neighborhoods in the fixed graph $H[S_\smsf(\Pi)]$ cover them. By \Cref{lemma:SubCompareSparseSideEdgesK1k}, this union has size at most $C_k\theta n$. Thus there are at most $n^{k-1}2^{C_k\theta n}$ possibilities. Outside roots have no retained-incident defect row into $S_\smsf(\Pi)$. Finally, pairs within $B$ contribute at most $2^{\binom{|B|}{2}}$ possibilities. The same estimates bound $e(L)$ by $C_k|B|(\alpha+\theta+\rho_B)n$, proving the weighted bound and the signed-size assertion.
+\end{proof}
+
+\begin{lemma}\label{lemma:fixed-profile-probability-K1k}
+For every compatible $H,T_B,R,L$ and every $\bsm\in\cM^\nar_\Pi$, with $T:=T_B\cup R\cup L$, we have
+\begin{align*}
+&\bbP\left\{G_{\Pi,H,T,\bsm}\in\bigcap_{\frt\in\Tail(\frp)}E_\frt\cap\cE_\matsf(R)\right\}\\
+&\hspace{15mm}\leq n^{C_k|\cI_\Pi|}2^{-\sum_{v\in B_\ret(\frp)}J_v(\frp)}\bbP\{G^\bin_{\Pi,H,T,\bsm}\in\cE_\matsf(R)\}\,.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Apply \Cref{lemma:fixed-count-transfer-K1k}. In the binomial model, distinct root-tail events use disjoint random coordinates, since every target excludes $B$. The residual event uses only coordinates with both endpoints outside $B$, so it is independent of all root-tail events.
+\end{proof}
+
+\begin{lemma}\label{lemma:profile-bound-K1k}
+For every profile $\frp$ and every fixed graph $H$ on $S_\Pi$ with $b:=e(H)=b(\frp)$,
+$$|\{G\in\cF_{\Pi,\frp}:G[S_\Pi]=H\}|\leq n^{C_k|\cI_\Pi|}Z_\Pi(b)2^{\sum_{v\in B(\frp)}\Psi_v(\frp)+\Psi_\matsf(\frp)+\Err(\frp)}\,.$$
+Summing over $H$ gives the same bound for $|\cF_{\Pi,\frp}|$ with $Z_\Pi(b)$ replaced by $\cZ_\Pi$.
+\end{lemma}
+\begin{proof}
+We may assume the fiber is nonempty. The sparse-side bound gives $b\leq C_k\eta n^2$. Balance of the retained parts, together with $m\sim\gamma\binom n2$, gives $A_\Pi\geq c_{k,\gamma}n^2$: the sparse side and defects contribute $O_k(\eta+\epsilon)n^2$ edges, while the retained clique capacity is at most $C_kA_\Pi$. Thus $|\sigma(T)|\leq\epsilon n^2\leq\delta A_\Pi/4$ for every compatible defect graph $T$.
+
+For each compatible triple, the active-edge count lies in $\cM^\nar_{\Pi,b+\sigma(T)}$. Moreover,
+\begin{equation}\label{eqn:troot-bound}
+|\cT^\root_{\Pi,\frp}|\leq\prod_{v\in B}\prod_{(Y,r)\in\cR_v(\frp)}\binom{|Y\setminus B|}{r}\prod_{v\in B_\ret}\binom{|P_v\setminus B|}{I_v}\,,
+\end{equation}
+and the signed-size weight gives
+\begin{equation}\label{eqn:root-free-energy-identity-K1k}
+\sum_{T_B\in\cT^\root_{\Pi,\frp}}2^{-L_k\sigma(T_B)}\leq2^{\sum_{v\in B}\Ent_v(\frp)}\,.
+\end{equation}
+Apply \Cref{lemma:active-level-comparison-K1k} to each triple and \Cref{lemma:fixed-profile-probability-K1k} to its active choices. Sum first over $L$ using \Cref{lemma:profile-root-leftover-bound-K1k}, then over $R$ using \eqref{eqn:Psi-mat-definition-K1k}, and finally over $T_B$ using \eqref{eqn:root-free-energy-identity-K1k}. The $C\delta|\sigma(T_B)|$ error is at most $C\delta|B|n$ and is included in $\Err$; the residual signed-size weight is at most $2^{C_ke(R)}$. This proves the fixed-$H$ bound. There are at most $N^\ast_{s(\Pi),b}(K_{1,k})$ choices for $H$, counted only at this last step, and their product with $Z_\Pi(b)$ is at most $\cZ_\Pi$.
+\end{proof}
+
+\subsubsection{Local exponent bounds}\label{subsec:local-exponent-bounds}
+We prove the required bound for all vertices in $B(\frp)$ using the balance between the numbers of medium- and high-density targets. The identity
+\begin{equation}\label{eqn:local-own-entropy-K1k}
+H(1-z)+L_k(1-z)=U-I_{p_k}(z)
+\end{equation}
+will provide a strict loss in the only configuration where this balance alone is insufficient.
+
+\begin{lemma}\label{lemma:local-compensation-K1k}
+There exists $c=c(k,\gamma)>0$ such that the following holds. For every profile $\frp\in\frP_\Pi$ with $\cF_{\Pi,\frp}\neq\emptyset$ and every $v\in B(\frp)$, we have $\Psi_v(\frp)\leq -c\eta n/R_0$.
+\end{lemma}
+\begin{proof}
+Fix $G\in\cF_{\Pi,\frp}$ and $v\in B(\frp)$, and write $B:=B(\frp)$. For every $a\in I_\theta(\Pi)$, set
+$$N_a:=|V_a|/q_a\,,\qquad x_{a,t}:=\frac{d_G(v,P_{a,t})}{|P_{a,t}|}\quad(t\in[q_a])\,,$$
+and define
+$$H_a:=\{t:x_{a,t}\geq1-\alpha\}\,,\qquad M_a:=\{t:\alpha<x_{a,t}<1-\alpha\}\,,\qquad h_a:=|H_a|\,,\qquad m_a:=|M_a|\,.$$
+\Cref{lemma:deterministic-nonlow-bound-K1k,lemma:deterministic-medium-companion-K1k} give
+\begin{equation}\label{eqn:local-support-budget-K1k}
+\sum_{a\in I_\theta(\Pi)}(h_a+m_a)\leq\Delta+1\,,\qquad M_a\subseteq\bigcup_{t\in H_a}N_{Q_a}(t)\,.
+\end{equation}
+In particular, $D_a:=\Delta h_a-m_a\geq0$, and $h_a\geq1$ whenever $h_a+m_a>0$.
+
+Suppose that every part of $V_a$ is an admissible target for a positive defect row rooted at $v$. This holds for $a\neq i$ when $v\in P_{i,j}$ is retained, and for every retained $a$ when $v\in S_\Pi$. Every high-density target is recorded in $\cR_v(\frp)$, and every recorded target lies in $H_a\cup M_a$. By \eqref{eqn:local-ent-estimates-K1k} and \eqref{eqn:high-row-ent-K1k}, a recorded medium-density target contributes at most $(A+o(1))N_a$ to $\Ent_v(\frp)$, while a high-density target contributes at most $(-L_k+o(1))N_a$. Here we used the balance of the visible parts and $|B|=o(\theta n)$. Adding $AN_a$ for each unrecorded medium-density target only increases the bound, so whenever $h_a+m_a>0$,
+\begin{equation}\label{eqn:local-component-deficit-K1k}
+\sum_{\substack{(Y,r)\in\cR_v(\frp)\\Y\subseteq V_a}}\left(|Y\setminus B|H\!\left(\frac{r}{|Y\setminus B|}\right)-L_kr\right)\leq\bigl(-AD_a+o(1)\bigr)N_a\,.
+\end{equation}
+The error is uniform and relative to $N_a$. Thus a component with $D_a\geq1$ contributes at most $-AN_a/2$, while a component with $h_a=m_a=0$ contributes $0$.
+
+Suppose first that $v\in B_\ret(\frp)\cap P_{i,j}$, and put $z:=x_{i,j}$. Moving $v$ to $\Pi_\sparse$ is admissible, so optimality gives $S_{i,j}(v)\geq0$. If $x_{i,j}$ and all $x_{i,t}$ with $t\in N_{Q_i}(j)$ were at most $\alpha$, then \eqref{eqn:sub-placement-score-K1k} and balance would give $S_{i,j}(v)<0$. Thus $h_i+m_i>0$, and hence $h_i\geq1$. By \eqref{eqn:local-support-budget-K1k}, every component $a\neq i$ with $h_a+m_a>0$ has $h_a+m_a\leq\Delta$ and therefore $D_a\geq1$. Its contribution in \eqref{eqn:local-component-deficit-K1k} is nonpositive.
+
+We now estimate the contribution from $V_i$, including the own-part term and $J_v(\frp)$. The own-part term is at most $(L_k+o(1))N_i$ if $z\leq\alpha$, is $o(N_i)$ if $j\in H_i$, and equals $(U-I_{p_k}(z)+o(1))N_i$ if $j\in M_i$, by \eqref{eqn:local-own-entropy-K1k}. The binomial tail bounds, uniformly over $\bsm\in\cM^\nar_\Pi$, give a contribution of at least $(U-o(1))N_i$ to $J_v(\frp)$ for each high-density active neighbor and at least $(A-o(1))N_i$ for each active neighbor of density at most $\alpha$. These contributions add because the corresponding row events are independent. The remaining positive rows satisfy the same medium- and high-density estimates as above. Combining these bounds and using $U=L_k+A$ and $L_k=\Delta A$ gives
+\begin{equation}\label{eqn:local-unified-exponent-K1k}
+\Psi_v(\frp)\leq\left(-AD_i-\bsone\{j\in M_i\}I_{p_k}(z)+o(1)\right)N_i\,.
+\end{equation}
+Indeed, assigning $A$ to every medium-density target and $-L_k$ to every high-density target accounts for all rows, except for an additional $L_k$ from the own part and a subtraction of $A$ for each of the $\Delta$ active neighbors; these cancel. The own medium-density target also supplies the displayed relative-entropy loss.
+
+If $D_i\geq1$, \eqref{eqn:local-unified-exponent-K1k} proves the result. Otherwise \eqref{eqn:local-support-budget-K1k} forces $h_i=1$ and $m_i=\Delta$, accounting for all targets of density greater than $\alpha$. Let $t$ be the unique element of $H_i$. Then $M_i=N_{Q_i}(t)$, and every other visible target has density at most $\alpha$. If $t=j$, the own-part missing degree is at most $\alpha|P_{i,j}|$ and every positive defect target has density at most $\alpha$, contrary to $v\in B_\ret(\frp)$.
+
+Assume therefore that $t\neq j$. Moving $v$ from $P_{i,j}$ to $P_{i,t}$ is admissible. In the difference of placement scores, common active-neighbor terms cancel. Since the parts are balanced, $x_{i,t}=1+o(1)$, and all densities outside $\{t\}\cup N_{Q_i}(t)$ are $o(1)$, we obtain
+\begin{align*}
+S_{i,t}(v)-S_{i,j}(v)&=N_i\bigl(2-\bsone\{jt\in E(Q_i)\}\bigr)(1-z)+N_i\sum_{u\in N_{Q_i}(t)\setminus(N_{Q_i}(j)\cup\{j\})}x_{i,u}+o(N_i)\\
+&\geq(1-z-o(1))N_i\,.
+\end{align*}
+If $z\leq(1+p_k)/2$, this difference is positive, contradicting optimality. Hence $z>(1+p_k)/2$, and, since $t$ is the unique high-density target, $j\in M_i$. It follows that $I_{p_k}(z)\geq I_{p_k}((1+p_k)/2)>0$. Equation \eqref{eqn:local-unified-exponent-K1k} now gives $\Psi_v(\frp)\leq-cN_i$ in this configuration as well.
+
+Finally, suppose $v\in B_\outsf(\frp)$. By \Cref{lemma:sparse-retained-row-budget-K1k}, at most $\Delta$ retained targets lie in the sets $H_a\cup M_a$. Thus every retained component with $h_a+m_a>0$ has $D_a\geq1$. At least one such component exists because $v\in B_\outsf(\frp)$, and \eqref{eqn:local-component-deficit-K1k} gives $\Psi_v(\frp)=\Ent_v(\frp)\leq-AN_a/2$ for one of them. Since every retained $N_a$ is at least $\lambda n=\eta n/(4R_0)$, both the retained and outside bounds imply the lemma.
+\end{proof}
+
+\begin{lemma}\label{lemma:residual-matching-estimate-K1k}
+There exists $c_\matsf=c_\matsf(k,\gamma,\eta,R_0)>0$ such that, for every profile $\frp$ with $\ell(\frp)\geq1$,
+$$\Psi_\matsf(\frp)\leq-\frac{c_\matsf}{2\kappa}\ell(\frp)n\,.$$
+\end{lemma}
+\begin{proof}
+Write $\ell:=\ell(\frp)$ and fix $T_B$. By \Cref{lemma:profile-residual-low-rows-K1k,lemma:SubCompareSparseSideEdgesK1k}, every residual graph has maximum degree at most $Dn$, where $D=C_k(\alpha+\theta)$. The endpoints of a maximum matching form a vertex cover of size $2\ell$. Choosing this cover and encoding its rows by Hamming balls gives the uniform bound
+\begin{equation}\label{eqn:residual-graph-count-K1k}
+\sum_{R\in\cT^\res_{\Pi,\frp}(T_B)}2^{C_ke(R)}\leq2^{C_k\ell(H(D)+D)n+C_k\ell\log n}\,.
+\end{equation}
+This counts subsets of $V$ directly and does not require fixing the graph on $S_\Pi$.
+
+Fix $R$ and a maximum matching $M$. Partition $M$ according to its retained endpoint parts: a pair lies within one retained part, between two retained parts, or between a retained part and $S_\Pi$. There are at most $\kappa$ classes. One contains a matching $M_0$ of size at least $\ell/\kappa$; take $M'\subseteq M_0$ of size $\lceil\lambda|M_0|/8\rceil$. All free vertices below avoid $B\cup V(M')$, and every relevant retained part has size at least $\lambda n$.
+
+For a missing-edge defect $xy\in M'[P_{i,a}]$, choose the center $z$ in $P_{i,a}$, use $x,y$ as leaves, and choose one further leaf in each active neighbor part of $P_{i,a}$. For every other defect $xy\in M'$, orient it with $x\in P_{i,a}$ retained, use $x$ as center and $y$ as a leaf, and choose one further leaf in $P_{i,a}$ and in each of its active neighbor parts. There are $k-1$ free choices in either construction. Discard choices containing another residual defect. At either fixed endpoint, at most $Dn$ choices in each target are forbidden. Among the free roles, the at most $Dn^2/2$ residual edges exclude at most $C_kDn^{k-1}$ tuples. Since $D=o(\lambda^{k-1})$ and $|V(M')|\leq\lambda n/4+O(1)$, at least $c_k(\lambda n)^{k-1}$ candidates remain for each anchor $xy$. No edge of $T_B$ or $L$ meets these candidates, since they avoid $B$.
+
+Let $\cK$ be this family and let $A_K$ be the event specifying all adjacencies and nonadjacencies of the labeled candidate, with its designated center, in the binomial model. Every required random edge or nonedge has probability at least $\rho/2$, so, writing $a:=|M'|$,
+$$\mu_J:=\sum_{K\in\cK}\bbP\{A_K\}\geq c_k a(\lambda n)^{k-1}\,,\qquad \Delta_J:=\sum_{\{K,K'\}:K\sim K'}\bbP\{A_K\cap A_{K'}\}\leq C_k a n^{2k-3}\,.$$
+For the second bound, sharing a random coordinate fixes at least one free role when the anchors agree and at least two when they differ; there are at most $C_kn^{k-2}+C_ka n^{k-3}$ choices for the other candidate.
+
+The whole family has a consistent coordinate complementation. For missing-edge anchors, all centers lie in $P_{i,a}\setminus(B\cup V(M'))$ and all leaves lie outside this set. For present-edge anchors, all centers are the first endpoints of $M'$, and all leaves avoid that set. In either case, every required present random edge meets the center set and every required absent random edge has both endpoints outside it. Complement the latter coordinates. The events are then increasing, and \Cref{thm:JansonsInequality} gives, uniformly over compatible $H,L,\bsm$,
+\begin{equation}\label{eqn:residual-matching-janson-bound-K1k}
+\bbP\{G^\bin_{\Pi,H,T_B\cup R\cup L,\bsm}\in\cE_\matsf(R)\}\leq e^{-c a n}\leq2^{-c_\matsf\ell n/\kappa}\,.
+\end{equation}
+Here the definition of $c_\matsf$ includes division of the natural exponential rate by $\ln2$. Combining this with \eqref{eqn:residual-graph-count-K1k} and $H(D)+D=o(c_\matsf/\kappa^2)$ proves the lemma.
+\end{proof}
+
+\subsection{Clean retained comparisons}\label{subsec:clean-retained}
+Fix the parameters above. For $K\in\cK_W$, let $\cF_{W,K}$ be the graphs in $\cB_{n,m}(W,\tau)$ whose canonical division has retained data $K$, and let $\cF'_{W,K}$ be those with a defect incident with $V(K)$. Write $N^\ast_{n,m}:=N^\ast_{n,m}(K_{1,k})$.
+
+\begin{lemma}\label{lemma:NtaunmWUpperBdK1k}
+There exists $c>0$, depending only on the fixed parameters, such that
+$$|\cF'_{W,K}|\leq e^{-cn}\cZ_K\,,\qquad |\cF_{W,K}|\leq(1+e^{-cn})\cZ_K\,.$$
+Consequently, $|\cB_{n,m}(W,\tau)|\leq(1+e^{-cn})\sum_{K\in\cK_W}\cZ_K$.
+\end{lemma}
+\begin{proof}
+First fix $K$ and the entire remainder graph $H$ on $S_K$. For every completion $\Pi$ with $\Pi_\ast=K$, the cost $b(G,\Pi)$ splits into the number of retained-incident defects, determined by $G$ and $K$, and a remainder-only term determined by $H$ and the completion. Choose one completion $\Pi_{K,H}$ minimizing the latter term. If a graph in this fiber has canonical retained data $K$, comparison with its canonical division shows that $\Pi_{K,H}$ is still a global minimizer. By \Cref{lemma:WtoWtildeMetricsK1k}, it is $W$-compatible. Thus the fixed-family estimates above apply to this whole fiber with the single division $\Pi_{K,H}$.
+
+For a nontrivial profile, put $r:=|B(\frp)|+\ell(\frp)\geq1$. By \Cref{lemma:profile-bound-K1k,lemma:local-compensation-K1k,lemma:residual-matching-estimate-K1k},
+\begin{equation}\label{eqn:fpifrp-mcn-bd}
+|\{G\in\cF_{\Pi_{K,H},\frp}:G[S_K]=H\}|\leq Z_K(e(H))\,2^{-c_1n|B(\frp)|-c_2n\ell(\frp)}
+\end{equation}
+after reserving half of each negative term to absorb $\Err$ and the polynomial prefactor. These reserves also cover the root-free case $\ell(\frp)>0$. There are at most $(n+1)^{C(r+1)}$ profiles of size $r$: the numbers of retained active pairs and visible parts are bounded in terms of $\eta,R_0,\theta$, independently of $\Pi$ and $n$. Summing \eqref{eqn:fpifrp-mcn-bd} gives at most $e^{-cn}Z_K(e(H))$. The trivial profile has no retained-incident defects and contributes at most $Z_K(e(H))$. Finally, sum once over the at most $N^\ast_{s(K),b}(K_{1,k})$ graphs $H$ at each level $b\leq C_k\eta n^2$.
+\end{proof}
+
+\begin{lemma}\label{lemma:canonical-clean-lower-K1k}
+For sufficiently small $\eta,\delta$, we have
+$$\sum_{K\in\cK_{W^\ast}}\cZ_K\leq2(k-1)!\,N^\ast_{n,m}\,.$$
+\end{lemma}
+\begin{proof}
+Put $r:=k-1$. Compatibility makes every $K\in\cK_{W^\ast}$ a single $K_r$-component of size $t=(\mu\pm\delta)n$. Consider a positive level $Z_K(b)>0$, and let $a_1,\dots,a_r$ be its part sizes. The identities
+$$C_K=\frac{\sum_j a_j^2-t}{2}\,,\qquad A_K=\frac{t^2-\sum_j a_j^2}{2}\,,\qquad m-b=C_K+(p_k\pm2\delta)A_K$$
+give $\sum_j(a_j-t/r)^2=O_{k,\gamma}((\eta+\delta+o(1))n^2)$. Hence every part has size at least $a n$, where $a:=\mu/(4r)$, and $A_K\geq a^2n^2$. These conclusions use positivity of the counting level, not compatibility alone.
+
+For every fixed active-edge vector, \Cref{lemma:balanced-cover-multiplicity-K1k} shows that all but an $e^{-cn}$ fraction of the retained graphs have a unique unordered cover by $r$ cliques. They are also connected except for an $e^{-cn^2}$ fraction: a disconnection separates whole clique parts and requires an empty cut between two linear sets. Choose $\eta$ so that $C_k\eta<a^2/4$. A remainder graph with at most $C_k\eta n^2$ edges has no clique of size $a n$. Consequently, in any second representation of a good graph, the connected retained support must be the same component, and its cover differs only by a permutation. Every good graph is therefore counted at most $r!$ times. At least half of every nonzero counting fiber is good, proving the assertion.
+\end{proof}
+
+\subsubsection{The comparison with $W^\ast$}\label{subsec:subcritical-comparison-K1k}
+For $0\leq b\leq C_k\eta n^2$, define
+\begin{equation}\label{eqn:sub-gamma-b-K1k}
+\gamma_b:=\frac{m-b}{\binom n2}\,,\qquad \mu_b:=\left(\frac{\gamma_b(k-1)}{1+(k-2)p_k}\right)^{1/2}\,.
+\end{equation}
+Fix one retained datum $\Sigma_b$ consisting of a $K_{k-1}$-component on $\lfloor\mu_bn\rfloor$ vertices, partitioned as equally as possible, with the remaining vertices in $S_{\Sigma_b}$. Its active-edge total differs from $p_kA_{\Sigma_b}$ by $O(n)$, so $Z_{\Sigma_b}(b)>0$ for large $n$.
+
+\begin{lemma}\label{lemma:sub-retained-mass-gap-K1k}
+There exists $g=g(k,\gamma,\omega)>0$, chosen before $\eta$ and $R_0$, such that, if $\delta_\square(W,W^\ast)\geq8\omega$, then every $K\in\cK_W$ satisfies
+$$s(K)\leq(1-\mu-g)n\,.$$
+Also, $s(\Sigma_b)\geq(1-\mu-O(\eta)-o(1))n$ uniformly over $0\leq b\leq C_k\eta n^2$.
+\end{lemma}
+\begin{proof}
+Write $W=W_\blambda$, with block lengths $\mu_i$ and core orders $r_i$, and put $I:=\{i:\mu_i\geq2\eta,\ r_i\leq R_0\}$. The defining identity and the actual contribution of a block to edge mass are
+$$\sum_i\frac{\mu_i^2}{r_i}=\frac{\mu^2}{k-1}\,,\qquad \|W|_{\text{block }i}\|_1=(1+\Delta p_k)\frac{\mu_i^2}{r_i}\,.$$
+The omitted quadratic mass is $O(\eta+R_0^{-1})$, so the omitted blocks have this same order of $L^1$ mass, regardless of their total length. If $\sum_{i\in I}\mu_i\leq\mu+t$, then
+$$\sum_{i\in I}\mu_i^2\geq\mu^2-O(\eta+R_0^{-1})\,,\qquad \max_{i\in I}\mu_i\geq\frac{\mu^2-O(\eta+R_0^{-1})}{\mu+t}\,.$$
+As $t,\eta,R_0^{-1}\to0$, one retained length tends to $\mu$ and the sum of the other retained lengths tends to zero. The quadratic identity then forces the dominant core order to be $k-1$, hence its core is $K_{k-1}$. Aligning this block with $W^\ast$, and bounding the omitted blocks by their $L^1$ mass, gives $\delta_\square(W,W^\ast)=o(1)$ uniformly. Choose $t>0$ so that this contradicts separation by $8\omega$, and then choose $\eta,R_0^{-1}$ sufficiently small. Thus, for some $g>0$,
+\begin{equation}\label{eqn:sub-graphon-retained-mass-gap-K1k}
+\sum_{i\in I}\mu_i\geq\mu+2g\,.
+\end{equation}
+Compatibility retains every block in $I$ and loses at most $\delta n/\eta$ vertices in their total size. Taking $\delta=o(\eta g)$ proves the first assertion. The second follows from $\mu_b=\mu+O(\eta)+o(1)$.
+\end{proof}
+
+\begin{lemma}\label{lemma:clean-retained-comparison-K1k}
+For a constant $C$ depending only on the fixed parameters, every $K\in\cK_W$ satisfies
+$$Z_K(b)\leq e^{Cn}Z_{\Sigma_b}(b)\qquad(0\leq b\leq C_k\eta n^2)\,.$$
+\end{lemma}
+\begin{proof}
+For each $\bsm\in\cM_{K,b}$, the graphon equal to $1$ on retained clique squares, $\bsm_e/N_e$ on active rectangles, and $0$ elsewhere is induced-$K_{1,k}$-free. Its density is $\gamma_b+O(1/n)$. Since $\gamma_b$ stays in a compact subinterval of $(0,\gamma_k)$, \Cref{prop:graphon-char-fixed-gamma} gives
+$$\log\binom{K}{\bsm}\leq\binom n2\sE_k(\gamma_b)+O(n)\,.$$
+There are polynomially many vectors, uniformly in $K$. Conversely, distributing the $O(n)$ rounding error of $\Sigma_b$ over its active pairs gives a feasible vector of densities $p_k+O(1/n)$. Stirling's formula yields $\log Z_{\Sigma_b}(b)\geq\binom n2\sE_k(\gamma_b)-O(n)$, proving the claim.
+\end{proof}
+
+\begin{lemma}\label{lemma:sub-combined}
+Let $K$ be retained data, with $A_K\geq a n^2$ for some fixed $a>0$, and suppose $Z_K(b)>0$. For every integer $0\leq q\leq C_0n$, there is a constant $C=C(k,a,C_0)>1$ such that
+\begin{enumerate}[label=\textit{(\roman*)}, ref=(\textit{\roman*}), topsep=5pt]
+\item\label{item:sub-active-shift-K1k} $Z_K(b)\leq C^q\overline Z_K(b+q)$, where $\overline Z_K(u):=\binom{A_K}{m-C_K-u}$;
+\item\label{item:sub-reference-ball-K1k} $\overline Z_K(b+q)N^\ast_{s(K),b+q}(K_{1,k})\leq N^\ast_{n,m}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+The sum defining $Z_K(b)$ counts a subfamily of the full active slice, so $Z_K(b)\leq\overline Z_K(b)$. Positivity gives $m-C_K-b\in(p_k\pm2\delta)A_K$. Subtracting $O(n)$ keeps this quantity a fixed positive distance from both endpoints of $[0,A_K]$, and adjacent binomial ratios prove \ref{item:sub-active-shift-K1k}. For \ref{item:sub-reference-ball-K1k}, choose the entire remainder graph and any active-edge set of the required total size. Their disjoint union with the retained cliques is induced-$K_{1,k}$-free: a vertex in a retained part has neighbors in at most $\Delta+1=k-1$ clique parts. These choices give distinct graphs with exactly $m$ edges.
+\end{proof}
+
+\begin{lemma}\label{lemma:sub-sparse-matching-transfer-K1k}
+Let $M_q:=(2q)!/(2^qq!)$. If $s'\geq s+2q$, then
+$$M_qN^\ast_{s,b}(K_{1,k})\leq N^\ast_{s',b+q}(K_{1,k})\,.$$
+\end{lemma}
+\begin{proof}
+Add a matching on a fixed set of $2q$ new vertices and leave all other new vertices isolated. This is an injective construction of induced-$K_{1,k}$-free graphs, with $M_q$ choices for the matching.
+\end{proof}
+
+\begin{lemma}\label{lemma:CompareBallsInCutMetricNlogNK1k}
+There exists $\nu=\nu(k,\gamma,\omega)>0$ such that, if $W\in\cV_\gamma$ and $\delta_\square(W,W^\ast)\geq8\omega$, then
+$$|\cB_{n,m}(W,\tau)|\leq n^{-\nu n}N^\ast_{n,m}\,.$$
+\end{lemma}
+\begin{proof}
+Let $g$ be given by \Cref{lemma:sub-retained-mass-gap-K1k}, and put $s_0:=\lfloor(1-\mu-g/2)n\rfloor$ and $q:=\lfloor gn/8\rfloor$. If separated candidates exist then $g<1-\mu$; otherwise the assertion is vacuous. Every $K\in\cK_W$ has $s(K)\leq s_0$, while $s(\Sigma_b)\geq s_0+2q$. Using \Cref{lemma:NtaunmWUpperBdK1k,lemma:clean-retained-comparison-K1k} and $|\cK_W|\leq e^{Cn}$ gives
+\begin{equation}\label{eqn:sub-comparison-start-K1k}
+|\cB_{n,m}(W,\tau)|\leq e^{Cn}\sum_{0\leq b\leq C_k\eta n^2}N^\ast_{s_0,b}(K_{1,k})Z_{\Sigma_b}(b)\,.
+\end{equation}
+The reference parts have linear size and $Z_{\Sigma_b}(b)>0$. Thus \Cref{lemma:sub-sparse-matching-transfer-K1k,lemma:sub-combined} bound each summand by $C^qN^\ast_{n,m}/M_q$. Since $M_q=n^{q}e^{O(n)}$ and $q=\Theta(n)$, the polynomial number of levels and the $e^{Cn}$ loss are absorbed by $n^{-\nu n}$.
+\end{proof}
+
+\begin{lemma}\label{lemma:sub-Wstar-sparse-lower-tail-K1k}
+Set $c_\ast:=(1-\mu)/32$ and $q:=\lfloor c_\ast n\rfloor$, independently of the accuracy parameters. For some $\nu>0$,
+$$\sum_{K\in\cK_{W^\ast}}\sum_{0\leq b<q}Z_K(b)N^\ast_{s(K),b}(K_{1,k})\leq n^{-\nu n}N^\ast_{n,m}\,.$$
+\end{lemma}
+\begin{proof}
+For small enough $\delta$, compatibility gives $s(K)\geq(1-\mu)n/2\geq8q$. Every graph on $S_K$ with $b<q$ edges has at least $s(K)-2q$ isolated vertices. Write $M_q(s):=s!/(2^qq!(s-2q)!)$. Adding a matching on isolated vertices and counting possible inverse choices gives
+$$M_q(s(K)-2q)N^\ast_{s(K),b}(K_{1,k})\leq\binom{b+q}{q}N^\ast_{s(K),b+q}(K_{1,k})\,.$$
+The left factor is $n^qe^{O(n)}$, while the inverse multiplicity is $e^{O(n)}$. For every positive level, the part-size calculation in \Cref{lemma:canonical-clean-lower-K1k} gives $A_K\geq a^2n^2$. Apply \Cref{lemma:sub-combined} to compare with the full shifted slice, whose product with the last remainder count is at most $N^\ast_{n,m}$. Summing over at most $e^{Cn}$ retained data and $O(n)$ levels proves the lemma.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:main-almostall} \ref{item:thm:main-almostall-sub}]
+Fix $c_\ast=(1-\mu)/32$ before choosing any accuracy parameter. First we show concentration at $W^\ast$ at every fixed cut radius $r>0$. Choose $\omega<r/10$, the associated parameters with $\tau<\omega$, and a finite $\tau/2$-net of the optimizer set. By \Cref{lemma:rough-struc-fixed-g}, graphs outside the union of the $\tau$-balls around the net form an $e^{-cn^2}$ fraction of $\cF^\ast_{n,m}(K_{1,k})$. A center at distance less than $8\omega$ from $W^\ast$ has its $\tau$-ball inside the $r$-ball. Every other ball has size at most $n^{-\nu n}N^\ast_{n,m}$ by \Cref{lemma:CompareBallsInCutMetricNlogNK1k}. Consequently,
+\begin{equation}\label{eqn:subcritical-almostall-cutclose-K1k}
+|\cF^\ast_{n,m}(K_{1,k})\setminus\cB_{n,m}(W^\ast,r)|=o(N^\ast_{n,m})\qquad\text{for every fixed }r>0\,.
+\end{equation}
+
+Now choose the structural parameters for any prescribed accuracy, and apply \eqref{eqn:subcritical-almostall-cutclose-K1k} at their actual input radius $\tau$. By \Cref{lemma:NtaunmWUpperBdK1k,lemma:canonical-clean-lower-K1k},
+$$\sum_{K\in\cK_{W^\ast}}|\cF'_{W^\ast,K}|\leq e^{-cn}\sum_{K\in\cK_{W^\ast}}\cZ_K=o(N^\ast_{n,m})\,.$$
+Thus almost every graph has no retained-incident defects. Its retained data consist of one $K_{k-1}$-component on $(\mu\pm\delta)n$ vertices. Hence $G=G_1\sqcup G_2$, where $G_1$ is co-$(k-1)$-partite on those vertices and $G_2=G[S_K]$ has at most $C_k\eta n^2$ edges. By \Cref{lemma:sub-Wstar-sparse-lower-tail-K1k}, almost every such graph also has $e(G_2)\geq c_\ast n/2$. Letting the accuracy tend to zero gives $v(G_1)=(\mu+o(1))n$ and $e(G_2)=o(n^2)$, with the same positive linear lower bound throughout.
+\end{proof}

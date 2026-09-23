@@ -1,0 +1,377 @@
+This appendix proves \Cref{thm:c4-main}. Fix $\gamma\in(0,1)$ and assume $m\sim\gamma\binom{n}{2}$. We first prove that almost every induced-$C_4$-free graph is within $\epsilon n^2$ edits of a split graph. We then restrict the sizes of its optimal split partition, exclude vertices with large defect degree, and use a matching estimate to eliminate the remaining defects. All statements are for sufficiently small positive tolerances and all sufficiently large $n$.
+
+\subsection{Rough structure lemma}
+Let us say that a graph $G$ is \emph{$t$-far from split} if the minimum edit distance from $G$ to a split graph is at least $t$. Define the sets of graphs
+\[\arraycolsep=0.4mm
+\begin{array}{ll}
+\cF^\far &:= \{G\in\cF^\ast_{n,m}(C_4):\text{$G$ is $\epsilon n^2$-far from split}\} \,, \\[6pt]
+\cF^\close &:= \cF^\ast_{n,m}(C_4)\setminus\cF^\far \,.
+\end{array}\]
+In this subsection we prove the following rough structure lemma.
+
+\begin{lemma}\label{lemma:c4-rough-struc}
+There exists a constant $c=c(\gamma,\epsilon)>0$ such that
+$$|\cF^\far|\leq 2^{-cn^2}N^\ast_{n,m}(C_4)\,.$$
+\end{lemma}
+
+To prepare for the proof of \Cref{lemma:c4-rough-struc}, we introduce several definitions and two lemmas relating to colored graphs and entropy. Recall also the definitions set forth in \Cref{subsec:colored-graphs}.
+For a colored graph $J$ on $n$ vertices, write $R:=e_\red(J)$ and $B:=e_\blue(J)$, and define
+$$f_\gamma(J):=R\,H\!\left(\frac{\gamma\binom{n}{2}-B}{R}\right)$$
+when $R>0$ and $B\leq\gamma\binom{n}{2}\leq B+R$. Set $f_\gamma(J):=0$ when $R=0$ and $\gamma\binom{n}{2}=B$, and $f_\gamma(J):=-\infty$ otherwise. Our entropy benchmark uses complete colored graphs:
+\begin{equation}\label{eqn:coloring-entropy-0}
+\Phi(n,\gamma,H):=\max\{f_\gamma(J):J\in\cC(n,H)\,,\,e(J^c)=0\}\,.
+\end{equation}
+The nearly complete partial colored graphs arising from types remain the inputs to stability; only the benchmark and its lower counting construction require completeness.
+
+\begin{definition}[Stability]\label{dfn:Jgamma-stable}
+Let $H$ be a fixed graph, $\gamma\in(0,1)$ a constant, and $\cJ(n)$ a set of colored graphs on $n$ vertices. For a colored graph $J$, let $d(J,\cJ(n))$ denote the minimum Hamming distance between $J$ and an element of $\cJ(n)$, where vertex edits incur zero cost. Assume that for all $\epsilon>0$ there exist $\delta>0$ and $\eta>0$ such that the following holds for all large enough $n$: if $J\in\cC(n,H)$ such that $e(J^c)\leq\eta n^2$ and
+$$f_\gamma(J)\geq\Phi(n,\gamma,H)-\delta n^2$$
+then $d(J,\cJ(n))\leq\epsilon n^2$. In this case we say $H$ is \emph{$(\cJ,\gamma)$-stable}.
+\end{definition}
+
+\Cref{lemma:c4-stability} below establishes stability for $C_4$ and is the key technical lemma needed to prove \Cref{lemma:c4-rough-struc}. We also need the following lemma.
+
+\begin{lemma}\label{lemma:entropy-BOOST}
+For all fixed $\gamma\in(0,1)$ and $\alpha\in(0,\frac{1}{2})$ there exists $\delta>0$ such that the following holds for all large enough $n$. Let $F_\gamma(R,B):=R\cdot H\big(\frac{\gamma\binom{n}{2}-B}{R}\big)$. If
+$$\alpha\leq\frac{\gamma\binom{n}{2}-B}{R}\leq1-\alpha\,,\qquad R\geq\alpha n^2\,,\qquad D_r\geq\alpha n^2\,,\qquad\text{and}\qquad|D_b|\leq n\,,$$
+then
+$$F_\gamma(R+D_r,B+D_b)\geq F_\gamma(R,B)+\delta n^2\,.$$
+\end{lemma}
+\begin{proof}
+Write $M:=\gamma\binom{n}{2}$. Since $(M-B)/R\in[\alpha,1-\alpha]$, $R\geq\alpha n^2$, and $|D_b|\leq n$, changing $B$ to $B+D_b$ changes $F_\gamma(R,B)$ by $O_\alpha(n)$ and leaves the selected density in $[\alpha/2,1-\alpha/2]$. For $h(x):=F_\gamma(x,B+D_b)$,
+$$h'(x)=-\log\!\left(1-\frac{M-B-D_b}{x}\right)\geq-\log(1-\alpha/4)>0$$
+on $[R,R+\alpha n^2]$, because $(M-B-D_b)/x\geq\alpha/4$ there. The function $h$ is increasing for $x\geq R$. Integrating over this interval gives a gain of at least $-\alpha\log(1-\alpha/4)n^2$, which absorbs the $O_\alpha(n)$ change and proves the lemma.
+\end{proof}
+
+A colored graph $J\in\cC(n)$ is called a \emph{split coloring} if $J$ is complete and there exists a partition $V(J)=A\cup B$ such that all vertices and edges in $A$ are green, all vertices and edges in $B$ are blue, and all edges between $A$ and $B$ are red. It is easy to see that $C_4\nHookrightarrow J$ for such a coloring, hence $J\in\cC(n,C_4)$. For all $n$, let $\cS(n)$ be the set of split colorings on $n$ vertices, so that $\cS(n)\subseteq\cC(n,C_4)$.
+
+\begin{lemma}\label{lemma:c4-stability}
+For all fixed $\gamma\in(0,1)$, $C_4$ is $(\cS,\gamma)$-stable.
+\end{lemma}
+\begin{proof}
+Fix $\epsilon>0$.
+Let $\alpha'\in(0,1/2)$ such that $H(\alpha')=\gamma(1-\gamma)/4$. Let $\delta_{\ref{lemma:entropy-BOOST}}$ be the constant from \Cref{lemma:entropy-BOOST} applied with $\gamma$ and $\alpha:=\min\{\frac{\epsilon\gamma(1-\gamma)}{320},\alpha'\}$. Let
+$$\eta:=\left(\frac{\epsilon\gamma(1-\gamma)}{3000}\right)^2,\quad\delta:=\min\left\{\frac{\gamma(1-\gamma)}{8},\,\frac{\delta_{\ref{lemma:entropy-BOOST}}}{2}\right\}\,.$$
+Let $J\in\cC(n,C_4)$ satisfy $e(J^c)\leq\eta n^2$ and
+$$f_\gamma(J)\geq \Phi(n,\gamma,C_4)-\delta n^2\,.$$
+
+Let $\sigma$ denote the coloring of $J$ and define the two vertex sets $V_\green:=\{v:\sigma(v)=\green\}$ and $V_\blue:=\{v:\sigma(v)=\blue\}$. For all $v\in V_\green$, every edge in $N_\red(v)$ is colored blue since $C_4\hookrightarrow\rrgtriangle$\,. (We use white vertices to convey that the colored homomorphism holds for any $\{\blue,\green\}$-labeling of those vertices.) Similarly, for all $v\in V_\blue$, every edge in $N_\red(v)$ is colored green since $C_4\hookrightarrow\rrbtriangle$\,. Moreover, all edges in $J[V_\green]$ are colored green since $C_4\hookrightarrow\grg$ and $C_4\hookrightarrow\gbg$; and $J[V_\blue]$ contains no red edges since $C_4\hookrightarrow\brb$.
+
+To prove the lemma, it suffices to prove the inequalities
+\begin{align}
+&e_\green(V_\blue)\leq {\textstyle\frac{1}{3}}\epsilon n^2 \,, \label{eqn:many-green-in-vb}\\[3pt]
+&e_\green(V_\green,V_\blue) + e_\blue(V_\green,V_\blue) \leq {\textstyle\frac{1}{3}}\epsilon n^2\,, \label{eqn:few-nonred-on-cut}
+\end{align}
+since by making all green edges in $V_\blue$ blue, all non-red edges between $V_\green$ and $V_\blue$ red, and forming the at most $\eta n^2$ nonedges, we can make $J$ a split coloring via at most $\epsilon n^2$ edits.
+
+Assuming \eqref{eqn:many-green-in-vb} or \eqref{eqn:few-nonred-on-cut} fails, we will construct a coloring with entropy greater than $\Phi(n,\gamma,C_4)$, a contradiction. We introduce the construction now. Let $b^\ast$ be the greatest integer such that $\binom{b^\ast}{2}\leq e_\blue(J)$, and let $g^\ast:=n-b^\ast$. Define the complete colored graph $J^\ast$ as follows: partition the vertex set $V(K_n)$ into subsets $U_\green$ and $U_\blue$ of sizes $g^\ast$ and $b^\ast$, respectively; $J^\ast[U_\green]$ is a green clique and all its vertices are green; $J^\ast[U_\blue]$ is a blue clique and all its vertices are blue; all edges between $U_\green$ and $U_\blue$ are red. Henceforth the notation $d_c$ and $N_c$ for a color $c\in\{\red,\green,\blue\}$ refers to $J$ and not $J^\ast$. Write $g:=|V_\green|$ and $b:=|V_\blue|$.
+
+To obtain the contradiction, we will apply \Cref{lemma:entropy-BOOST} with $R:=e_\red(J)$, $D_r:=e_\red(J^\ast)-e_\red(J)$, $B:=e_\blue(J)$, and $D_b:=e_\blue(J^\ast)-e_\blue(J)$. We will verify that the hypotheses of \Cref{lemma:entropy-BOOST} are satisfied with $\gamma$ and $\alpha$. First, from \eqref{eqn:Phi0-LB} we have
+\begin{equation}\label{eqn:c4-red-lb}
+e_\red(J)\geq f_\gamma(J)\geq\Phi(n,\gamma,C_4)-\delta n^2\geq\left(\frac{\gamma(1-\gamma)}{4}-\delta\right)n^2\geq\frac{\gamma(1-\gamma)}{8}\,n^2\,.
+\end{equation}
+The inequality $|D_b|\leq n$ holds trivially by definition of $J^\ast$. Using \eqref{eqn:c4-red-lb}, we also verify that
+$$H\bigg(\frac{\gamma\binom{n}{2}-B}{R}\bigg)=\frac{f_\gamma(J)}{R}\geq\frac{\gamma(1-\gamma)}{4}\,,$$
+so the symmetry of $H$ and the fact that $\alpha\leq\alpha'$ implies $\alpha\leq\frac{\gamma\binom{n}{2}-B}{R}\leq1-\alpha$. To complete the proof of the lemma, it suffices to prove $D_r\geq\alpha n^2$, since then all the hypotheses of \Cref{lemma:entropy-BOOST} are met, implying
+$$f_\gamma(J^\ast)-f_\gamma(J)=F_\gamma(R+D_r,B+D_b)-F_\gamma(R,B)\geq\delta_{\ref{lemma:entropy-BOOST}} n^2\,,$$
+which contradicts $f_\gamma(J)\geq\Phi(n,\gamma,C_4)-\delta_{\ref{lemma:entropy-BOOST}}n^2/2$. In the remainder, we show that the failure of \eqref{eqn:many-green-in-vb} or \eqref{eqn:few-nonred-on-cut} leads to $D_r\geq\alpha n^2$.
+
+We will use the following observations. For all $v\in V_\green$,
+$$\binom{b^\ast}{2}+n\geq e_\blue(J[N_\red(v)])\geq\binom{d_\red(v)}{2}-\eta n^2\,,$$
+which implies $d_\red(v)\leq b^\ast+2\sqrt{\eta}n$ (for all large enough $n$). We calculate
+\begin{equation}\label{eqn:c4-vgbeta-bd}
+e_\red(J)=\sum_{v\in V_\green}d_\red(v)\leq g\cdot(b^\ast+2\sqrt{\eta}n)\,,
+\end{equation}
+which we combine with \eqref{eqn:c4-red-lb} to deduce $b^\ast\geq\frac{\gamma(1-\gamma)}{10}n$ and $g\geq\frac{\gamma(1-\gamma)}{10}n$.
+
+We consider three cases depending on the discrepancy $g^\ast-g$.
+
+\noindent\textbf{Case 1:} First, if $g^\ast\geq g+{\textstyle\frac{1}{16}}\epsilon n$ then
+from \eqref{eqn:c4-vgbeta-bd} and $e_\red(J^\ast)=g^\ast b^\ast$, we deduce
+\begin{align*}
+e_\red(J^\ast)-e_\red(J)&\geq b^\ast(g^\ast-g)-2\sqrt{\eta}\,g\,n \\
+&\geq \frac{\epsilon b^\ast n}{16}-2\sqrt{\eta}n^2\geq\frac{\epsilon\gamma(1-\gamma)}{160}n^2-\frac{\epsilon\gamma(1-\gamma)}{1500}n^2\geq\alpha n^2\,.
+\end{align*}
+
+\noindent\textbf{Case 2:} If $g\geq g^\ast+\tfrac{1}{16}\epsilon n$ then using $e_\green(J)\geq\binom{g}{2}-e(J^c)$ and $e_\green(J^\ast)=\binom{g^\ast}{2}$,
+\begin{align*}
+e_\green(J)-e_\green(J^\ast) &\geq \binom{g}{2}-\binom{g^\ast}{2}-e(J^c) \\
+&= \frac{(g-g^\ast)(g+g^\ast-1)}{2}-e(J^c) \geq \frac{\epsilon\gamma(1-\gamma)}{320}n^2-e(J^c) \,,
+\end{align*}
+where we used $g-g^\ast\geq\tfrac{1}{16}\epsilon n$ and $g\geq\frac{\gamma(1-\gamma)}{10}n$. Using the identity
+\begin{equation}\label{eqn:c4-hhstar-id}
+\begin{aligned}
+e_\red(J^\ast) &= \binom{n}{2} - e_\green(J^\ast) - e_\blue(J^\ast) \\
+&= e_\red(J) + \big(e_\green(J)- e_\green(J^\ast)+ e(J^c)\big) + \big(e_\blue(J) - e_\blue(J^\ast)\big) \,,
+\end{aligned}
+\end{equation}
+we obtain $e_\red(J^\ast)\geq e_\red(J)+\alpha n^2$.
+
+\noindent\textbf{Case 3:} Finally assume $|g^\ast-g|\leq\tfrac{1}{16}\epsilon n$. If \eqref{eqn:many-green-in-vb} fails then comparing green edges,
+$$e_\green(J)\geq\binom{g}{2}+e_\green(J[V_\blue])-\eta n^2\geq\binom{g}{2}+\frac{\epsilon n^2}{3}-\eta n^2\,.$$
+We also have $e_\green(J^\ast)=\binom{g^\ast}{2}$ and
+$$\left|\binom{g^\ast}{2}-\binom{g}{2}\right|=\frac{|g^\ast-g|\,(g^\ast+g-1)}{2}\leq n|g^\ast-g|\leq\frac{\epsilon n^2}{16}\,,$$
+so combining the above bounds gives $e_\green(J)\geq e_\green(J^\ast)+{\textstyle\frac{1}{4}}\epsilon n^2$. Plugging this into \eqref{eqn:c4-hhstar-id} yields $e_\red(J^\ast)\geq e_\red(J)+{\textstyle\frac14}\epsilon n^2$. On the other hand, if \eqref{eqn:few-nonred-on-cut} fails then since the mapping $x\mapsto x(n-x)$ is $n$-Lipschitz on $[0,n]$,
+$$|g^\ast b^\ast-gb|=|g^\ast(n-g^\ast)-g(n-g)| \leq n|g^\ast-g| \leq \tfrac{1}{16}\epsilon n^2\,,$$
+which we combine with $e_\red(J)\leq gb-\frac13\epsilon n^2$ to deduce
+$$D_r=g^\ast b^\ast-e_{\red}(J) \geq g^\ast b^\ast-\Big(gb-\tfrac13\epsilon n^2\Big) \geq -\tfrac{1}{16}\epsilon n^2+\tfrac13\,\epsilon n^2 \geq \tfrac14\epsilon n^2\,,$$
+completing the proof.
+\end{proof}
+
+For a type $T$ and integers $n$ and $m$, define
+$$N_{n,m}(T):=\abs{\{G\in\cG(n,m):G\text{ has }T\}}\,,$$
+where \emph{having a type} is the notion defined in \Cref{dfn:type}.
+
+\begin{definition}[Distance to a colored graph]
+Let $G$ be a graph on $[n]$ and let $J=(F,\sigma)\in\cC(n)$ be a colored graph on $[n]$. Define
+$$d(G,J):=\abs{\{e\in E(J):\sigma(e)=\blue,\, e\notin E(G)\}}+\abs{\{e\in E(J):\sigma(e)=\green,\, e\in E(G)\}}\,,$$
+and for a subset $\cJ(n)\subseteq\cC(n)$, set $d(G,\cJ(n)):=\min\{d(G,J):J\in\cJ(n)\}$.
+\end{definition}
+
+We will use the following explicit lower bound on $\Phi(n,\gamma,C_4)$. Let $J_\spl\in\cS(n)$ be a split coloring whose blue clique is on $k:=\floor{\gamma n}$ vertices and whose green clique is on $l:=n-k$ vertices. It is easy to check that
+$$\frac{\gamma\binom{n}{2}-e_\blue(J_\spl)}{e_\red(J_\spl)}=\frac{1}{2}+O_\gamma\!\left(\frac1n\right)\,,$$
+which implies
+\begin{equation}
+\Phi(n,\gamma,C_4)\geq f_\gamma(J_\spl)\geq\frac{e_\red(J_\spl)}{2}\geq\frac{\gamma(1-\gamma)}{4}\,n^2 \label{eqn:Phi0-LB}
+\end{equation}
+for all large enough $n$.
+
+\begin{proof}[Proof of \Cref{lemma:c4-rough-struc}]
+Choose a complete $J^\ast\in\cC(n,C_4)$ attaining $\Phi(n,\gamma,C_4)$, and write $R:=e_\red(J^\ast)$ and $B:=e_\blue(J^\ast)$. By \eqref{eqn:Phi0-LB}, $R=\Omega_\gamma(n^2)$ and $q:=(\gamma\binom{n}{2}-B)/R$ lies in a fixed compact subinterval of $(0,1)$. Consequently $p:=(m-B)/R=q+o(1)$ is feasible. Including every blue edge, excluding every green edge, and choosing $m-B$ red edges gives induced-$C_4$-free graphs: completeness of $J^\ast$ turns any induced $C_4$ into a colored homomorphism. Stirling's formula and continuity of $H$ give
+\begin{equation}\label{eqn:lower-bound-Nstar}
+\log N^\ast_{n,m}(C_4)\geq\log\binom{R}{m-B}=R\,H(p)+o(n^2)=\Phi(n,\gamma,C_4)+o(n^2)\,.
+\end{equation}
+
+We record the entropy estimate needed when the ideal edge quota is infeasible. Uniform continuity of $H$ gives a function $\nu(t)\to0$ as $t\to0$ such that, for any colored graph $J$ with $R=e_\red(J)$ and $B=e_\blue(J)$,
+$$R\,H(k/R)\leq\max\{0,f_\gamma(J)\}+\nu(t)n^2\,,$$
+whenever $0\leq k\leq R$ and $|B+k-\gamma\binom{n}{2}|\leq tn^2$; the left side is $0$ when $R=0$. Indeed, $R\leq\sqrt{t}\,n^2$ is immediate from $H\leq1$. Otherwise clamp the ideal quota $\gamma\binom{n}{2}-B$ to $[0,R]$; the two densities differ by at most $\sqrt{t}$, so uniform continuity applies. If clamping changes the quota, its entropy is zero.
+
+Let $\delta_0,\eta_0>0$ be supplied by \Cref{lemma:c4-stability} for $\epsilon/2$, decreasing $\delta_0$ so that $\delta_0<\gamma(1-\gamma)/8$. Choose $\tau>0$ with $6\tau<\epsilon$ and
+$$2\tau+H(6\tau)+\nu(6\tau)<\delta_0/4\,.$$
+Apply \Cref{lemma:type-lemma} with $\delta:=\tau$, $\ell:=4$, $L:=\lceil1/\tau\rceil$, $t:=1$, and the trivial initial partition, choosing its regularity tolerance $\eta$ below $\min\{\epsilon^\ast(\tau,4),\tau,\eta_0/2\}$. The resulting constants $u,n_1$ ensure that every sufficiently large graph has an $(\eta,\tau,4)$-type $T=(P,R)$ with $1/\tau\leq v(R)\leq u$.
+
+Write $P=\{V_0,V_1,\dots,V_k\}$. Lift $R$ to a colored graph $R'$ on $[n]$ by coloring each $V_i$ internally with its vertex color and each regular pair with its edge color. Leave pairs incident with $V_0$ and irregular pairs missing, and color the vertices of $V_0$ green. Then $e((R')^c)\leq2\eta n^2$. Every graph $G$ of type $T$ satisfies
+$$d(G,R')\leq |V_0|n+\eta\binom{k}{2}(n/k)^2+\tau\binom{n}{2}+\sum_{i=1}^k\binom{|V_i|}{2}\leq3\tau n^2\,.$$
+Repairing these disagreements gives a graph consistent with $R'$ whose edge count differs from $m$ by at most $3\tau n^2$. Count its missing-template pairs arbitrarily, then its actually feasible red quota. The latter differs from $\gamma\binom{n}{2}-e_\blue(R')$ by at most $(3\tau+2\eta)n^2+o(n^2)$. Finally choose the at most $3\tau n^2$ repaired pairs. There are only polynomially many quotas, so the preceding entropy estimate and the Hamming-ball bound give
+\begin{equation}\label{eqn:type-counting}
+N_{n,m}(T)\leq2^{\max\{0,f_\gamma(R')\}+(2\eta+H(6\tau)+\nu(6\tau))n^2+o(n^2)}\,.
+\end{equation}
+
+For $G\in\cF^\far$, choose such a type and lift $R'_G$. The edit triangle inequality gives $d(R'_G,\cS(n))\geq(\epsilon-3\tau)n^2>\epsilon n^2/2$. Moreover $R'_G\in\cC(n,C_4)$: a colored homomorphism into the lift projects to one into its type, contrary to \Cref{dfn:type} \ref{item:type-colored-homo}. If its ideal quota is feasible, stability bounds $f_\gamma(R'_G)$ by $\Phi(n,\gamma,C_4)-\delta_0n^2$; if it is infeasible, $\max\{0,f_\gamma(R'_G)\}=0$. The positive benchmark bound \eqref{eqn:Phi0-LB} therefore gives, in either case,
+\begin{equation}\label{eqn:entropy-gap}
+\max\{0,f_\gamma(R'_G)\}\leq\Phi(n,\gamma,C_4)-\delta_0n^2\,.
+\end{equation}
+There are $2^{o(n^2)}$ types and partitions with at most $u$ parts. Summing \eqref{eqn:type-counting} over them yields $|\cF^\far|\leq2^{\Phi(n,\gamma,C_4)-\delta_0n^2/2+o(n^2)}$. Comparison with \eqref{eqn:lower-bound-Nstar} proves the lemma.
+\end{proof}
+
+\subsection{Final counting argument}
+For all $G\in\cF^\ast_{n,m}(C_4)$ and all (ordered) partitions $\Pi=(A,B)$ of $V$, define
+$$b(G,\Pi):=e(G[A])+e(G^c[B])$$
+and let $\Pi(G)$ be a canonically chosen bipartition minimizing $b(G,\cdot)$. If $\Pi(G)=(A,B)$ then let $T(G)$ be the graph on $V$ with edge set
+$$E(T(G)):=E(G[A])\cup E(G^c[B])\,.$$
+Choose the degree threshold $\alpha>0$ sufficiently small in terms of $\gamma$, then a sufficiently small nondegeneracy tolerance $\zeta>0$, and finally the defect tolerance $\epsilon>0$ sufficiently small in terms of $\gamma,\alpha,\zeta$. These choices will satisfy the entropy-gap and counting estimates below; in particular, we require $H(\epsilon)+\epsilon=o(\alpha^3)$ as $\epsilon\to0$ with $\alpha,\zeta$ fixed. Define the function
+$$\psi_\gamma(x):=x(1-x)\,H\!\left(\frac{\gamma-x^2}{2x(1-x)}\right)$$
+for $x\in[1-\sqrt{1-\gamma},\sqrt{\gamma}]$. This function is strictly concave: writing $q=(\gamma-x^2)/(2x(1-x))$, differentiation in the interior gives
+$$\psi_\gamma''(x)=\log(q(1-q))-\frac{(x+q(1-2x))^2}{(\ln2)x(1-x)q(1-q)}<-2\,.$$
+It vanishes at the endpoints and is positive inside, so it has a unique interior maximizer $\lambda_\gamma$. Both $\lambda_\gamma$ and $\psi_\gamma(\lambda_\gamma)$ depend continuously on $\gamma$, by continuity and uniqueness of this maximum. For $\zeta>0$, let us say that a partition $(A,B)$ is \emph{$\zeta$-degenerate} if $||B|-\lambda_\gamma n|>\zeta n$, and \emph{$\zeta$-nondegenerate} otherwise. Let us also say that a graph $G\in\cF^\close$ is $\zeta$-degenerate if its optimal partition $\Pi(G)$ is $\zeta$-degenerate. Define the set of graphs
+$$\cF^\degenerate:=\{G\in\cF^\close:G\text{ is $\zeta$-degenerate}\}\,.$$
+Let $S_{n,m}$ be the number of split graphs on $n$ vertices and $m$ edges. Let us write $\sP$ for the set of all $\zeta$-nondegenerate partitions $(A,B)$ of the vertex set $V$. For all partitions $\Pi=(A,B)$, define the sets of graphs
+\[\arraycolsep=0.4mm
+\begin{array}{ll}
+\cF_\Pi &:= \{G\in\cF^\close:\Pi(G)=\Pi\} \,, \\[4pt]
+\cF^\ast_\Pi &:= \{G\in\cF^\close:\Pi(G)=\Pi,\,b(G,\Pi(G))=0\} \,, \\[4pt]
+\cT_\Pi &:= \{T(G):G\in\cF_\Pi\} \,, \\[4pt]
+\cF_{\Pi,T} &:= \{G\in\cF_\Pi:T(G)=T\} \,,
+\end{array}\]
+and write
+$$s_\Pi:=\binom{|A|\cdot|B|}{m-e(K_B)}\,.$$
+
+\begin{lemma}\label{lemma:almost-all-nondeg}
+For fixed $\zeta>0$ and sufficiently small $\epsilon>0$, there exists $c=c(\gamma,\zeta)>0$ such that
+$$|\cF^\degenerate|\leq 2^{-cn^2}\,N^\ast_{n,m}(C_4)\,.$$
+\end{lemma}
+\begin{proof}
+A split partition with $|B|=\lfloor\lambda_\gamma n\rfloor$ has cross-edge density $p_\gamma+o(1)$, where $p_\gamma:=(\gamma-\lambda_\gamma^2)/(2\lambda_\gamma(1-\lambda_\gamma))\in(0,1)$. Hence
+\begin{equation}\label{eqn:c4-split-lb}
+N^\ast_{n,m}(C_4)\geq\binom{|A||B|}{m-\binom{|B|}{2}}=2^{\psi_\gamma(\lambda_\gamma)n^2+o(n^2)}\,.
+\end{equation}
+Strict concavity and continuity imply that there exist $\delta,c_0>0$, depending on $\gamma,\zeta$, such that for $|\gamma'-\gamma|<\delta$ and every feasible $x$ with $|x-\lambda_\gamma|\geq\zeta$,
+$$\psi_{\gamma'}(x)\leq\psi_\gamma(\lambda_\gamma)-2c_0\,.$$
+Indeed, any sequence violating a uniform strict gap has a convergent subsequence of feasible pairs tending to a maximizer at density $\gamma$ outside the prescribed neighborhood, contradicting uniqueness.
+
+Fix a degenerate partition $\Pi=(A,B)$, put $b:=|B|$, and let $t:=e(T[A])-e(T[B])$. An infeasible cross quota contributes no graphs. For a feasible quota, put
+$$\gamma':=\frac{2m-2t+b}{n^2}\,.$$
+Then $x=b/n$ is feasible for $\psi_{\gamma'}$, and the exact relation between the quota and this density gives
+$$|\cF_{\Pi,T}|\leq\binom{b(n-b)}{m-\binom{b}{2}-t}\leq2^{\psi_{\gamma'}(b/n)n^2}\leq2^{(\psi_\gamma(\lambda_\gamma)-2c_0)n^2}\,.$$
+Here $|\gamma'-\gamma|\leq2\epsilon+o(1)<\delta$. There are at most $2^{H(\epsilon)n^2}$ defect graphs and $2^n$ partitions. Choosing $\epsilon$ so that $H(\epsilon)<c_0$ and comparing with \eqref{eqn:c4-split-lb} proves the assertion.
+\end{proof}
+
+\begin{remark}[Consequences of nondegeneracy]\label{rem:c4-nondeg-bounds}
+Since $\lambda_\gamma$ and its cross-edge density are interior, choosing $\zeta>0$ and then $\epsilon>0$ sufficiently small ensures that every $\Pi=(A,B)\in\sP$ satisfies $|A|,|B|=\Theta_\gamma(n)$. Additionally, there exists a constant $\beta=\beta(\gamma)\in(0,\frac12)$ such that for all large enough $n$, if $\Pi=(A,B)\in\sP$, $|t|\leq \epsilon n^2+n$, and $0\leq z\leq n$ then
+\begin{equation}\label{eqn:c4-p-bounded}
+\beta\leq \frac{m-\binom{|B|}{2}-t}{|A|\cdot|B|-z}\leq1-\beta\,,
+\end{equation}
+and the same bound also holds if one subtracts $z$ from the numerator (by decreasing $\beta$).
+\end{remark}
+
+The following lemma quantifies how the number of graphs in $\cF_{\Pi,T}$ is constrained if the defect graph $T$ contains a matching of a given size.
+
+\begin{lemma}\label{lemma:c4-matching}
+There exists a constant $c=c(\gamma)>0$ such that the following holds. Let $\Pi=(A,B)\in\sP$ and $T\in\cT_\Pi$. If $T[A]$ or $T[B]$ has a matching of size $k\geq1$ then
+$$|\cF_{\Pi,T}|\leq 2^{-ckn}\binom{|A|\cdot|B|}{m-e(K_B)-e(T[A])+e(T[B])}\,.$$
+\end{lemma}
+\begin{proof}
+Define $t:=e(T[A])-e(T[B])$ and $m':=m-e(K_B)-t$. Let $H'$ be the uniformly random bipartite subgraph of $K_{A,B}$ with $m'$ edges, and let $H''$ be the random bipartite subgraph of $K_{A,B}$ where each edge is included independently with probability $p:=\frac{m'}{|A|\cdot|B|}$. Let $G'$ and $G''$ be the random graphs on $V$ with edge sets
+$$E(G')=(E(H')\cup K_B)\,\triangle\,E(T)\,,\qquad E(G'')=(E(H'')\cup K_B)\,\triangle\,E(T)\,,$$
+where $\triangle$ is the symmetric difference. Using \cite[Lemma~A.4]{perkins2025typical} to relate $G'$ and $G''$, we have
+\begin{equation}\label{eqn:c4-mat-init}
+|\cF_{\Pi,T}|\leq\bbP\{G'\in\cF^\ast_n(C_4)\}\cdot\binom{|A|\cdot|B|}{m'}\leq\sqrt{2p}\,n\,\bbP\{G''\in\cF^\ast_n(C_4)\}\cdot\binom{|A|\cdot|B|}{m'}\,.
+\end{equation}
+In the remainder, we bound $\bbP\{G''\in\cF^\ast_n(C_4)\}$ by the probability $G''$ avoids a specific family $\cK$ of copies of $C_4$.
+
+Let $M\subseteq T$ be a matching of size $k$ in $T[A]$ or $T[B]$. First assume $M\subseteq T[A]$. By \Cref{rem:c4-nondeg-bounds}, we have $|A|,|B|=\Theta_\gamma(n)$, and therefore for all $G\in\cF_{\Pi,T}$,
+$$\min\{e(G^c[A]),e(G[B])\}\geq c n^2$$
+for some constant $c=c(\gamma)>0$ since $e(T)\leq\epsilon n^2$ and $\epsilon>0$ is small enough. Using \cite[Lemma~A.3]{perkins2025typical}, this implies each of the graphs $G^c[A]$ and $G[B]=K_B\setminus T[B]$ has a matching on at least $cn$ edges. Fix a matching $M'\subseteq K_B\setminus T[B]$ with at least $cn$ edges. For each $e=\{x_1,x_2\}\in E(M)$ and $f=\{y_1,y_2\}\in E(M')$, write
+$x_1<x_2$ and $y_1<y_2$, and let $K_{e,f}$ be the copy of $C_4$ on
+$\{x_1,x_2,y_1,y_2\}$ with edge set $E(K_{e,f})=\{e,\,f,\,x_1y_1,\,x_2y_2\}$. Define
+$$\cK:=\{K_{e,f}:e\in E(M),\,f\in E(M')\}$$
+and note that $|\cK|=|M|\cdot|M'|\geq ckn$. For all $K\in\cK$, if we define the event $E_K:=\{G''[V(K)]\cong K\}$ then since the events $\{E_K:K\in\cK\}$ are independent and \eqref{eqn:c4-p-bounded} gives $p\in[\beta,1-\beta]$, we have
+\begin{equation}\label{eqn:G''-janson-mat}
+\begin{aligned}
+\bbP\{G''\in\cF^\ast_n(C_4)\}\leq\bbP\!\left\{\bigcap_{K\in\cK}E_K^c\right\} &\leq \prod_{K\in\cK}\bbP\{E_K^c\} \\
+&\leq (1-\beta^2(1-\beta)^2)^{|\cK|}\leq2^{-c|\cK|}\leq2^{-ckn}\,.
+\end{aligned}
+\end{equation}
+By combining \eqref{eqn:c4-mat-init} and \eqref{eqn:G''-janson-mat}, this gives the bound in the case $V(M)\subseteq A$.
+
+If instead $M\subseteq T[B]$ then the same argument applies with $G^c[A]$ in place of $G[B]$: fix a matching $M'\subseteq K_A\setminus T[A]$ of linear size and, for each $e\in E(M)$ and $f\in E(M')$, use the induced copy of $C_4$ on the four vertices whose non-edges are $e$ and $f$. Using \eqref{eqn:c4-p-bounded}, this again yields the $2^{-ckn}$ bound, possibly with a different constant $c=c(\gamma)>0$.
+\end{proof}
+
+For all $\Pi=(A,B)\in\sP$ define the sets of graphs
+\[\arraycolsep=0.4mm
+\begin{array}{ll}
+\cF^\high_{\Pi,1} &:= \{G\in\cF_\Pi:\exists\,v\in A\,,\,d_{T(G)}(v)\geq\alpha|A|\}\,, \\[7pt]
+\cF^\high_{\Pi,2} &:= \{G\in\cF_\Pi:\exists\,v\in B\,,\,d_{T(G)}(v)\geq\alpha|B|\}\,.
+\end{array}\]
+
+\begin{lemma}\label{lemma:FPi1}
+There exists a constant $c=c(\gamma)>0$ such that for all $\Pi\in\sP$,
+$$\abs{\cF^\high_{\Pi,1}}\leq2^{-c\alpha^2n^2}s_\Pi\,.$$
+\end{lemma}
+\begin{proof}
+In this proof, $c=c(\gamma)>0$ is a constant that may change from line to line. Let $T\in\cT_\Pi$ and assume there is a vertex $v$ (canonically chosen for each $T$) such that $d_T(v)\geq\alpha|A|$. Let us denote $N:=N_T(v)$. We split into two cases.
+
+\smallskip
+\noindent\textbf{Case 1.}
+First assume $e_T(N)\geq|N|^2/4$. Then using \cite[Lemma~A.3]{perkins2025typical}, $T[N]$ has a matching of size at least $|N|/32\geq c\alpha n$. Hence by \Cref{lemma:c4-matching},
+\begin{align}
+|\cF_{\Pi,T}| &\leq 2^{-c\alpha n^2}\binom{|A|\cdot|B|}{m-e(K_B)-e(T[A])+e(T[B])} \nonumber\\
+&\leq 2^{-c\alpha n^2+c\epsilon n^2}\binom{|A|\cdot|B|}{m-e(K_B)}
+=2^{-c\alpha n^2+c\epsilon n^2}s_\Pi \leq2^{-c\alpha^2n^2}s_\Pi\,, \label{eqn:fhipi1-case1-bd}
+\end{align}
+where in the second inequality we used \cite[Lemma~A.1(ii)]{perkins2025typical}.
+\smallskip
+
+\noindent\textbf{Case 2.} Now assume $e_T(N)\leq|N|^2/4$. For all $G\in\cF_{\Pi,T}$ and $v\in A$, the optimality of $\Pi$ implies $d_G^c(v,B)\geq d_G(v,A)$, so let $Z=Z(G)\subseteq B$ be a canonically chosen subset of size at least $d_G(v,A)$ such that $Z\subseteq N^c_G(v,B)$. Let us write $\cF_{\Pi,T,v,Z}$ for the set of all $G\in\cF_{\Pi,T}$ for which $v$ and $Z$ are exactly as chosen above.
+
+Let $t:=e(T[A])-e(T[B])$ and $m':=m-e(K_B)-t$. Let $H'$ be the random graph on $V$ whose edge set is a uniformly random choice of $m'$ edges from $E(K_{A,B}\setminus K_{v,Z})$. Let $H''$ be the random graph on $V$ in which each edge $e\in E(K_{A,B}\setminus K_{v,Z})$ is included in $H''$ independently with probability $p:=\frac{m'}{|A|\cdot|B|-|Z|}$. Let $G'$ be the random graph $(H'\cup K_B)\,\triangle\,T$ and let $G''$ be the random graph $(H''\cup K_B)\,\triangle\,T$. By definition, we have $e(G')=m$. Using \cite[Lemma~A.4]{perkins2025typical} to relate $G'$ and $G''$, we have
+\begin{align}
+|\cF_{\Pi,T,v,Z}| &\leq \bbP\{G'\in\cF^\ast_n(C_4)\}\cdot\binom{|A|\cdot|B|-|Z|}{m'} \nonumber\\
+&\leq \sqrt{2p}\,n\,\bbP\{G''\in\cF^\ast_n(C_4)\}\cdot\binom{|A|\cdot|B|-|Z|}{m'} \nonumber\\
+&\leq \bbP\{G''\in\cF^\ast_n(C_4)\} \cdot 2^{c\epsilon n^2}\,s_\Pi \,,\label{eqn:G''-PiTvZ-bd}
+\end{align}
+where in the third inequality we used \cite[Lemma~A.1(i),(ii),(iii)]{perkins2025typical}.
+We now bound $\bbP\{G''\in\cF^\ast_n(C_4)\}$ by the probability $G''$ avoids a specific set of copies of $C_4$. For each $xy\in E(T^c[N])$ and $z\in Z$, let $K_{xy,z}$ be the copy of $C_4$ on $\{v,x,y,z\}$ with edge set $\{vx,vy,xz,yz\}$. Define the set of copies
+$$\cK:=\{K_{xy,z}:xy\in E(T^c[N])\,,\, z\in Z\}\,,$$
+so that, using the choice of $Z$ and $\Pi\in\sP$,
+$$|\cK|=e(T^c[N])\cdot|Z|\geq\left(\binom{|N|}{2}-\frac{|N|^2}{4}\right)|Z|\geq \frac{|N|^2|Z|}{8}\,.$$
+If we define the event $E_K:=\{G''[V(K)]\cong K\}$ for all $K\in\cK$ then $G''\in\cF^\ast_n(C_4)$ implies $\bigcap_{K\in\cK}E_K^c$. Since distinct events $E_{K_1}$ and $E_{K_2}$ are dependent only if the corresponding copies share the same vertex in $Z$ and share one endpoint in $N$, we have, using the notation of \Cref{thm:JansonsInequality},
+\begin{align*}
+\mu &:= \sum_{K\in\cK}\bbP\{E_K\} \geq p^2\,|\cK| \geq p^2\cdot\frac{|N|^2|Z|}{8} \,, \\
+\Delta &:= \sum_{K_1\sim K_2}\bbP\{E_{K_1}\cap E_{K_2}\}\leq p^3\cdot|N|^3\cdot|Z|\,,
+\end{align*}
+which implies
+$$\frac{\mu^2}{\Delta}\geq \frac{p^4|\cK|^2}{p^3|N|^3|Z|}\geq c\frac{|N|^4|Z|^2}{|N|^3|Z|}\geq c\alpha^2n^2\,.$$
+Every event $E_K$ requires only the two random edges $xz,yz$, so this family is increasing. Applying \Cref{thm:JansonsInequality} gives
+\begin{equation}\label{eqn:G''-pitvz-janson}
+\bbP\{G''\in\cF^\ast_n(C_4)\} \leq \bbP\!\left\{\bigcap_{K\in\cK}E_K^c\right\} \leq \exp\!\left(-\min\left\{\frac{\mu}{2}\,,\,\frac{\mu^2}{4\Delta}\right\}\right) \leq e^{-c\alpha^2n^2}\,.
+\end{equation}
+
+As in the proof of \Cref{lemma:almost-all-nondeg}, the number of possibilities for $T$ is at most $2^{H(\epsilon)n^2}$. Also, the number of possibilities for $v$ and $Z$ is at most $n2^n$. Hence, the result follows by combining \eqref{eqn:fhipi1-case1-bd}, \eqref{eqn:G''-PiTvZ-bd}, and \eqref{eqn:G''-pitvz-janson}, summing over $T\in\cT_\Pi$, $v\in V$, and $Z\subseteq V$, and taking $\epsilon>0$ sufficiently small.
+\end{proof}
+
+\begin{lemma}\label{lemma:FPi2}
+There exists a constant $c=c(\gamma)>0$ such that for all $\Pi\in\sP$,
+$$\abs{\cF^\high_{\Pi,2}}\leq2^{-c\alpha^3n^2}s_\Pi\,.$$
+\end{lemma}
+\begin{proof}
+Let $T\in\cT_\Pi$ and assume there is a vertex $v$ (canonically chosen for each $T$) such that $d_T(v)\geq\alpha|B|$. Let us denote $N:=N_T(v)$. For all $G\in\cF_{\Pi,T}$ and $v\in B$, the optimality of $\Pi$ implies $d_G(v,A)\geq d_G^c(v,B)$, so let $Z=Z(G)\subseteq A$ be a canonically chosen subset of size at least $d_G^c(v,B)$ such that $Z\subseteq N_G(v,A)$. Let us write $\cF_{\Pi,T,v,Z}$ for the set of all $G\in\cF_{\Pi,T}$ for which $v$ and $Z$ are exactly as chosen above.
+
+Let $t:=e(T[A])-e(T[B])$ and $m':=m-e(K_B)-t-|Z|$. Let $H'$ be the random graph on $V$ whose edge set is a uniformly random choice of $m'$ edges from $E(K_{A,B}\setminus K_{v,Z})$. Let $H''$ be the random graph on $V$ in which each edge $e\in E(K_{A,B}\setminus K_{v,Z})$ is included in $H''$ independently with probability $p:=\frac{m'}{|A|\cdot|B|-|Z|}$. Let $G'$ be the random graph $(H'\cup K_B\cup K_{v,Z})\,\triangle\,T$ and let $G''$ be the random graph $(H''\cup K_B\cup K_{v,Z})\,\triangle\,T$. By definition, we have $e(G')=m$. Using \cite[Lemma~A.4]{perkins2025typical} to relate $G'$ and $G''$, we have
+\begin{align}
+|\cF_{\Pi,T,v,Z}| &\leq \bbP\{G'\in\cF^\ast_n(C_4)\}\cdot\binom{|A|\cdot|B|-|Z|}{m'} \nonumber\\
+&\leq \sqrt{2p}\,n\,\bbP\{G''\in\cF^\ast_n(C_4)\}\cdot\binom{|A|\cdot|B|-|Z|}{m'} \nonumber\\
+&\leq \bbP\{G''\in\cF^\ast_n(C_4)\} \cdot 2^{c\epsilon n^2}\,s_\Pi \,, \label{eqn:G''-PiTvZ-bd-2}
+\end{align}
+where in the third inequality we used \cite[Lemma~A.1(i),(ii),(iii)]{perkins2025typical}.
+It remains to bound $\bbP\{G''\in\cF^\ast_n(C_4)\}$. Since $|Z|\geq|N|\geq\alpha|B|\geq c\alpha n$ and $e(T)\leq\epsilon n^2$, we have
+$$e_{T^c}(Z)\geq\binom{|Z|}{2}-\epsilon n^2\geq c\alpha^2n^2$$
+for every graph $G\in\cF_{\Pi,T}$. Hence by \cite[Lemma~A.3]{perkins2025typical}, there exists a matching $M=M(T)\subseteq T^c[Z]$ of size at least $c\alpha^2n$. For all $x\in N$ and $yz\in E(M)$, let $K_{yz,x}$ be the copy of $C_4$ on $\{v,x,y,z\}$ with edge set $\{vy,vz,xy,xz\}$. Define the set of copies
+$$\cK:=\{K_{yz,x}:yz\in E(M),\,x\in N\}\,,$$
+so that
+$$|\cK|=e(M)\cdot |N|\geq c\alpha^3n^2\,.$$
+If we write $E_K:=\{G''[V(K)]\cong K\}$ for all $K\in\cK$ then again $G''\in\cF^\ast_n(C_4)$ implies $\bigcap_{K\in\cK}E_K^c$. Moreover, the events $\{E_K:K\in\cK\}$ are independent since each of these events depends on a distinct pair of random cross edges. Using \Cref{rem:c4-nondeg-bounds},
+\begin{align*}
+\bbP\{G''\in\cF^\ast_n(C_4)\} &\leq \bbP\!\left\{\bigcap_{K\in\cK}E_K^c\right\}=\prod_{K\in\cK}\bbP\{E_K^c\} \leq (1-\beta^2)^{|\cK|} \leq 2^{-c|\cK|}\leq 2^{-c\alpha^3n^2}\,.
+\end{align*}
+As in \Cref{lemma:FPi1}, the result now follows from \eqref{eqn:G''-PiTvZ-bd-2} by summing over the possibilities for $T$, $v$, and $Z$.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:c4-main}]
+In this proof, the constant $c>0$ depends on the fixed parameters and may change from line to line. For all $G\in\cF^\close$, if $\Pi(G)=(A,B)$ then let $M(G)\subseteq T(G)$ be a canonically-chosen maximum matching subject to either $V(M(G))\subseteq A$ or $V(M(G))\subseteq B$. For all $\Pi\in\sP$, $k\geq1$, and graphs $T$, let us define
+\[\arraycolsep=0.4mm
+\begin{array}{ll}
+\cF^\mat_{\Pi,k} &:= \{G\in\cF_\Pi\setminus(\cF^\high_{\Pi,1}\cup\cF^\high_{\Pi,2}):e(M(G))=k\} \,, \\[8pt]
+\cT^\mat_{\Pi,k} &:= \{T(G):G\in\cF^\mat_{\Pi,k}\} \,.
+\end{array}\]
+Using the definitions of all the sets in this section, we have
+\begin{equation}\label{eqn:c4-union-bound}
+\cF^\ast_{n,m}(C_4)\subseteq\bigcup_{\Pi\in\sP}\Bigg(\cF^\ast_\Pi\cup\bigcup_{k\geq1}\cF^\mat_{\Pi,k}\cup\cF^\high_{\Pi,1}\cup\cF^\high_{\Pi,2}\Bigg)\cup\cF^\degenerate\cup\cF^\far\,.
+\end{equation}
+For all $\Pi\in\sP$, $k\geq1$, and $T\in\cT^\mat_{\Pi,k}$, let $M=M(T)$ be a canonically chosen maximum matching of $T$ subject to $V(M)\subseteq A$ or $V(M)\subseteq B$. Since $M$ is maximum among matchings contained in $A$ or in $B$, both graphs $T[A]$ and $T[B]$ have matching number at most $k$, and hence each has a vertex cover of size at most $2k$. Using additionally that $\Delta(T)\leq\alpha n$, it follows that
+$$e(T)\leq e(T[A])+e(T[B])\leq 4k\alpha n\,.$$
+Using \Cref{lemma:c4-matching}, we calculate that
+\begin{align*}
+|\cF_{\Pi,T}| &\leq 2^{-ckn}\binom{|A|\cdot|B|}{m-e(K_B)-e(T[A])+e(T[B])} \\
+&\leq 2^{-ckn+c\alpha kn}\binom{|A|\cdot|B|}{m-e(K_B)}
+=2^{-ckn+c\alpha kn}s_\Pi \leq 2^{-ckn}s_\Pi \,,
+\end{align*}
+where in the second inequality we used \cite[Lemma~A.1(ii)]{perkins2025typical}.
+Again using the fact that both $T[A]$ and $T[B]$ have vertex covers of size at most $2k$, we have
+$$|\cT^\mat_{\Pi,k}|\leq\sum_{X\in\binom{V}{\leq4k}}\prod_{v\in X}\binom{n}{\leq\alpha n}\leq\binom{n}{\leq4k}2^{4k\cdot H(\alpha)n}\leq 2^{5H(\alpha)kn}\,,$$
+where we used $\binom{n}{\leq\alpha n}\leq2^{H(\alpha)n}$.
+Summing over $k\geq1$ and $T\in\cT^\mat_{\Pi,k}$, we obtain
+\begin{equation}\label{eqn:c4-fmat-sum}
+\begin{aligned}
+\sum_{k\geq1}|\cF^\mat_{\Pi,k}|\leq\sum_{k\geq1}\sum_{T\in\cT^\mat_{\Pi,k}}|\cF_{\Pi,T}| &\leq \sum_{k\geq1}|\cT^\mat_{\Pi,k}|\cdot2^{-ckn}s_\Pi \\
+&\leq s_\Pi\sum_{k\geq1}2^{-ckn+5H(\alpha)kn} \leq 2^{-cn}\,s_\Pi \,.
+\end{aligned}
+\end{equation}
+Two split partitions of the same graph have clique parts differing by at most one vertex in each direction: each difference is both a clique and an independent set. Thus every split graph has at most $(n+1)^2$ ordered split partitions, and double counting gives
+\begin{equation}\label{eqn:c4-sPi-sum}
+\sum_{\Pi\in\sP}s_\Pi\leq(n+1)^2S_{n,m}\,.
+\end{equation}
+
+Combining \eqref{eqn:c4-union-bound}, \eqref{eqn:c4-fmat-sum}, \eqref{eqn:c4-sPi-sum}, \Cref{lemma:c4-rough-struc,lemma:almost-all-nondeg,lemma:FPi1,lemma:FPi2}, and using $\sum_{\Pi\in\sP}|\cF^\ast_\Pi|\leq S_{n,m}$, we calculate
+\begin{align*}
+N^\ast_{n,m}(C_4) &\leq \sum_{\Pi\in\sP}\Bigg(|\cF^\ast_\Pi|+\sum_{k\geq1}|\cF^\mat_{\Pi,k}|+|\cF^\high_{\Pi,1}|+|\cF^\high_{\Pi,2}|\Bigg)+\abs{\cF^\degenerate}+\abs{\cF^\far} \\
+&\leq S_{n,m} + \sum_{\Pi\in\sP}\Big(2^{-cn}+2^{-c\alpha^2n^2}+2^{-c\alpha^3n^2}\Big)s_\Pi +2\cdot2^{-cn^2}\,N^\ast_{n,m}(C_4) \\
+&\leq S_{n,m} + \Big(2^{-cn}+2^{-c\alpha^2n^2}+2^{-c\alpha^3n^2}\Big)(n+1)^2\,S_{n,m} + 2^{-cn^2}\,N^\ast_{n,m}(C_4) \\
+&\leq (1+2^{-cn})\,S_{n,m}+2^{-cn^2}\,N^\ast_{n,m}(C_4) \,.
+\end{align*}
+It follows that $N^\ast_{n,m}(C_4)=(1+O(2^{-cn}))\cdot S_{n,m}$, proving the theorem.
+
+To deduce \eqref{eqn:c4-entropy-main}, for each $b\in\{0,\dots,n\}$ let $S_{n,m}(b):=\binom{n}{b}\binom{b(n-b)}{m-\binom{b}{2}}$, where the second binomial coefficient is defined as $0$ if its lower entry does not lie in $[0,b(n-b)]$. We have
+$$\max_{0\leq b\leq n}\binom{b(n-b)}{m-\binom{b}{2}}\leq S_{n,m}\leq\sum_{b=0}^n S_{n,m}(b)\,,$$
+and \eqref{eqn:c4-entropy-main} follows by using Stirling's formula, $m\sim\gamma\binom{n}{2}$, and $N^\ast_{n,m}(C_4)=(1+o(1))\cdot S_{n,m}$.
+\end{proof}

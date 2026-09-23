@@ -1,0 +1,91 @@
+In this section we prove \Cref{thm:main-almostall} \ref{item:thm:main-critical}. Let $a_\ast:=\frac{(k-2)p_k(1-p_k)\ln2}{(k-1)\gamma_k}$ and fix $a\in\R$. Write $r:=k-1$, $\Delta:=k-2$, and $p:=p_k$, and set
+$$\gamma:=\gamma_k+a\frac{\log n}{n}\,,\qquad m:=\floor{\gamma\binom n2}\,.$$
+We use the definitions from \Cref{sec:supercritical} with limiting density $\gamma_k$ and $\rho=p$. The structural and fixed-remainder estimates apply since $m/\binom n2\to\gamma_k$. They reduce the proof to counting graphs that are the disjoint union of a co-$r$-partite graph and a small remainder. We compare these counts for different remainder sizes; their maximum will determine the first-order asymptotics of the remainder.
+
+Call a graph \emph{clean} if $T(G)=\emptyset$, and put $R_s:=\sum_{\Pi\in\sD_s}|\cF^\ast_\Pi|$, the number of clean graphs outside $\cF^\far$ whose minimizing division has remainder size $s$. Define
+$$Z_s:=\sum_{t=0}^{\binom s2}N^\ast_{s,t}(K_{1,k})\left(\frac{p}{1-p}\right)^t\,.$$
+Since
+$$\bbP\{G(s,p)\not\geq K_{1,k}\}=(1-p)^{\binom s2}Z_s\,,$$
+and \Cref{thm:main-rate} gives $\binom s2^{-1}\log\bbP\{G(s,p)\not\geq K_{1,k}\}\to\log(1-p)$ at $p=p_k$, we have
+\begin{equation}\label{eqn:critical-remainder-partition}
+\log Z_s=o(s^2)\qquad(s\to\infty)\,.
+\end{equation}
+
+For each integer $v\geq r$, let $C_v$ be the number of within-part pairs in a partition of $v$ vertices into $r$ parts whose sizes differ by at most one, and put
+\begin{equation}\label{eqn:balanced-completion-counts}
+A_v:=\binom v2-C_v\,,\qquad B_v(t):=\binom{A_v}{m-C_v-t}\,.
+\end{equation}
+Thus $B_v(t)$ counts the co-$r$-partite graphs with $m-t$ edges for one fixed balanced partition. Direct calculation gives
+\begin{equation}\label{eqn:balanced-pair-expansions}
+C_v=\frac{v^2}{2r}-\frac v2+O_k(1)\,,\qquad A_v=\frac{\Delta v^2}{2r}+O_k(1)\,.
+\end{equation}
+Uniformly for $v=n-O(\log n)$ and $t=O((\log n)^2)$,
+\begin{equation}\label{eqn:critical-copartite-comparison}
+C^r_{v,m-t}\asymp_k r^v v^{-(r-1)/2}B_v(t)\,.
+\end{equation}
+Indeed, an ordered partition with $D$ more within-part pairs than a balanced partition has completion count
+$$\binom{A_v-D}{m-C_v-t-D}\leq q_0^D B_v(t)$$
+for some fixed $q_0<1$, by adjacent binomial ratios. Its multinomial coefficient is at most the balanced one. Since $D=\frac12\sum_i(a_i-v/r)^2+O_k(1)$ for part sizes $a_1,\dots,a_r$, summing this Gaussian bound over all size vectors and applying Stirling's formula gives the upper bound. For the lower bound, use balanced ordered partitions and \Cref{lemma:balanced-cover-multiplicity-K1k}: all but an $e^{-cn}$ fraction of their completions have a unique unordered cover, so they are counted exactly $r!$ times.
+
+For every fixed $L>0$, uniformly over $0\leq s\leq L\log n$ and $0\leq t\leq\binom s2$,
+\begin{equation}\label{eqn:critical-binomial-scaling}
+\log\frac{B_{n-s}(t)}{B_n(0)}=-\frac{\gamma_k}{a_\ast}s^2-\frac{a}{a_\ast}s\log n+t\log\frac{p}{1-p}+O_{k,a,L}(s+1)\,.
+\end{equation}
+To verify this, put $A:=A_n$, $M:=m-C_n$, and $q:=M/A$. From \eqref{eqn:balanced-pair-expansions},
+\begin{equation}\label{eqn:critical-q-expansion}
+q=p+\frac{ra}{\Delta}\frac{\log n}{n}+O_{k,a}\!\left(\frac1n\right)\,.
+\end{equation}
+For $v=n-s$, write $K:=A-A_v$ and $L_t:=C_n-C_v-t$. Then
+\begin{align}
+K&=\frac{\Delta}{r}sn-\frac{\Delta}{2r}s^2+O_k(1)\,,\nonumber\\
+L_t&=\frac1r sn-\frac1{2r}s^2-\frac s2-t+O_k(1)\,.\label{eqn:critical-KL-expansions}
+\end{align}
+The exact binomial-probability identity and Stirling's formula give
+\begin{equation}\label{eqn:critical-stirling-ratio}
+\log\frac{B_v(t)}{B_n(0)}=K\log(1-q)+L_t\log\frac{1-q}{q}-\frac{(L_t+qK)^2}{2(A-K)q(1-q)\ln2}+O_{k,a,L}(1)\,.
+\end{equation}
+The cubic Taylor remainder is $o(1)$ because $s=O(\log n)$. Since $p=(1-p)^r$, \eqref{eqn:critical-q-expansion} gives
+$$\log\frac{(1-q)^r}{q}=-\frac{r^2\gamma_ka}{\Delta p(1-p)\ln2}\frac{\log n}{n}+O_{k,a}\!\left(\frac1n\right)\,,$$
+while \eqref{eqn:critical-KL-expansions} gives $K-\Delta L_t=\Delta s/2+\Delta t+O_k(1)$. Thus the first two terms in \eqref{eqn:critical-stirling-ratio} equal
+$$-\frac{a}{a_\ast}s\log n+t\log\frac{p}{1-p}+O_{k,a,L}(s+1)\,.$$
+Also $L_t+qK=\gamma_ksn+O_{k,a,L}(s\log n+s^2+t+1)$, so the quadratic term equals $(\gamma_k/a_\ast)s^2+O_{k,a,L}(s+1)$. This proves \eqref{eqn:critical-binomial-scaling}.
+
+We now count clean graphs. For every fixed $L>0$ and $0\leq s\leq L\log n$, \eqref{eqn:critical-copartite-comparison} and \eqref{eqn:critical-binomial-scaling} give
+\begin{align}
+\frac{R_s}{C^r_{n,m}}&\leq C_{k,a,L}^{s+1}\binom ns r^{-s}2^{-(\gamma_k/a_\ast)s^2-(a/a_\ast)s\log n}Z_s\,,\label{eqn:critical-Rs-upper}\\
+\frac{R_s}{C^r_{n,m}}&\geq C_{k,a,L}^{-(s+1)}\binom ns r^{-s}2^{-(\gamma_k/a_\ast)s^2-(a/a_\ast)s\log n}\,.\label{eqn:critical-Rs-lower}
+\end{align}
+For the upper bound, choose the remainder set, an induced-$K_{1,k}$-free graph on it, and a co-$r$-partite graph on the other vertices. For the lower bound, take the remainder to be empty internally and use balanced core partitions. A $1-o(1)$ fraction of their completions have a unique unordered clique cover by \Cref{lemma:balanced-cover-multiplicity-K1k}. They also lie outside $\cF^\far$ except for an $e^{-cn^2}$ fraction: concentration for the fixed-count cross edges, followed by a union bound over cuts, gives convergence to $W^\ast_{\gamma_k}$, and the $O(\log n)$ isolated vertices change cut distance by $o(1)$. These graphs have $b(G)=0$. Their core vertices have degree $\Theta(n)$ and therefore cannot lie in the minimizing remainder; by \Cref{lemma:SuperCloseStructureK1k}, every minimizing main part has linear size and therefore contains no isolated vertex. Thus the minimizing remainder is precisely the chosen set, and each graph is counted exactly $r!$ times.
+
+We next bound larger remainders. Put $\beta:=\gamma_k/a_\ast$. The expansion in \eqref{eqn:critical-stirling-ratio}, now for $s\leq\xi n$ and $0\leq t\leq\binom s2$, gives
+$$\log\frac{B_{n-s}(t)}{B_n(0)}=-\beta s^2+t\log\frac{p}{1-p}+O_{k,a}\!\left(s\log n+\frac{s^3}{n}+1\right)\,.$$
+Here the cubic remainder is $O_k(s^3/n)$, and the change $q-p=O_a(\log n/n)$ contributes $O_{k,a}(s\log n)$. Summing over all graphs on the remainder contributes the factor $(1-p)^{-\binom s2}$. The resulting quadratic coefficient is positive, since
+$$\beta-\frac{p}{(1-p)\ln2}=\frac{1+\Delta p(2-p)}{r\Delta p(1-p)\ln2}>0\,,\qquad \log\frac1{1-p}<\frac{p}{(1-p)\ln2}\,.$$
+Choosing $\xi>0$ sufficiently small therefore gives
+\begin{equation}\label{eqn:critical-large-s-tail}
+\sum_{t=0}^{\binom s2}\binom{\binom s2}{t}\frac{B_{n-s}(t)}{B_n(0)}\leq 2^{C_a s\log n-cs^2}\qquad(0\leq s\leq\xi n)\,,
+\end{equation}
+where $c=c(k)>0$ and $C_a=C(k,a)>0$.
+
+To sum over divisions, put
+$$Q_s:=\binom ns r^{n-s}\sum_{t=0}^{\binom s2}\binom{\binom s2}{t}B_{n-s}(t)\,.$$
+For a division $\Pi\in\sD_s$, balance minimizes $e(\Pi^c)$, while the difference between the upper and lower arguments of $Z_\Pi(t)$ is $\binom{n-s}{2}-m+t$, independent of the part sizes. Hence $Z_\Pi(t)\leq B_{n-s}(t)$, and $Q_s$ bounds the sum of these completion counts over all divisions and remainder graphs. In particular, $R_s\leq Q_s$. Combining \eqref{eqn:critical-copartite-comparison} at $v=n,t=0$ with \eqref{eqn:critical-large-s-tail}, and increasing $L=L(k,a)$ if necessary, gives
+\begin{equation}\label{eqn:critical-large-s-negligible}
+\sum_{L\log n\leq s\leq\xi n}Q_s=o(C^r_{n,m})\,,\qquad \sum_{0\leq s\leq\xi n}Q_s\leq2^{C(\log n)^2}C^r_{n,m}\,.
+\end{equation}
+
+\begin{proof}[Proof of \Cref{thm:main-almostall} \ref{item:thm:main-critical}]
+Choose the parameters in \Cref{sec:supercritical} sufficiently small that every graph outside $\cF^\far$ has a minimizing remainder of size at most $\xi n$. By \Cref{lemma:super-fixed-remainder} and \eqref{eqn:critical-large-s-negligible}, the number of these graphs that are not clean is at most
+$$e^{-cn}\sum_{0\leq s\leq\xi n}Q_s=o(C^r_{n,m})\,.$$
+By \Cref{lemma:rough-struc-fixed-g}, the far class has size at most $e^{-c_0n^2}N^\ast_{n,m}(K_{1,k})$. Summing the clean counts and absorbing this last term gives
+$$N^\ast_{n,m}(K_{1,k})\leq2^{C(\log n)^2}C^r_{n,m}\,.$$
+It follows that $|\cF^\far|=o(C^r_{n,m})$. Thus all but $o(C^r_{n,m})$ graphs are counted by the $R_s$.
+
+Stirling's formula and \eqref{eqn:critical-remainder-partition}, \eqref{eqn:critical-Rs-upper}, and \eqref{eqn:critical-Rs-lower} give, uniformly for $0\leq s\leq L\log n$,
+$$\frac{1}{(\log n)^2}\log\frac{R_s}{C^r_{n,m}}=\left(1-\frac{a}{a_\ast}\right)\frac{s}{\log n}-\frac{\gamma_k}{a_\ast}\left(\frac{s}{\log n}\right)^2+o(1)\,.$$
+Uniformity down to $s=0$ follows from $\log Z_s\leq\eta s^2+O_\eta(1)$ for every $\eta>0$; the remaining errors are $O_{k,a,L}(\log n\log\log n)$. If $a<a_\ast$, the quadratic has the unique maximizer $x_\ast=(a_\ast-a)/(2\gamma_k)$. For every fixed $\eta>0$, its maximum on $|x-x_\ast|\geq\eta$ is strictly smaller than its value at $x_\ast$. Comparing with $s=\floor{x_\ast\log n}$ and using \eqref{eqn:critical-large-s-negligible} gives $s=(x_\ast+o(1))\log n$ for almost every graph. If $a=a_\ast$, the quadratic is $-(\gamma_k/a_\ast)x^2$, and comparison with $s=0$ gives $s=o(\log n)$. This proves the asserted formula for $v(G_2)$ when $a\leq a_\ast$.
+
+Finally suppose $a>a_\ast$. For $1\leq s\leq\eta\log n$, the bound $Z_s\leq(1-p)^{-\binom s2}$ and \eqref{eqn:critical-Rs-upper} give, after choosing $\eta>0$ sufficiently small,
+$$R_s\leq C^r_{n,m}2^{-c_as\log n}$$
+for some $c_a>0$. For $\eta\log n\leq s\leq L\log n$, the quadratic above is uniformly negative, while \eqref{eqn:critical-large-s-negligible} handles $s\geq L\log n$. Hence $\sum_{s\geq1}R_s=o(C^r_{n,m})$. A clean graph with $s=0$ is co-$r$-partite, so almost every graph is co-$(k-1)$-partite.
+\end{proof}

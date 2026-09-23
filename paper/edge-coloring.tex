@@ -1,0 +1,345 @@
+In this section we prove extremal structure and stability results for red--green--blue edge colorings. We use the letters $\red$, $\green$, and $\blue$ to denote the three colors. Let $k\geq3$ be an integer fixed throughout this section.
+
+\begin{definition}\label{dfn:Fk-free-cols}
+Let $\cF_k$ be the set of all red--green--blue colorings $\varphi$ of $E(K_k)$ such that for some vertex $v\in V(K_k)$, the following holds: $\varphi(vx)=\red$ for all $x\neq v$, and $\varphi(xy)\in\{\red,\green\}$ for all distinct $x,y\in V(K_k)\setminus\{v\}$. We call the elements of $\cF_k$ \emph{forbidden patterns}. Let $\cC_k(n)$ be the set of red--green--blue colorings $\varphi$ of $E(K_n)$ such that for all $S\subseteq V(K_n)$ with $|S|=k$, $\varphi|_S\not\in\cF_k$. We call the elements of $\cC_k(n)$ \emph{$\cF_k$-free colorings}.
+\end{definition}
+
+For a red--green--blue coloring $\varphi$ of $E(K_n)$, and all $u\in V(K_n)$ and $U\subseteq V(K_n)$, define 
+\begin{align*}
+N_\red(u) &:= \{v\in V(K_n):\varphi(uv)=\red\}\,, \\
+d_\red(u) &:= |N_\red(u)|\,, \\
+e_\red(U) &:= |\{e\in\textstyle\binom{U}{2}:\varphi(e)=\red\}|\,.
+\end{align*}
+We also define $N_\red(u,U):=N_\red(u)\cap U$ and $d_\red(u,U):=|N_\red(u,U)|$. The green and blue counterparts $N_\green(u)$, $N_\blue(u)$, etc.\ are all defined analogously. Write $E_\red(\varphi)$, $E_\green(\varphi)$, and $E_\blue(\varphi)$ for the sets of red, green, and blue edges of $\varphi$, respectively, and write $e_\red(\varphi)$, $e_\green(\varphi)$, and $e_\blue(\varphi)$ for their cardinalities.
+
+Throughout this section, we will use the variable $\Delta:=k-2$. For any red--green--blue coloring $\varphi$ of $E(K_n)$, define
+$$\Phi(\varphi):=e_\red(\varphi)-\Delta\,e_\blue(\varphi)\,.$$
+Define the weighted degree $D(v):=d_\red(v)-\Delta\,d_\blue(v)$ of a vertex $v$. The weighted degree restricted to a subset $U$ is $D(v,U):=d_\red(v,U)-\Delta\,d_\blue(v,U)$. Note that $2\Phi(\varphi)=\sum_vD(v)$. We emphasize that $\Delta$, $\Phi$, and $D$ all depend on $k$, but we leave this dependence implicit since we think of $k$ as an integer fixed throughout the whole section. Additionally, the coloring that our notation refers to is typically clear from the context; in cases of ambiguity, we include the coloring as a superscript, as in $N_\red^\varphi(u)$ and $D^\varphi$.
+
+The extremal objects in this section have a multipartite structure amenable to symmetrization. The following cloning operation plays a central role in our analysis.
+
+\begin{definition}[Cloning]\label{dfn:cloning}
+Let $\varphi$ be a red--green--blue coloring of $E(K_n)$. If $v\in V(K_n)$ and $U\subseteq V(K_n)\setminus\{v\}$, define the coloring $\varphi^{U\gets v}$ as follows:
+\begin{itemize}[leftmargin=\parindent, topsep=4pt]
+    \item for all $u\in U$ and $w\in V(K_n)\setminus(U\cup\{u,v\})$, set $\varphi^{U\gets v}(uw):=\varphi(vw)$,
+    \item for all distinct $u,w\in U\cup\{v\}$, set $\varphi^{U\gets v}(uw):=\blue$,
+    \item all other edges are the same as in $\varphi$.
+\end{itemize}
+If $U$ contains a single element $u$ then we write $\varphi^{u\gets v}:=\varphi^{U\gets v}$.
+\end{definition}
+
+\begin{fact}\label{fact:cloning-keeps-ckn}
+If $\varphi\in\cC_k(n)$, $v\in V(K_n)$, and $U\subseteq V(K_n)\setminus\{v\}$ then $\varphi^{U\gets v}\in\cC_k(n)$.
+\end{fact}
+\begin{proof}
+If there were a forbidden pattern in $\varphi^{U\gets v}$ then it would use at most one vertex from $U\cup\{v\}$ (since $U\cup\{v\}$ is a blue clique), and replacing that vertex by $v$ would produce the same forbidden pattern in $\varphi$, which contradicts $\varphi\in\cC_k(n)$.
+\end{proof}
+
+\begin{lemma}\label{lemma:kthOrderMantel}
+For all $k\geq3$ and $\varphi\in\cC_k(n)$,
+\begin{equation}
+\Phi(\varphi)\leq\floor*{\frac{\Delta n}{2}}\,.\label{eqn:kthOrderIneq}
+\end{equation}
+\end{lemma}
+\begin{proof}
+For a coloring $\chi$, two vertices $x,y$ are \emph{twins} if $\chi(xy)=\blue$ and $\chi(xz)=\chi(yz)$ for every $z\in V(K_n)\setminus\{x,y\}$. The relation of being equal or twin is an equivalence relation; call its equivalence classes \emph{twin classes}. Let $\tau(\chi)$ be the number of pairs of twin vertices in $\chi$.
+
+Choose $\psi\in\cC_k(n)$ so that $\Phi(\psi)$ is maximum, and subject to this, $\tau(\psi)$ is maximum. We have $\Phi(\varphi)\leq\Phi(\psi)$, so it suffices to prove \eqref{eqn:kthOrderIneq} for $\psi$. We first claim that every blue edge of $\psi$ has twin endpoints. Indeed, for every blue edge $xy\in E_\blue(\psi)$, we have
+$$\Phi(\psi^{x\gets y})-\Phi(\psi)=D^\psi(y)-D^\psi(x)\,,\qquad \Phi(\psi^{y\gets x})-\Phi(\psi)=D^\psi(x)-D^\psi(y)\,.$$
+Since both cloned colorings belong to $\cC_k(n)$ by \Cref{fact:cloning-keeps-ckn}, maximality of $\Phi(\psi)$ implies $D^\psi(x)=D^\psi(y)$. Suppose now that $x$ and $y$ are not twins, and let $C_x$ and $C_y$ be their twin classes. Then $C_x\neq C_y$, and both clonings preserve $\Phi$. Under the cloning $x\gets y$, the vertex $x$ leaves $C_x$ and joins $C_y$, and no twin class not containing $x$ is split. It follows that
+\begin{align*}
+&\tau(\psi^{x\gets y})-\tau(\psi)\geq |C_y|-(|C_x|-1) \,, \qquad \tau(\psi^{y\gets x})-\tau(\psi)\geq |C_x|-(|C_y|-1)\,.
+\end{align*}
+Since the sum of the right-hand sides in the last two displays is $2$, one of the two clonings preserves $\Phi$ and strictly increases $\tau$, contradicting the choice of $\psi$ and proving our claim.
+
+It follows that $\psi$ has the following structure: there exists a partition $V(K_n)=V_1\cup\cdots\cup V_l$ such that $\psi|_{V_i}\equiv\blue$ for all $i\in[l]$; and for all $1\leq i<j\leq l$ there exists $c\in\{\red,\green\}$ such that $\psi|_{E(V_i,V_j)}\equiv c$. Let $R$ be the graph with vertex set $[l]$ and edge set $\{ij:\psi|_{E(V_i,V_j)}\equiv\red\}$. Notice that $\Delta(R)\leq\Delta$, as otherwise $\psi$ contains a forbidden coloring. Let $v_i:=|V_i|$ for all $i\in[l]$. We then have
+$$e_\red(\psi)=\sum_{ij\in E(R)}v_iv_j\,,\qquad e_\blue(\psi)=\sum_{i=1}^l\binom{v_i}{2}\,.$$
+Using that $v_iv_j\leq\frac{1}{2}(v_i^2+v_j^2)$ for all $1\leq i<j\leq l$, we calculate
+$$\sum_{ij\in E(R)}v_iv_j\leq\frac{1}{2}\sum_{i=1}^ld_R(i)\,v_i^2\leq\frac{\Delta}{2}\sum_{i=1}^lv_i^2\,,$$
+which further implies
+$$\Phi(\varphi)\leq\Phi(\psi)=\sum_{ij\in E(R)}v_iv_j-\Delta\sum_{i=1}^l\binom{v_i}{2}\leq\frac{\Delta}{2}\sum_{i=1}^lv_i^2-\frac{\Delta}{2}\sum_{i=1}^lv_i(v_i-1)=\frac{\Delta n}{2}\,,$$
+completing the proof.
+\end{proof}
+
+\subsection{Stability of the extremal structure}
+\begin{definition}[$\Delta$-regular core]\label{dfn:d-regular-cores}
+Fix integers $3\leq k\leq n$. Let $\cR_k(n)$ be the set of red--green--blue colorings of $E(K_n)$ obtained as follows: for some integer $\ell\in[k-1,n]$, choose a connected $\Delta$-regular graph $R$ on $[\ell]$; form a partition $V(K_n)=V_1\cup\cdots\cup V_\ell$ such that $||V_i|-|V_j||\leq1$ for all $1\leq i<j\leq \ell$; color all edges inside each $V_i$ blue; for all $ij\in E(R)$, color all edges in $E(V_i,V_j)$ red; color all remaining edges green. The elements of $\cR_k(n)$ are called \emph{$\Delta$-regular cores}.
+\end{definition}
+
+\begin{definition}[Extremal family $\cE_k(n)$]\label{dfn:k1k-extremal-fam}
+Let $\cE_k(n)$ be the set of red--green--blue colorings of $E(K_n)$ obtained as follows: for some integer $t\geq0$, choose integers $\kappa_1,\dots,\kappa_t$, each being at least $k$, such that $\kappa_1+\cdots+\kappa_t\leq n$; choose colorings $\psi_i\in\cR_k(\kappa_i)$ for all $i\in[t]$; choose injective embeddings $\iota_i:V(K_{\kappa_i})\to V(K_n)$ such that $\image(\iota_i)\cap\image(\iota_j)=\emptyset$ for all $1\leq i<j\leq t$; finally, $K_n$ inherits all the colors from the $\psi_i$ and $\iota_i$, and all remaining edges in $K_n$ are colored green.
+\end{definition}
+
+Note that the all-green coloring $\varphi\equiv\green$ is an element of $\cE_k(n)$ since one can take $t=0$.
+The \emph{Hamming distance} between two colorings $\varphi$ and $\psi$ of $E(K_n)$ is
+$$d(\varphi,\psi):=|\{e\in E(K_n):\varphi(e)\neq\psi(e)\}|\,.$$
+The Hamming distance between a coloring $\varphi$ and a set $\cS$ of colorings is
+$$d(\varphi,\cS):=\min\{d(\varphi,\psi):\psi\in\cS\}\,.$$
+The following stability theorem is the main result of this section.
+
+\begin{theorem}\label{thm:kth-order-stability}
+For all $k\geq3$ and $\epsilon>0$ there exists $\delta>0$ such that the following holds for all large enough $n$. If $\varphi\in\cC_k(n)$ and
+\begin{equation}\label{eqn:near-extremality}
+\Phi(\varphi)\geq-\delta n^2
+\end{equation}
+then
+$$d(\varphi,\cE_k(n))\leq\epsilon n^2\,.$$
+\end{theorem}
+
+\subsubsection{Proof overview}
+The proof extracts nearly balanced blue-dense clusters from red neighborhoods of almost maximum red degree. After restricting to vertices with small weighted degree, local Tur\'an stability supplies these clusters uniformly for every seed. Intersecting typical subsets are close, so repeated extraction yields disjoint clusters with little red or blue leakage. A forbidden-transversal argument makes every pair predominantly red or green, and the degree balance forces the reduced graph to be exactly $\Delta$-regular. Iterating this construction on the remainder produces a coloring close to $\cE_k(n)$.
+
+In several places we will use the fact that for a coloring $\varphi$, a vertex $v$, and a subset $U\subseteq V(K_n)\setminus\{v\}$ of size $s$,
+\begin{equation}
+\Phi(\varphi^{U\gets v})-\Phi(\varphi)\geq sD^\varphi(v)-\sum_{u\in U}D^\varphi(u)-(\Delta+1)s^2\,. \label{eqn:phi-clone-ineq}
+\end{equation}
+To obtain this inequality, expand the weighted-degree sum and cancel the terms joining $U$ to $V(K_n)\setminus(U\cup\{v\})$. The remaining terms involve only $U\cup\{v\}$ and have total error at most $(\Delta+1)s^2$.
+
+\subsubsection{Restriction to a subset with uniform weighted degrees}
+The following lemma will allow us to restrict to a subset $X$ of $(1-o(1))n$ vertices, all of which have weighted degree $|D(v,X)|=o(n)$. In particular, $d_\red(v,X)=\Delta\,d_\blue(v,X)+o(n)$, which is suggestive of the extremal structure $\cE_k(n)$ and will turn out to be a very convenient identity.
+
+\begin{lemma}\label{lemma:D-tails}
+For all fixed $k\geq3$ and $\delta\in(0,1)$, there exists $n_0$ such that the following holds for all integers $n\geq n_0$. If $\varphi\in\cC_k(n)$ and $\Phi(\varphi)\geq-\delta n^2$ then the following hold:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+	\item\label{item:lemma:D-tails-i} $\max_{v\in V(K_n)}D(v)\leq8\Delta\sqrt{\delta}\,n$.
+	\item\label{item:lemma:D-tails-ii} All but at most $10\Delta\delta^{1/4}n$ vertices satisfy $D(v)\geq-\delta^{1/4}n$.
+	\item\label{item:lemma:D-tails-iii} Let $X:=\left\{v\in V(K_n):D(v)\geq-\delta^{1/4} n\right\}$. For all $v\in X$,
+    $$\abs{D(v,X)} \leq 12\Delta^2\delta^{1/4}n\,.$$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+{\it(i)} Suppose $D(z)\geq8\Delta\sqrt\delta n$ and choose an $s$-subset $S\subseteq V(K_n)\setminus\{z\}$ of minimum weighted-degree sum, where $s:=\floor{\sqrt\delta n}$. By \Cref{lemma:kthOrderMantel}, the average weighted degree is at most $\Delta$; for large $n$, removing $z$ does not increase it. Thus $\sum_{v\in S}D(v)\leq s\Delta$, and \eqref{eqn:phi-clone-ineq} gives
+$$\Phi(\varphi^{S\gets z})-\Phi(\varphi)\geq8\Delta s\sqrt\delta n-s\Delta-(\Delta+1)s^2\geq(7\Delta-1)\delta n^2-O_k(n)>\delta n^2+\Delta n/2\,.$$
+This contradicts \Cref{fact:cloning-keeps-ckn,lemma:kthOrderMantel}.
+
+{\it(ii)} Let $x:=|X^c|$ (the set $X$ is defined in {\it(iii)}). Using part {\it(i)}, the definition of $X$, and near-extremality of $\Phi$,
+$$-\delta n^2\leq\Phi(\varphi)=\frac{1}{2}\left(\sum_{v\in X}D(v)+\sum_{v\in X^c}D(v)\right)\leq 4\Delta\sqrt{\delta}n^2-\frac{x\delta^{1/4} n}{2}\,,$$
+which immediately implies $x\leq\frac{\delta+4\Delta\sqrt{\delta}}{\delta^{1/4}/2}n\leq10\Delta\delta^{1/4}n$.
+
+{\it(iii)} Write $q:=\delta^{1/4}$. If $q>1/4$, the trivial bound $|D(v,X)|\leq\Delta n$ suffices. Otherwise parts {\it(i)} and {\it(ii)} give
+\begin{align*}
+D(v,X)&\geq D(v)-|X^c|\geq-(1+10\Delta)qn\geq-12\Delta^2qn\,,\\
+D(v,X)&\leq D(v)+\Delta|X^c|\leq(8\Delta q+10\Delta^2)qn\leq12\Delta^2qn\,,
+\end{align*}
+which proves the claim.
+\end{proof}
+
+\subsubsection{Near-Tur\'an structure in red neighborhoods}
+Next, we present a key structural lemma that states, roughly speaking, that if a coloring $\varphi\in\cC_k(n)$ is close to extremal, then inside the red neighborhood of a vertex of large enough red degree, the union of the red and green edges is close to Tur\'an. We write $T_{n,r}$ for the Tur\'an graph and denote $t_{n,r}:=e(T_{n,r})$.
+
+\begin{lemma}\label{lemma:locally-turan}
+For all fixed $\delta\in(0,1)$, $\alpha\in[0,1]$ and $k\geq4$, there exists $n_0$ such that the following holds for all $n\geq n_0$. Let $\varphi\in\cC_k(n)$ and assume
+$$\Phi(\varphi)\geq-\delta n^2\,.$$
+Fix $x\in V(K_n)$ such that
+$$d_\red(x)\geq \max_{v\in V(K_n)} d_\red(v)-\alpha n\,,$$
+and write $m:=d_\red(x)$. Assume $m\geq \vartheta n$ for some $\vartheta\in(0,1]$. Let $H$ be the graph on $N_\red(x)$ with edge set $E(H):=\{e\in\textstyle\binom{N_\red(x)}{2}:\varphi(e)\in\{\red,\green\}\}$. Then
+\begin{equation}
+e(H)\geq t_{m,\Delta}-12\bigg(\frac{\sqrt{\delta}}{\vartheta}+\frac{\alpha}{\vartheta}\bigg)m^2\,. \label{eqn:local-stability}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Let $A:=N_\red(x)$, $\rho:=(t_{m,\Delta}-e(H))/m^2$, and $h:=\rho m$. The graph $H$ is $K_{\Delta+1}$-free, so $0\leq\rho\leq1/2$. Since
+$$2e_\blue(A)=2\left(\binom m2-t_{m,\Delta}\right)+2hm\geq m^2/\Delta-m+2hm$$
+and $d_\red(v)\leq m+\alpha n$ for every $v$, we obtain
+$$\frac1m\sum_{v\in A}D(v)\leq\alpha n+\Delta-2\Delta h\,.$$
+Suppose \eqref{eqn:local-stability} fails. Then $h\geq12(\sqrt\delta+\alpha)n$. Choose $z$ maximizing $D(z)$, so $D(z)\geq2\Phi(\varphi)/n\geq-2\delta n$, and put $s:=\floor{h/16}$. For sufficiently large $n$, $h/32\leq s\leq h/16\leq m/32$, so we may choose an $s$-subset $S\subseteq A\setminus\{z\}$ minimizing $\sum_{v\in S}D(v)$. Removing $z$, when $z\in A$, cannot increase the average, hence this sum is at most $s(\alpha n+\Delta-2\Delta h)$. By \eqref{eqn:phi-clone-ineq},
+\begin{align*}
+\Phi(\varphi^{S\gets z})-\Phi(\varphi)&\geq s(2\Delta h-\alpha n-2\delta n-\Delta)-(\Delta+1)s^2\\
+&\geq\Delta sh\geq\Delta h^2/32\geq9\delta n^2\,.
+\end{align*}
+Here we used $\Delta\geq2$, $\delta<1$, and $h\geq32$. This contradicts the upper bound $\Delta n/2+\delta n^2$ from \Cref{fact:cloning-keeps-ckn,lemma:kthOrderMantel}. Since $h\geq12\sqrt\delta n$, all order thresholds are independent of $\vartheta$.
+\end{proof}
+
+\begin{theorem}{\normalfont(\citeauthor{erdos1967some}~\cite{erdos1967some},~\citeauthor{simonovits1968method}~\cite{simonovits1968method})}\label{thm:erdos-simonovits}
+For every fixed $r\geq2$ and $\epsilon>0$ there exist $\delta>0$ and $n_0\geq0$ such that the following holds for all $n\geq n_0$. Let $G$ be a $K_{r+1}$-free graph on $n$ vertices. If
+$$e(G)\geq t_{n,r}-\delta n^2$$
+then there exists a partition $V(G)=V_1\cup\cdots\cup V_r$ such that
+$$\sum_{i=1}^re(V_i)\leq\epsilon n^2$$
+and $\left||V_i|-\frac{n}{r}\right|\leq \epsilon n$ for all $i\in[r]$.
+\end{theorem}
+
+\subsubsection{Between-cluster dominant colors}
+\begin{lemma}\label{lemma:vertex-level-mixed-mass}
+For all fixed $k\geq3$ and $\eta\in(0,1)$ there exist $\beta_0>0$ and $C\geq1$ such that the following holds for all $\beta\in(0,\beta_0)$ and all sufficiently large $n$. Let $\varphi\in\cC_k(n)$, and let $U_1,\dots,U_t\subseteq V(K_n)$ be $t\geq k-1$ disjoint sets, and let $U:=\bigcup_{i=1}^tU_i$. Assume the following conditions hold:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+    \item\label{item:vertex-level-mixed-mass-1} $|U_i|\geq \eta n$ for all $i\in[t]$, and $||U_i|-|U_j||\leq \beta n$ for all $i,j\in[t]$;
+    \item\label{item:vertex-level-mixed-mass-2} $d_\blue(U_i,U_j)\leq\beta$ for all distinct $i,j\in[t]$;
+    \item\label{item:vertex-level-mixed-mass-3} for all $i\in[t]$, every $v\in U_i$ satisfies
+    $$d_\blue(v,U_i)\geq (1-\beta)|U_i|\,,\qquad d_\blue(v,U\setminus U_i)\leq \beta n\,,\qquad\abs{D(v,U)}\leq \beta n\,.$$
+\end{enumerate}
+Then for all distinct $i,j\in[t]$,
+\begin{equation}\label{eqn:dominant-color}
+\max\{d_\red(U_i,U_j),\,d_\green(U_i,U_j)\} \geq 1-C\,\frac{\sqrt{\beta}}{\eta^2} \,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+For $v\in U_i$, put $\rho_{vj}:=d_\red(v,U_j)/|U_j|$, $\theta:=8\Delta\sqrt\beta$, and $A(v):=\{j\neq i:\rho_{vj}\geq\theta\}$. We have $t\leq1/\eta$ and $\rho_{vi}\leq\beta\leq\theta$ for sufficiently small $\beta$. If $A(v)$ contained distinct indices $j_1,\dots,j_{\Delta+1}$, choose independent uniform vertices $y_r\in N_\red(v,U_{j_r})$. The probability of a blue pair among them is at most
+$$\sum_{r<q}\frac{e_\blue(U_{j_r},U_{j_q})}{\theta^2|U_{j_r}||U_{j_q}|}\leq\binom{\Delta+1}{2}\frac\beta{\theta^2}<1\,.$$
+A choice with no blue pair, together with $v$, is a forbidden pattern. Thus $|A(v)|\leq\Delta$.
+
+The degree hypotheses give $d_\blue(v,U)=|U_i|+O_k(\beta n)$ and $d_\red(v,U)=\Delta|U_i|+O_k(\beta n)$. Consequently, balance and $t\leq1/\eta$ imply
+$$\sum_{j=1}^t\rho_{vj}=\frac{d_\red(v,U)}{|U_i|}+O\!\left(\frac{t\beta}{\eta}\right)=\Delta+O_k\!\left(\frac\beta{\eta^2}\right)\,.$$
+Splitting the sum over $A(v)$ and its complement yields
+\begin{equation}\label{eq:vertex-mixed-mass-final}
+\sum_{j=1}^t\min\{\rho_{vj},1-\rho_{vj}\}\leq |A(v)|-\sum_{j=1}^t\rho_{vj}+2t\theta\leq C_1\frac{\sqrt\beta}{\eta^2}\,.
+\end{equation}
+Here $C_1=C_1(k)\geq1$. Set $\mu:=C_1\sqrt\beta/\eta^2$, and decrease $\beta_0$ so that $\beta\leq\mu<1/2$.
+
+Fix distinct $i,j$, and choose independent uniform $v\in U_i$, $w\in U_j$. Let $R(v,w)$ indicate a red edge, and let $a(v):=\bsone\{\rho_{vj}\geq1/2\}$ and $b(w):=\bsone\{\rho_{wi}\geq1/2\}$. By \eqref{eq:vertex-mixed-mass-final},
+$$\E|R-a|\leq\mu\,,\qquad\E|R-b|\leq\mu\,,\qquad\E|a-b|\leq2\mu\,.$$
+Writing $h:=\E a$ and $d:=d_\red(U_i,U_j)$, independence gives $\E|a-b|\geq\min\{h,1-h\}$, while $|d-h|\leq\mu$. Hence $\min\{d,1-d\}\leq3\mu$. Since $d_\blue(U_i,U_j)\leq\beta\leq\mu$, either red or green has density at least $1-4\mu$, proving \eqref{eqn:dominant-color} with $C=4C_1$.
+\end{proof}
+
+\subsubsection{Extraction of a $\Delta$-regular core}
+
+\begin{lemma}\label{lemma:kth-order-recursion}
+For every fixed $k\geq3$ and $\eta\in(0,1)$ and every $\xi\in(0,\eta/20)$, there exist $\delta_0=\delta_0(k,\eta,\xi)\in(0,1)$ and $n_0=n_0(k,\eta,\xi)$ such that the following holds for all $n\geq n_0$ and all $\delta\in(0,\delta_0)$. Let $\varphi\in\cC_k(n)$ and assume
+\begin{equation}\label{eq:recursion-assumption-phi-new}
+\Phi(\varphi)\geq-\delta n^2
+\end{equation}
+and
+\begin{equation}\label{eq:maxreddeg-assump}
+\max_{v\in V(K_n)}d_\red(v)\geq \eta n\,.
+\end{equation}
+Then there exist a constant $c=c(k,\eta)>0$, an integer $\ell\geq k-1$, disjoint sets $U_0,U_1,\dots,U_\ell\subseteq V(K_n)$, and a $\Delta$-regular graph $R$ on $[\ell]$ such that, writing
+$$U_\ast:=\bigcup_{i=0}^{\ell}U_i,\qquad T:=V(K_n)\setminus U_\ast\,,$$
+the following hold:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+\item\label{item:kth-rec-blue-dense} $e_\blue(U_i)\geq(1-\xi)\binom{|U_i|}{2}$ for all $i\in[\ell]$.
+\item\label{item:kth-rec-sizes} $|U_i|\geq cn$ and $\big||U_i|-|U_j|\big|\leq \xi n$ for all $i,j\in[\ell]$, $|U_0|\leq \xi n$, and $\abs{\bigcup_{i=1}^{\ell}U_i}\geq (\eta-\xi)n$.
+\item\label{item:kth-rec-red-dens} $d_\red(U_i,U_j)\geq1-\xi$ for all $ij\in E(R)$.
+\item\label{item:kth-rec-green-dens} $d_\green(U_i,U_j)\geq1-\xi$ for all $ij\notin E(R)$.
+\item\label{item:kth-rec-small-bdry} $e_\red(U_\ast,U_\ast^c)+e_\blue(U_\ast,U_\ast^c)\leq \xi n^2$.
+\item\label{item:kth-rec-extr-pres} $e_\red(T)-\Delta\,e_\blue(T)\geq-(\delta+\xi)n^2$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Write $V:=V(K_n)$, $\zeta:=\xi/3$, and $\eta_0:=\eta/(4\Delta)$. Fix a constant $K=K(k)$ large enough for the neighborhood-extraction claim below, and then fix $M=M(k)$ sufficiently large compared with $K$ and the constants in the subsequent estimates. All implicit constants below depend only on $k$ and are fixed independently of $M$. Let $\sE(\epsilon)$ be the threshold in \Cref{thm:erdos-simonovits} for $r=\Delta$ when $k\geq4$, and set $\sE(\epsilon):=\epsilon$ when $k=3$. Write $\beta_{\mathrm{mix}}(\eta_0)$ for the threshold in \Cref{lemma:vertex-level-mixed-mass}. Choose
+\begin{align}
+\tau&:=M^{-6}\min\{\eta^4\zeta^2,\beta_{\mathrm{mix}}(\eta_0),\eta^8\}\,,\qquad L:=\ceil{M/\tau}\,,\qquad \beta_L:=\tau^6/M^8\,,\label{eq:betaL}\\
+\beta_q&:=M^{-1}\min\{\tau^2,(\eta\beta_{q+1})^2,(\eta\sE(\beta_{q+1}))^2\}\,,\qquad q=L-1,\dots,0\,,\label{eq:betaq}\\
+0<\delta_0&\leq\min\{\beta_0^{16}/M^4,\eta/M\}\,.\label{eq:delta-small}
+\end{align}
+These choices give $0<\beta_0<\cdots<\beta_L<\tau$. All order thresholds below concern these fixed parameters, so a single $n_0$ suffices uniformly over $\delta\in(0,\delta_0)$.
+
+At tolerance $\delta_0$, \Cref{lemma:D-tails} gives a set $X$ with $|X^c|\leq\beta_0^4n$ and $|D^\varphi(v,X)|\leq\beta_0n$ for every $v\in X$. Choose $x^{(0)}$ of maximum red degree in $\varphi$, put $\widetilde X:=X\cup\{x^{(0)}\}$, and let $\psi$ agree with $\varphi$ on $\widetilde X$ and color all other edges green. Then $\psi\in\cC_k(n)$, and, for sufficiently large $n$,
+\begin{equation}\label{eqn:vpr-deg-control}
+|D^\psi(v)|\leq2\beta_0n\qquad(v\in X)\,.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:psi-near-extremal}
+\Phi(\psi)\geq\Phi(\varphi)-|\widetilde X^c|n\geq-\deltatilde n^2\,,\qquad \deltatilde:=2\beta_0^4\,.
+\end{equation}
+Henceforth degrees and neighborhoods refer to $\psi$. Write $m:=d_\red(x^{(0)})$ and $a:=m/\Delta$. The global maximality of $x^{(0)}$ in $\varphi$ gives
+$$m\geq\eta n-|\widetilde X^c|\geq\eta n/2\,,\qquad \max_vd_\red(v)\leq m+\beta_0^4n\,.$$
+
+\begin{claim}\label{claim:uniform-neighborhood-extraction}
+For $0\leq q<L$ and any $x\in\widetilde X$ with $d_\red(x)\geq m-K\sqrt{\beta_q}n$, the neighborhood $A_x:=N_\red(x)$ has a partition $A_x=P_1\cup\cdots\cup P_\Delta$ and subsets $W_i\subseteq P_i\cap X$ such that
+$$\sum_i e_{\red,\green}(P_i)\leq K\beta_{q+1}m^2\,,\qquad \big||P_i|-a\big|\leq K\beta_{q+1}m\,,\qquad |P_i\setminus W_i|\leq K\sqrt{\beta_{q+1}}n\,,$$
+and every $v\in W_i$ satisfies
+\begin{equation}\label{eq:uniform-seed-degrees}
+d_\blue(v,P_i)\geq a-K\sqrt{\beta_{q+1}}n\,,\qquad d_\blue(v,V\setminus P_i)\leq K\sqrt{\beta_{q+1}}n\,,\qquad d_\red(v)\geq m-K\sqrt{\beta_{q+1}}n\,.
+\end{equation}
+\end{claim}
+\begin{proof}
+Put $d:=d_\red(x)$. The hierarchy gives $d\geq\eta n/4$ and $|d-m|\leq\beta_{q+1}m$. If $k=3$, then $A_x$ is a blue clique, since any nonblue pair in it would complete a forbidden pattern centered at $x$. Take $P_1:=A_x$. If $k\geq4$, apply \Cref{lemma:locally-turan} with tolerance $\deltatilde$, $\vartheta=\eta/4$, and $\alpha=2K\sqrt{\beta_q}$. Its error is $O_k(\sqrt{\beta_q}/\eta)\leq\sE(\beta_{q+1})$ by \eqref{eq:betaq}. Thus \Cref{thm:erdos-simonovits} gives a partition with
+$$\sum_i e_{\red,\green}(P_i)\leq\beta_{q+1}d^2\,,\qquad \big||P_i|-d/\Delta\big|\leq\beta_{q+1}d\,.$$
+Converting from $d$ to $m$ proves the first two bounds in both cases.
+
+Remove from each $P_i$ the vertices of nonblue degree greater than $\sqrt{\beta_{q+1}}m$ inside $P_i$, and the possible vertex outside $X$, to obtain $W_i$. The internal nonblue edge bound shows that $|P_i\setminus W_i|=O_k(\sqrt{\beta_{q+1}}n)$, and $d_\blue(v,P_i)\geq a-O_k(\sqrt{\beta_{q+1}}n)$. For $v\in W_i$, \eqref{eqn:vpr-deg-control} and the global red-degree bound imply
+$$d_\blue(v,V\setminus P_i)=\frac{d_\red(v)-D(v)}{\Delta}-d_\blue(v,P_i)=O_k(\sqrt{\beta_{q+1}}n)\,,$$
+while $d_\red(v)=\Delta d_\blue(v)+D(v)\geq m-O_k(\sqrt{\beta_{q+1}}n)$. Taking $K$ large enough proves the claim.
+\end{proof}
+
+Apply \Cref{claim:uniform-neighborhood-extraction} first to $x^{(0)}$ with $q=0$, obtaining $A^{(0)}$ and its parts and typical subsets. Having chosen $q$ neighborhoods, continue whenever some vertex $x^{(q)}$ in a previous typical subset satisfies
+$$d_\red\!\left(x^{(q)},V\setminus\bigcup_{j<q}A^{(j)}\right)\geq\tau n\,.$$
+By \eqref{eq:uniform-seed-degrees} and the increasing scales, this vertex is admissible in \Cref{claim:uniform-neighborhood-extraction} at stage $q$. Each continuation adds at least $\tau n$ new vertices, so the construction terminates after $J<L$ neighborhoods. Write $A:=\bigcup_{q<J}A^{(q)}$ and $b:=\sqrt{\beta_L}$. Every vertex in any typical subset has fewer than $\tau n$ red neighbors outside $A$.
+
+\begin{claim}\label{claim:terminal-clusters}
+There are $t\geq\Delta+1$ disjoint sets $U_1,\dots,U_t\subseteq A\cap X$, with union $U$, such that
+\begin{align}
+\big||U_r|-a\big|&=O_k(Lbn)\,,\qquad |A\setminus U|=O_k(L^2bn)\,,\label{eq:terminal-cluster-sizes}\\
+d_\blue(v,U_r)&\geq|U_r|-O_k(Lbn)\,,\qquad d_\blue(v,V\setminus U_r)=O_k(Lbn)\,,\label{eq:terminal-blue-degrees}\\
+d_\red(v,V\setminus U)&\leq\tau n+|A\setminus U|\,,\qquad d_\red(v,U)=m+O_k(\tau n)\label{eq:terminal-red-degrees}
+\end{align}
+for every $r\in[t]$ and $v\in U_r$.
+\end{claim}
+\begin{proof}
+For each typical set $W$ with parent part $P$ and $v\in W$, \Cref{claim:uniform-neighborhood-extraction} gives
+$$|W\setminus N_\blue(v)|\leq|P|-d_\blue(v,P)=O_k(bn)\,,\qquad |N_\blue(v)\setminus W|\leq d_\blue(v,V\setminus P)+|P\setminus W|=O_k(bn)\,.$$
+Thus intersecting typical sets have symmetric difference at most $C_kbn$, for a fixed $C_k$. Define $W\sim W'$ by this bound. To check transitivity, if $W\sim W'$ and $W'\sim W''$, then $|W\triangle W''|\leq2C_kbn$. Since every typical set has size $a+O_k(bn)\geq\eta_0n$, this precludes disjointness; their intersection restores the original bound $C_kbn$. Hence $\sim$ is an equivalence relation.
+
+Let $U_r$ be the intersection of the sets in its $r$th class. Distinct classes are disjoint, and each class contains at most $\Delta L$ sets. Relative to any representative $W$, the intersection loses $O_k(Lbn)$ vertices. The size and trimming bounds from \Cref{claim:uniform-neighborhood-extraction}, summed over at most $\Delta L$ parent parts, give \eqref{eq:terminal-cluster-sizes}; they also show that each $U_r$ is nonempty and has size at least $\eta_0n$. Restricting the blue-degree bounds from a representative parent part gives \eqref{eq:terminal-blue-degrees}.
+
+For $v\in U_r$, termination bounds its red degree outside $A$ by $\tau n$, proving the first bound in \eqref{eq:terminal-red-degrees}. The original red-degree estimate and the global upper bound then give
+$$m-O_k(bn)-\tau n-|A\setminus U|\leq d_\red(v,U)\leq m+\beta_0^4n\,.$$
+Since $L^2b=O(\tau/M^2)$, this proves the remaining bound. Finally, if $t\leq\Delta$, then the internal blue-degree bound would imply
+$$m-O_k(\tau n)\leq d_\red(v,U)\leq O_k(Lbn)+(t-1)(a+O_k(Lbn))\leq m-a+O_k(\tau n)\,,$$
+contradicting $a\geq\eta n/(2\Delta)$.
+\end{proof}
+
+For the clusters from \Cref{claim:terminal-clusters}, we apply \Cref{lemma:vertex-level-mixed-mass} with size parameter $\eta_0$. In fact, \eqref{eqn:vpr-deg-control} and the identity $D(v,U)=D(v)-D(v,V\setminus U)$ give
+$$|D(v,U)|\leq2\beta_0n+d_\red(v,V\setminus U)+\Delta d_\blue(v,V\setminus U)=O_k(\tau n)\,.$$
+The relative internal blue-degree error and each between-cluster blue density are $O_k(Lb/\eta)$, by \eqref{eq:terminal-blue-degrees} and $|U_r|\geq\eta_0n$. Since $L^2b=O(\tau/M^2)$ and $Lb=O(\tau^2/M^3)$, all hypotheses hold with $\beta=C_2\tau$ for a fixed $C_2=C_2(k)$. Our choice of $\tau$ gives $\beta<\beta_{\mathrm{mix}}(\eta_0)$, and the lemma yields
+\begin{equation}\label{eq:dominant-color-UiUj}
+\max\{d_\red(U_r,U_s),d_\green(U_r,U_s)\}\geq1-\mu\,,\qquad \mu:=C_3\sqrt\tau/\eta^2\,,
+\end{equation}
+where $C_3=C_3(k)$ and $\mu\leq\zeta/20$.
+
+Define $R$ on $[t]$ by $rs\in E(R)$ if and only if $d_\red(U_r,U_s)\geq1/2$. By \eqref{eq:dominant-color-UiUj}, red has density at least $1-\mu$ on its edges and green has density at least $1-\mu$ on its nonedges. Summing \eqref{eq:terminal-red-degrees} over $v\in U_r$ and subtracting the internal red contribution gives
+\begin{equation}\label{eqn:erurus-rhs}
+\sum_{s\neq r}e_\red(U_r,U_s)=\frac{m^2}{\Delta}+O_k(\tau n^2)=d_R(r)\frac{m^2}{\Delta^2}+O_k((\tau+\mu)n^2)\,.
+\end{equation}
+For the last equality, the density errors sum to $O(\mu n^2)$, and replacing $|U_r||U_s|$ by $a^2$ over the red neighbors costs $O_k(Lbn^2)$, since $ta\leq2n$. As $m\geq\eta n/2$, it follows that $|d_R(r)-\Delta|=O_k((\tau+\mu)/\eta^2)<1/2$; the last inequality uses the $\eta^8$ reserve in \eqref{eq:betaL}. Integrality therefore makes $R$ exactly $\Delta$-regular.
+
+Set $\ell:=t$ and
+$$U_0:=\widetilde X^c\cup(A\setminus U)\,,\qquad U_\ast:=U_0\cup U\,,\qquad T:=V\setminus U_\ast\,.$$
+Since $U,T\subseteq\widetilde X$, the density conclusions also hold for $\varphi$. The terminal estimates give \ref{item:kth-rec-blue-dense}, \ref{item:kth-rec-red-dens}, and \ref{item:kth-rec-green-dens} with error $\zeta$, and give $|U_i|\geq cn$ with $c:=\eta_0$, independent of $\xi$. They also give pairwise size differences at most $\zeta n$ and $|U_0|\leq\zeta n/2$. Since $A$ contains $N_\red(x^{(0)})$,
+$$|U|\geq m-|A\setminus U|\geq\eta n-|U_0|\geq(\eta-\zeta)n\,,$$
+proving \ref{item:kth-rec-sizes}. Termination bounds red degrees from $U$ to $T$ by $\tau n$, and \eqref{eq:terminal-blue-degrees} bounds the blue degrees by $O_k(Lbn)$. Including the edges from $U_0$ therefore gives
+$$e_\red^\varphi(U_\ast,T)+e_\blue^\varphi(U_\ast,T)\leq(\tau+O_k(Lb))n^2+|U_0|n\leq\zeta n^2\,,$$
+proving \ref{item:kth-rec-small-bdry}. Finally, \eqref{eq:psi-near-extremal} gives $\Phi(\psi)\geq-(\delta+\zeta)n^2$, while \Cref{lemma:kthOrderMantel} gives $\Phi(\psi|_{U_\ast})\leq\Delta n/2\leq\zeta n^2$. Decomposing the potential yields
+$$\Phi(\varphi|_T)=\Phi(\psi)-\Phi(\psi|_{U_\ast})-e_\red^\psi(U_\ast,T)+\Delta e_\blue^\psi(U_\ast,T)\geq-(\delta+3\zeta)n^2\,,$$
+which is \ref{item:kth-rec-extr-pres}.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:kth-order-stability}]
+We may assume $0<\epsilon\leq1$. Set $\eta:=\epsilon/100$, and let $c=c(k,\eta)>0$ be the constant from \Cref{lemma:kth-order-recursion}. Its output on $N$ vertices has at most $1/c$ nonexceptional clusters. The density and boundary conclusions allow us to make each cluster blue, each between-cluster pair its prescribed color, and all edges incident with the exceptional set or crossing to the remainder green, using $O(\xi N^2)$ edits. Within each connected component of the reduced graph, equalizing the part sizes moves at most $c^{-1}\xi N$ vertices in total, costing at most $c^{-1}\xi N^2$ further edits. Thus, for a constant $C=C(k,\eta)$ independent of $\xi$, one extraction produces a union of balanced connected $\Delta$-regular cores with green exterior at a cost of at most $C\xi N^2$ edits, leaving the remainder unchanged.
+
+Let $r$ be minimal such that $(1-\eta/2)^r\leq\epsilon/20$, and put $A:=(20/\epsilon)^2$. Choose $\Gamma_r:=\eta$ and then choose positive $\xi_s,\Gamma_s$ backwards for $s=r-1,\dots,0$ so that
+\begin{align*}
+\xi_s&<\min\{\eta/20,\epsilon\eta/(8C)\}\,,\qquad \Gamma_s<\delta_0(k,\eta,\xi_s)\,,\\
+A(\Gamma_s+\xi_s)&\leq\Gamma_{s+1}\,,\qquad\Gamma_s\leq\eta\,.
+\end{align*}
+This is possible by choosing $\xi_s$ first and then $\Gamma_s$ sufficiently small. Take $\delta:=\Gamma_0$ and $n$ sufficiently large that every set of more than $\epsilon n/20$ vertices meets all the order thresholds $n_0(k,\eta,\xi_s)$ from \Cref{lemma:kth-order-recursion}.
+
+Starting with $W_0:=V(K_n)$, write $n_s:=|W_s|$ and maintain
+\begin{equation}\label{eq:iter-phi-lb-fixed}
+\Phi(\varphi|_{W_s})\geq-\Gamma_s n_s^2\,.
+\end{equation}
+The vertices already removed form a union of cores and isolated vertices, with all edges to $W_s$ green. If $n_s\leq\epsilon n/20$, recolor the remaining edges green and stop. If instead $\max_{v\in W_s}d_\red(v,W_s)<\eta n_s$, then \eqref{eq:iter-phi-lb-fixed} gives
+$$e_\red(W_s)+e_\blue(W_s)\leq\frac{\eta n_s^2}{2}+\frac{\eta n_s^2/2+\Gamma_s n_s^2}{\Delta}\leq2\eta n_s^2\,,$$
+so again recolor all remaining non-green edges green and stop.
+
+Otherwise apply \Cref{lemma:kth-order-recursion} to $\varphi|_{W_s}$ with input tolerance $\Gamma_s$ and output error $\xi_s$. Let $W_{s+1}$ be its remainder, and perform the edits described above on the extracted vertices and their exterior. The coverage conclusion gives
+$$n_{s+1}\leq(1-\eta+\xi_s)n_s\leq(1-\eta/2)n_s\,.$$
+If $n_{s+1}>\epsilon n/20$, the remainder conclusion and the backward parameter choices imply
+$$\Phi(\varphi|_{W_{s+1}})\geq-(\Gamma_s+\xi_s)n_s^2\geq-A(\Gamma_s+\xi_s)n_{s+1}^2\geq-\Gamma_{s+1}n_{s+1}^2\,,$$
+preserving \eqref{eq:iter-phi-lb-fixed}. Otherwise the small-order stopping rule applies immediately. Since $n_s\leq(1-\eta/2)^s n$, there are at most $r$ extractions.
+
+Writing $\xi_{\max}:=\max_{s<r}\xi_s$, the total extraction cost is at most
+$$C\xi_{\max}\sum_{s\geq0}(1-\eta/2)^{2s}n^2\leq\frac{2C\xi_{\max}}{\eta}n^2\leq\frac{\epsilon n^2}{4}\,.$$
+The terminal recoloring costs at most $\max\{\epsilon/20,2\eta\}n^2\leq\epsilon n^2/20$. The resulting coloring belongs to $\cE_k(n)$ and differs from $\varphi$ on at most $\epsilon n^2$ edges.
+\end{proof}

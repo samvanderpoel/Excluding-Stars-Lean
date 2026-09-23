@@ -1,0 +1,78 @@
+In this section we prove \Cref{thm:gnp-typ-struc}. The proofs in this section generalize those in \cite{perkins2025typical}. Let $W_0\equiv0$ denote the all-zero graphon, and $W_1\equiv1$ the all-one graphon; also write $\cV_0:=\{W_0\}$ and $\cV_1:=\{W_1\}$. In this section we use notation from \Cref{sec:graphon-prob} relating to the optimal graphons in $\cV_\gamma$. If $\cF$ is a set of graphs on $V$ then define
+$$Z_p(\cF):=(1-p)^{\binom n2}\sum_{G\in\cF}\left(\frac{p}{1-p}\right)^{e(G)}\,.$$
+For all graphons $W\in\cW$ and all $r>0$, define
+$$\cB_n(W,r):=\{G\in\cF^\ast_n(K_{1,k}):\delta_\square(G,W)<r\}\,.$$
+Also let $\cC^{k-1}_n$ denote the set of co-$(k-1)$-partite graphs on $V$. The following lemma is the weighted analogue of the final comparison in \Cref{subsec:subcritical-comparison-K1k}.
+
+\begin{lemma}\label{lemma:critical-gnp-comparison-K1k}
+For every sufficiently small $\omega>0$, there exist constants $\tau,\nu>0$ such that the following holds. If $W\in\bigcup_{\gamma\in[0,\gamma_k]}\cV_\gamma$ and $\delta_\square(W,W_0)\geq8\omega$ then
+$$Z_{p_k}(\cB_n(W,\tau))\leq n^{-\nu n}Z_{p_k}(\cB_n(W_0,\omega))\,.$$
+\end{lemma}
+\begin{proof}
+Put $\Delta:=k-2$ and $p:=p_k$. Choose all parameters uniformly for candidate densities in $[8\omega,\gamma_k]$, before fixing a representation of $W$. In particular, choose $\eta,R_0^{-1}$ sufficiently small relative to $\omega$, and then choose $\theta,\alpha,\delta,\epsilon,\tau$ as in \Cref{sec:subcritical}, with $\tau<\omega$ and $C_k\eta<\omega/10$. The bridge and fixed-family profile estimates use only the regular-core representation, the fixed density $p_k$ on active pairs, and a positive lower bound on the graph's edge density. They therefore apply also at $\gamma_k$ and to every edge level in this cut ball: since $t(K_2,W)\geq8\omega$, each such graph has edge density at least $4\omega$ for large $n$.
+
+Write $W=W_\blambda$, including the single complete-core block at $\gamma_k$, and let $\mu_i,r_i$ be its block lengths and core orders. For $I:=\{i:\mu_i\geq2\eta,\ r_i\leq R_0\}$, we have
+$$\sum_i\frac{\mu_i^2}{r_i}=\frac{t(K_2,W)}{1+\Delta p_k}\geq\frac{8\omega}{1+\Delta p_k}\,,\qquad \sum_{i\notin I}\frac{\mu_i^2}{r_i}\leq2\eta+R_0^{-1}\,.$$
+Thus $\sum_{i\in I}\mu_i\geq c_0$ for a constant $c_0=c_0(k,\omega)>0$. Compatibility gives $|V(K)|\geq c_0n$ for every $K\in\cK_W$, after decreasing $c_0$.
+
+Using retained data as in \Cref{subsec:counting}, define
+$$\widehat{\cZ}_K:=(1-p)^{\binom n2}\sum_{0\leq b\leq C_k\eta n^2}N^\ast_{s(K),b}(K_{1,k})\left(\frac{p}{1-p}\right)^{C_K+b}\prod_{e\in\cI_K}\sum_{\substack{0\leq a\leq N_e\\a/N_e\in p\pm2\delta}}\binom{N_e}{a}\left(\frac{p}{1-p}\right)^a\,.$$
+For each fixed $K,H$, choose the minimizing completion from \Cref{lemma:NtaunmWUpperBdK1k}. Sum its fiber estimate over the exact edge levels with their $p$-weights, and only then sum over $H$. This gives
+\begin{equation}\label{eqn:critical-weighted-upper-K1k}
+Z_p(\cB_n(W,\tau))\leq e^{Cn}\sum_{K\in\cK_W}\widehat{\cZ}_K\,.
+\end{equation}
+The factor $(1-p)^{\binom n2}$ is the common ambient normalization throughout.
+
+Since $p/(1-p)=(1-p)^\Delta$ and each core has largest eigenvalue $\Delta$,
+$$A_K=\sum_{i}\sum_{uv\in E(Q_i)}|P_{i,u}||P_{i,v}|\leq\frac{\Delta}{2}\sum_i\sum_u|P_{i,u}|^2=\Delta C_K+O(n)\,.$$
+Bounding the restricted binomial sums by the unrestricted ones, the retained weight is at most $(1-p)^{\Delta C_K-A_K}\leq e^{Cn}$. Hence
+\begin{equation}\label{eqn:critical-clean-sparse-side-K1k}
+\widehat{\cZ}_K\leq e^{Cn}(1-p)^{\binom n2}\sum_{0\leq b\leq C_k\eta n^2}N^\ast_{s(K),b}(K_{1,k})\left(\frac{p}{1-p}\right)^b\,.
+\end{equation}
+
+Let $q:=\lfloor c_0n/8\rfloor$ and $M_q:=(2q)!/(2^qq!)$. Given a remainder graph on $S_K$, add any matching on a fixed set of $2q$ retained vertices and leave the other retained vertices isolated. The resulting graph is induced-$K_{1,k}$-free and lies in $\cB_n(W_0,\omega)$, since it has at most $C_k\eta n^2+q$ edges. For fixed $K$ this construction is injective in both the remainder graph and the matching, so
+\begin{equation}\label{eqn:critical-matching-transfer-K1k}
+M_q\left(\frac{p}{1-p}\right)^q(1-p)^{\binom n2}\sum_{0\leq b\leq C_k\eta n^2}N^\ast_{s(K),b}(K_{1,k})\left(\frac{p}{1-p}\right)^b\leq Z_p(\cB_n(W_0,\omega))\,.
+\end{equation}
+Here $M_q=n^qe^{O(n)}$, while the additional weight and all $|\cK_W|\leq e^{Cn}$ retained choices cost only $e^{O(n)}$. Combining the three displays proves the lemma.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:gnp-typ-struc}]
+Let $G$ be the \erdosrenyi{} random graph $G(n,p)$ conditional on the event $G\in\cF^\ast_n(K_{1,k})$.
+
+First assume $p\in(0,p_k)$. By \eqref{eqn:CpStarFormalDef}, we have $\cX^p_\ast=\{W_0\}$. Hence \Cref{lemma:rough-struc-gnp} implies that $\delta_\square(G,W_0)=o(1)$ with high probability. Since $W_G$ is nonnegative, this implies $e(G)=o(n^2)$.
+
+Now suppose $p\in(p_k,1)$ and define
+$$\gamma_p:=\frac{1+(k-2)p}{k-1}=p+\frac{1-p}{k-1},\qquad W_p:=W^\ast_{\gamma_p}\,.$$
+By \eqref{eqn:CpStarFormalDef}, the graphon $W_p$ is the unique element of $\cX^p_\ast$ up to equivalence. Therefore \Cref{lemma:rough-struc-gnp} implies that $\delta_\square(G,W_p)=o(1)$ with high probability, and in particular $e(G)=(1+o(1))\gamma_p\binom n2$. It remains to prove that $G$ is co-$(k-1)$-partite with high probability. Let $\zeta>0$ be small enough that $[\gamma_p-\zeta,\gamma_p+\zeta]\subset(\gamma_k,1)$. The proof of \Cref{thm:main-almostall} \ref{item:thm:main-almostall-super} is uniform for all $m$ satisfying $m/\binom n2\in[\gamma_p-\zeta,\gamma_p+\zeta]$, and gives
+$$|\cF^\ast_{n,m}(K_{1,k})\setminus\cC^{k-1}_{n,m}|=o(|\cC^{k-1}_{n,m}|)$$
+uniformly in this range. Since every graph in $\cB_n(W_p,\zeta/2)$ has $m/\binom n2\in[\gamma_p-\zeta,\gamma_p+\zeta]$ for large enough $n$, we have
+\begin{align*}
+Z_p(\cB_n(W_p,\zeta/2)\setminus\cC^{k-1}_n)&\leq (1-p)^{\binom n2}\sum_{\substack{m\\ m/\binom n2\in[\gamma_p-\zeta,\gamma_p+\zeta]}}\left(\frac{p}{1-p}\right)^m|\cF^\ast_{n,m}(K_{1,k})\setminus\cC^{k-1}_{n,m}| \\
+&= o\vast((1-p)^{\binom n2}\sum_{\substack{m\\ m/\binom n2\in[\gamma_p-\zeta,\gamma_p+\zeta]}}\left(\frac{p}{1-p}\right)^m|\cC^{k-1}_{n,m}|\vast) \\
+&= o(Z_p(\cC^{k-1}_n))\,.
+\end{align*}
+Since $\cC^{k-1}_n\subseteq\cF^\ast_n(K_{1,k})$, and since \Cref{lemma:rough-struc-gnp} gives
+$$Z_p(\cF^\ast_n(K_{1,k})\setminus\cB_n(W_p,\zeta/2))\leq e^{-Cn^2}Z_p(\cF^\ast_n(K_{1,k}))\,,$$
+it follows that
+$$Z_p(\cF^\ast_n(K_{1,k})\setminus\cC^{k-1}_n)=o(Z_p(\cF^\ast_n(K_{1,k})))\,.$$
+Thus $G$ is co-$(k-1)$-partite with high probability.
+
+It remains to consider the critical case $p=p_k$. Let $\omega>0$ be sufficiently small, and let $\tau_0<\omega$ and $\nu>0$ be given by \Cref{lemma:critical-gnp-comparison-K1k}. Let
+$$\cN=\{W_0,W_1,\dots,W_\ell\}\subseteq\cX^{p_k}_\ast$$
+be a $\tau_0/2$-net of $\cX^{p_k}_\ast$ in cut metric. We may assume each $W_i$ can be written $W_\blambda$ for some $\blambda\in\bLambda$. Define
+$$\arraycolsep=1.4pt
+\begin{array}{ll}
+\cF_\close &:= \displaystyle \cB_n(W_0,\tau_0)\cup\bigcup_{i=1}^\ell\cB_n(W_i,\tau_0)\,, \\[18pt]
+\cF_\far &:= \cF^\ast_n(K_{1,k})\setminus\cF_\close\,.
+\end{array}$$
+By \Cref{lemma:rough-struc-gnp}, there is a constant $C=C(k,\omega)>0$ such that
+$$Z_{p_k}(\cF_\far)\leq e^{-Cn^2}Z_{p_k}(\cF^\ast_n(K_{1,k}))\,.$$
+Let $I:=\{i\in[\ell]:\delta_\square(W_i,W_0)\geq8\omega\}$. Since $\tau_0<\omega$, we have
+$$\cF_\close\subseteq\cB_n(W_0,9\omega)\cup\bigcup_{i\in I}\cB_n(W_i,\tau_0)\,.$$
+Applying \Cref{lemma:critical-gnp-comparison-K1k} to every $W_i$ with $i\in I$ gives
+$$\sum_{i\in I}Z_{p_k}(\cB_n(W_i,\tau_0))\leq \ell n^{-\nu n}Z_{p_k}(\cB_n(W_0,\omega))=o(Z_{p_k}(\cB_n(W_0,9\omega)))\,.$$
+Since $\cB_n(W_0,9\omega)\subseteq\cF^\ast_n(K_{1,k})$, the previous displays imply
+$$Z_{p_k}(\cF^\ast_n(K_{1,k})\setminus\cB_n(W_0,9\omega))=o(Z_{p_k}(\cF^\ast_n(K_{1,k})))\,.$$
+It follows that $\delta_\square(G,W_0)<9\omega$ with high probability. Since $\omega>0$ was arbitrary, we have $\delta_\square(G,W_0)=o(1)$ with high probability, and hence $e(G)=o(n^2)$.
+\end{proof}

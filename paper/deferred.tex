@@ -1,0 +1,44 @@
+\begin{lemma}\label{lemma:type-lemma}
+For all $\delta\in(0,1/2)$ and integers $\ell,L,t\geq1$ there exists $\epsilon^\ast=\epsilon^\ast(\delta,\ell)>0$ such that for all $\eta\in(0,\epsilon^\ast)$ there exist integers $U=U(\delta,\ell,L,t,\eta)$ and $n_0=n_0(\delta,\ell,L,t,\eta)$ with the following property. Let $G$ be a graph on $n\geq n_0$ vertices and let $P'=\{V_1',\dots,V_s'\}$ be a partition of $V(G)$ such that $1\leq s\leq t$ and all parts differ in size by at most 1.
+Then there exist an integer $r\geq1$ and an $(\eta,\delta,\ell)$-type $(P,R)$ for $G$ with
+$P=\{V_0,V_1,\dots,V_k\}$ such that:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+    \item $|V_0|\leq \eta n$.
+    \item $L\leq k\leq U$.
+    \item There is a partition $[k]=J_1\cup\cdots\cup J_s$ with $|J_i|=r$ for all $i\in[s]$ such that $V_i'\setminus V_0=\bigcup_{j\in J_i} V_j$ and $V_j\subseteq V_i'$ for all $j\in J_i$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+We follow the selected-image argument in \cite[Lemma~2.9]{bottcher2012perfect}; its tolerances need depend only on $(\delta,\ell)$. Choose an inner regularity tolerance $\epsilon'>0$ for embedding at most $\ell$ vertices with density reserve $\delta/2$. The usual greedy proof works for arbitrary disjoint candidate sets: at each step regularity excludes at most $\ell\epsilon'$ of the current parent set, while each surviving candidate set retains at least a $(\delta/4)^\ell$ fraction. Taking $\epsilon'<\delta/4$ and $\ell\epsilon'<(\delta/4)^\ell$ suffices.
+
+Apply \cite[Lemma~2.5]{bottcher2012perfect} with $(\epsilon',\ell)$ to obtain a homogeneous-subpartition scale $\mu>0$, and choose $\epsilon^\ast<\min\{1/2,\delta/2,\mu\epsilon'/2\}$. Given $\eta<\epsilon^\ast$, run the energy-increment regularity proof from $P'$, subdividing every current class into the same number of equal children and placing the rounding losses in $V_0$. This gives (i)--(iii), with bounds depending only on the stated parameters. Increase $n_0$ so every nonexceptional class admits the homogeneous subpartition above, and color it green or blue according as that subpartition is sparse or dense. Color regular pairs by their densities as in \Cref{dfn:type}. For any colored homomorphism of a graph of order at most $\ell$, choose distinct children for its vertices within each image class. Slicing gives the inner regularity tolerance and edge/nonedge density reserve $\delta/2$ between these children. The greedy argument embeds the graph, proving the Type property independently of the total number of classes.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lemma:UFHatGraphonSeq}]
+We adapt \cite[proof of Lemma~5.1]{lovasz2006limits} using \Cref{lemma:type-lemma}. The case $v(F)=0$ is vacuous, since then $t_\ind(F,W)=1$. Zero induced density, \cite[Corollary~2.6]{lovasz2006limits}, and \cite[Theorem~3.8]{borgs2008convergent} allow us to fix one realization $G_n:=G(n,W)$ such that every $G_n$ is induced-$F$-free and $\delta_\square(G_n,W)\to0$; these probability-one properties hold simultaneously over all sample orders. Fix $\epsilon^\ast=\epsilon^\ast(\delta,v(F))\leq1/2$ from \Cref{lemma:type-lemma} and put $\eta_m:=\min\{\epsilon^\ast/2,1/m\}$.
+
+Start with the trivial clean partition at level zero and $t_0:=1$. At level $m\geq1$, discard finitely many graphs and apply \Cref{lemma:type-lemma} to the preceding clean partition with tolerance $\eta_m$ and lower bound $L=2t_{m-1}$. The resulting type $(P^\type_{n,m},R_{n,m})$ has a bounded number $t_m$ of classes, so pass to a subsequence on which $t_m$ and the common child count $r_{m-1}=t_m/t_{m-1}$ are constant. Complete the type partition by distributing exceptional vertices equitably among the children within their own parent. The parents differ in size by at most one, and each has the same number of equal-sized nonexceptional children; their exceptional counts therefore differ by at most one, so the completed partition is globally equitable. Order children consecutively within each parent, relabeling the type data accordingly.
+
+For the clean classes $C_i=C_{n,m,i}$, define the symmetric matrix
+$$Q_{n,m}(i,j):=\frac{1}{|C_i||C_j|}\sum_{u\in C_i,\,v\in C_j}\bsone\{uv\in E(G_n)\}\,.$$
+Thus diagonal sums count each internal edge twice. After further subsequences at each level and diagonalization, retain the notation $G_n$ so that all structures through level $n$ are defined and, for every fixed $m$, $Q_{n,m}\to Q_m\in[0,1]^{t_m\times t_m}$ entrywise. Finite refinements give exact size-weighted averaging, and equitability makes each child-to-parent size ratio tend to $1/r_m$ as the host order tends to infinity. Taking limits gives
+\begin{equation}\label{eq:clean-block-averages}
+Q_m(i,j)=\frac{1}{r_m^2}\sum_{a,b=1}^{r_m}Q_{m+1}((i,a),(j,b))\,,\qquad t_{m+1}=r_mt_m\,.
+\end{equation}
+The consecutive child labels and \eqref{eq:clean-block-averages} give the compatible block averages at every pair of levels required by \cite[Lemma~5.2]{lovasz2006limits}. Part~(a) of that lemma gives $W_{Q_m}\to W'$ almost everywhere for a graphon $W'$, and bounded convergence gives $\norm{W_{Q_m}-W'}_1\to0$.
+
+Choose increasing indices $n(m)\geq m$ so that $Q_{n(m),m}$ is entrywise within $1/m$ of $Q_m$ and $t_m/N_m\leq1/m$, where $N_m:=v(G_{n(m)})$. Let $W_m$ be the graphon of the type $(P_m,R_m):=(P^\type_{n(m),m},R_{n(m),m})$. Completion adds at most $\eta_mN_m/t_m+1$ vertices to each type class, whose size is at least $(1-\eta_m)N_m/t_m$. Thus off-diagonal densities change by at most $C(\eta_m+t_m/N_m)$ for an absolute constant $C$. The type graphon retains its original diagonal-density convention, whose discrepancy from ordered adjacency is supported on squares of total area $1/t_m$. Since all matrices use the same equal-cell ordering,
+\begin{align*}
+\norm{W_m-W_{Q_{n(m),m}}}_1&\leq C(\eta_m+t_m/N_m)+1/t_m\,,\\
+\norm{W_{Q_{n(m),m}}-W_{Q_m}}_1&\leq1/m\,.
+\end{align*}
+These bounds give $\norm{W_m-W_{Q_m}}_1\to0$ and hence $\norm{W_m-W'}_1\to0$.
+
+The regular-partition estimate \cite[\S9.1.2]{lovasz2012large}, including the diagonal-block error, gives
+$$\delta_\square(W_m,W)\leq\delta_\square(W_m,G_{n(m)})+\delta_\square(G_{n(m)},W)\leq5\eta_m+1/t_m+\delta_\square(G_{n(m)},W)\to0\,.$$
+Each $(P_m,R_m)$ is a type of an induced-$F$-free graph by construction, while $\eta_m\to0$ and $v(R_m)=t_m\to\infty$ because $t_m\geq2t_{m-1}$. This proves all four conclusions.
+\end{proof}

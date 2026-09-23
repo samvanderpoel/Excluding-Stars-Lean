@@ -1,0 +1,161 @@
+In this section we solve the variational problems \eqref{eqn:var-prob-intro-gamma} and \eqref{eqn:var-prob-intro-p}. Let $k\geq3$ be an integer fixed throughout this section, and let $\Delta:=k-2$. For all $\gamma\in(0,1)$ define the set of graphons
+$$\cX_\gamma:=\{W\in\cW:t_\ind(K_{1,k},W)=0\,,\,t(K_2,W)=\gamma\}\,.$$
+Then the variational problems \eqref{eqn:var-prob-intro-gamma} and \eqref{eqn:var-prob-intro-p} can be written
+\begin{align}
+\Phi_k(\gamma) &= \sup\{H(W):W\in\cX_\gamma\} \,,\label{eqn:var-prob-fixed-gamma} \\[4pt]
+\Psi_k(p) &= \inf\{I_p(W):t_\ind(K_{1,k},W)=0\} \,.
+\end{align}
+Let $\cX_\gamma^\ast$ be the set of optimizers in \eqref{eqn:var-prob-fixed-gamma}, which is nonempty since $\cX_\gamma$ is compact and $H$ is upper semicontinuous in the cut metric topology (see \cite[Theorem~3.7]{borgs2008convergent} and \cite[Lemma~2.1]{chatterjee2011large}).
+
+We now define the set of graphons we will prove are the optimizers in \eqref{eqn:var-prob-fixed-gamma}.
+For a graph $G$ on $[n]$, define the function $\xi_G:\R^2\to[0,1]$ by
+\begin{equation}\label{eqn:xiG-dfn}
+\xi_G(x,y)=\sum_{i=1}^n\bsone_{S^n_{ii}}+\sum_{ij\in E(G)}p_k\,\bsone_{S_{ij}^n}\,,
+\end{equation}
+where $S_{ij}^n$ is defined in \eqref{dfn:snij}.
+
+Let $\bLambda$ denote the set of all (finite or infinite) sequences $((\lambda_1,G_1),(\lambda_2,G_2),\dots)$ of pairs where the numbers $\lambda_i\in[0,1]$ are strictly increasing in $i\geq1$, the numbers $\lambda_i-\lambda_{i-1}$ are nonincreasing in $i\geq1$ (where $\lambda_0:=0$), and each $G_i$ is a connected $\Delta$-regular graph. For all $\blambda=((\lambda_i,G_i))_{i\geq1}\in\bLambda$ define the graphon $W_\blambda$ by
+\begin{equation}\label{eqn:Wblambda}
+W_\blambda(x,y)=\sum_{i=1}^{\abs{\blambda}}\xi_{G_i}\!\left(\frac{x-\lambda_{i-1}}{\lambda_{i}-\lambda_{i-1}}\,,\,\frac{y-\lambda_{i-1}}{\lambda_{i}-\lambda_{i-1}}\right)\,.
+\end{equation}
+We clarify this definition below in \Cref{ex:graphon-clarification}. For all $\gamma\in(0,\gamma_k)$, let $\cV_{\gamma}$ be the set of graphons defined by
+\begin{align}
+\cV_{\gamma} &:= \left\{W_\blambda:\int_{[0,1]^2}W_\blambda(x,y)\,dx\,dy=\gamma\,,\,\blambda\in\bLambda\right\} \nonumber\\
+&= \Bigg\{W_\blambda:\sum_{i=1}^{\abs{\blambda}}\frac{(\lambda_{i}-\lambda_{i-1})^2}{v(G_i)}=\frac{\gamma}{1+\Delta\,p_k}\,,\,\blambda=((\lambda_i,G_i))_{i\geq1}\in\bLambda\Bigg\}\,,\label{eqn:vgamma-condition}
+\end{align}
+while for $\gamma\geq\gamma_k$, let $\cV_{\gamma}$ be the set containing the single graphon $W^\ast_{\gamma}$ defined by
+\begin{equation}\label{eqn:opt-graphon-super}
+W^\ast_{\gamma}(x,y):=\begin{cases}1&(x,y)\in\bigcup_{i=1}^{k-1}S^{k-1}_{ii}\\[4pt]\frac{(k-1)\gamma-1}{k-2}&\text{otherwise}\end{cases}\,.
+\end{equation}
+Define the union $\cV=\bigcup_{\gamma\in(0,1)}\cV_\gamma$. We also write $\cV_0:=\{W_0\}$, where $W_0\equiv0$ is the all-zero graphon.
+
+\begin{example}\label{ex:graphon-clarification}
+Several graphons in $\cV_\gamma$ for $k=8$ are shown in \Cref{fig:graphons}. The unit squares are rotated 90 degrees in the figure to match the ``adjacency matrix'' interpretation. We now concretely describe some of these graphons to clarify the definitions given above. The leftmost supercritical graphon in \Cref{fig:graphons} is precisely $W^\ast_{\gamma_k}$ from \eqref{eqn:opt-graphon-super}. At this edge density, we can see from \eqref{eqn:gammak-dfn} and \eqref{eqn:opt-graphon-super} that the off-diagonal density is $p_k$. The second supercritical graphon is $W^\ast_{1/2}$, the unique element of $\cV_{1/2}$; in this case, the off-diagonal density is $\frac{5}{12}$.
+
+All four subcritical graphons are of edge density $\gamma=\frac{1}{10}$ and are given by $W_\blambda$ for some $\blambda\in\bLambda$. The first of these graphons has $\blambda=((\lambda_1,K_7))$, where $\lambda_1:=\big(\frac{7\,\cdot\,1/10}{1+6p_8}\big)^{1/2}\approx0.561$, which can be seen from the condition in \eqref{eqn:vgamma-condition}; this is the unique graphon in $\cV_\gamma$ satisfying both $|\blambda|=1$ and $G_1=K_7$. The third subcritical graphon has $\blambda=((\lambda_1,G_1))$, where $\lambda_1=\big(\frac{19\,\cdot\,1/10}{1+6p_8}\big)^{1/2}\approx0.925$ and $G_1$ is a 6-regular connected graph on 19 vertices. The fourth subcritical graphon has $\blambda=((\lambda_1,K_7),\dots,(\lambda_{19},K_7))$.
+\end{example}
+
+The following proposition is the main result of this section. Before proving it, we will state and prove two lemmas.
+
+\begin{proposition}\label{prop:graphon-char-fixed-gamma}
+For all $\gamma\in(0,1)$ we have $\cX^\ast_\gamma=\cV_\gamma$ up to equivalence of graphons.
+\end{proposition}
+
+\begin{lemma}\label{lemma:Vgamma-opt}
+For all $\gamma\in(0,1)$ and $W\in\cV_\gamma$, we have $t_\ind(K_{1,k},W)=0$ and $H(W)=\sE_k(\gamma)$.
+\end{lemma}
+\begin{proof}
+If $\gamma\in(0,\gamma_k)$ then write $W=W_\blambda$ with $\blambda=((\lambda_i,G_i))_{i\geq1}\in\bLambda$ and $\alpha_i:=\lambda_i-\lambda_{i-1}$. Since different blocks are joined by zero density and each $G_i$ is $\Delta$-regular, the integrand defining $t_\ind(K_{1,k},W)$ can be positive only on tuples lying in a single block; its $k$ leaf-cell labels must be distinct, since diagonal cells have value one, and must all lie in the center label's closed neighborhood, which has size $\Delta+1=k-1$. This is impossible. Also,
+$$H(W)=H(p_k)\sum_{i=1}^{|\blambda|}\frac{\Delta\alpha_i^2}{v(G_i)}=\frac{\Delta\gamma}{1+\Delta p_k}H(p_k)=\sE_k(\gamma)\,,$$
+where we used \eqref{eqn:vgamma-condition}. If $\gamma\in[\gamma_k,1)$ then $W=W^\ast_\gamma$, and since $W^\ast_\gamma$ has only $\Delta+1=k-1$ diagonal blocks, we have $t_\ind(K_{1,k},W)=0$ as above. Moreover, we have
+$$H(W)=\frac{\Delta}{\Delta+1}H\!\left(\frac{(\Delta+1)\gamma-1}{\Delta}\right)=\sE_k(\gamma)\,,$$
+completing the proof.
+\end{proof}
+
+\begin{lemma}\label{lemma:k1k-calc-prob}
+Let $\gamma\in(0,1)$, $k\geq3$, and $\Delta:=k-2$. Let $p_k$ and $\gamma_k$ be as defined in \eqref{eqn:gammak-dfn}. The optimization problem
+\begin{equation}\label{eqn:calculus-problem}
+\begin{array}{ll}
+\max & y\,H\big(\frac{\gamma-x}{y}\big) \\[6pt]
+\mathrm{s.t.} & 0\leq x\leq 1 \,, \\[3pt]
+& 0<y\leq\min\{1-x,\Delta\,x\} \,, \\[3pt]
+& 0\leq \frac{\gamma-x}{y} \leq 1 \,,
+\end{array}
+\end{equation}
+has the unique optimizer
+\begin{equation}\label{eqn:xsys-opt-coords}
+(x^\ast,y^\ast)=\begin{cases}
+\left(\dfrac{\gamma}{1+\Delta p_k}\,,\,\dfrac{\Delta\gamma}{1+\Delta p_k}\right)\,, & 0<\gamma\leq \gamma_k\,,\\[10pt]
+\left(\dfrac{1}{\Delta+1}\,,\,\dfrac{\Delta}{\Delta+1}\right)\,, & \gamma_k\leq \gamma<1\,,
+\end{cases}
+\end{equation}
+and has optimal value $\sE_k(\gamma)$, where $\sE_k$ is the function defined in \eqref{eqn:entropy-dfn}.
+\end{lemma}
+\begin{proof}
+For fixed $x$, the objective is nondecreasing in $y$, and strictly increasing when $\gamma>x$. The optimum is positive, so every optimizer has $\gamma>x$ and lies on the boundary $y=\min\{1-x,\Delta\,x\}$. The boundaries intersect at $x_0=1/(\Delta+1)$, $y_0=\Delta/(\Delta+1)$. Along $y=1-x$ for $x\geq1/(\Delta+1)$, the objective is decreasing in $x$. Whenever this segment is feasible, its maximum is at the intersection point, where $y=\Delta\,x$. Otherwise if $y\neq1-x$ then we must have $y=\Delta\,x$ per our previous observation.
+
+It remains to maximize the univariate objective $\Delta x\,H\big(\frac{\gamma-x}{\Delta x}\big)$ subject to $x\leq x_0$. With the change of variable $p=\frac{\gamma-x}{\Delta x}$, this becomes $f(p):=\frac{\Delta\gamma}{1+\Delta p}\,H(p)$ subject to $\max\{0,p_0\}\leq p\leq1$ where $p_0:=\frac{\gamma(\Delta+1)-1}{\Delta}$. On $(0,1)$, differentiation shows that $f'(p)$ has the sign of $\log((1-p)^{\Delta+1}/p)$, which vanishes precisely at $p_k$. The endpoint comparisons follow by continuity. Thus if $p_k\geq p_0$ then the global optimizer is $p^\ast=p_k$; otherwise if $p_k<p_0$ then since $f$ is strictly decreasing for $p\geq p_k$, the optimizer is $p^\ast=p_0$.
+
+The condition $p_k\geq p_0$ is equivalent to $\gamma\leq\gamma_k$. Hence using $y^\ast=\Delta x^\ast$, we establish \eqref{eqn:xsys-opt-coords} by obtaining $x^\ast$ and $y^\ast$ in the equation $p_k=\frac{\gamma-x^\ast}{\Delta x^\ast}$ if $\gamma\leq\gamma_k$, and $p_0=\frac{\gamma-x^\ast}{\Delta x^\ast}$ if $\gamma\geq\gamma_k$. The objective value $\sE_{\Delta+2}(\gamma)$ follows immediately by substituting $(x,y)=(x^\ast,y^\ast)$.
+\end{proof}
+
+For a graphon $W\in\cW$ define
+\begin{align*}
+R_W&:=\{(x,y)\in[0,1]^2:0<W(x,y)<1\}\,, \\
+O_W&:=\{(x,y)\in[0,1]^2:W(x,y)=1\}\,,
+\end{align*}
+and write $|\cdot|$ for Lebesgue measure.
+
+\begin{proof}[Proof of \Cref{prop:graphon-char-fixed-gamma}]
+The proof will go as follows. First, we will show every graphon $W\in\cX^\ast_\gamma$ satisfies $|R_W|\leq\Delta|O_W|$ and $H(W)\leq\sE_k(\gamma)$ by invoking the optimization problem \eqref{eqn:calculus-problem} and the extremal inequality in \Cref{lemma:kthOrderMantel}. Since every graphon in $\cV_\gamma$ has entropy $\sE_k(\gamma)$, this means $\cV_\gamma\subseteq\cX^\ast_\gamma$. To show that every optimal graphon is equivalent to a graphon in $\cV_\gamma$, we will need the stability of the extremal structure from \Cref{thm:kth-order-stability}.
+
+\smallskip
+\noindent\textbf{Preparation.}
+This part applies to the whole remainder of the proof.
+Let $W\in\cX^\ast_\gamma$ and
+$$p:=\frac{1}{|R_W|}\int_{R_W}W(x,y)\,dx\,dy\,,$$
+which is well-defined since $|R_W|>0$, as otherwise we would have $H(W)=0$, contradicting optimality of $W$. Strict concavity of $H(\cdot)$ implies $W$ takes the three values $\{0,p,1\}$ almost everywhere: otherwise the graphon defined by $W':=\bsone_{O_W}+p\,\bsone_{R_W}$, which also satisfies $t(K_2,W')=\gamma$ and $t_\ind(K_{1,k},W')=0$, would have $H(W')>H(W)$ by Jensen's inequality.
+
+Let $\delta\in\big(0,\frac12\min\{p,1-p\}\big)$. Apply \Cref{lemma:UFHatGraphonSeq} with $W_{\ref{lemma:UFHatGraphonSeq}}=W$, $F_{\ref{lemma:UFHatGraphonSeq}}=K_{1,k}$ and $\delta_{\ref{lemma:UFHatGraphonSeq}}=\delta$. This yields graphons $W_m$, a graphon $W'$, real numbers $\eta_m\to0$, and $(\eta_m,\delta,k+1)$-types $(P_m,R_m)$ such that $\delta_\square(W_m,W)\to0$ and $\norm{W_m-W'}_1\to0$. Since $\delta_\square(W_m,W')\leq \norm{W_m-W'}_1$, we have $\delta_\square(W,W')=0$. Thus $W$ and $W'$ are equivalent, so $|R_W|=|R_{W'}|$ and $|O_W|=|O_{W'}|$. Replacing $W$ by $W'$ if necessary, we may assume that $\norm{W_m-W}_1\to0$.
+
+For each $m$, write $R_m=([q_m],E_m,\sigma_m)$ and define the coloring $\varphi_m$ of $E(K_{q_m})$ by
+\begin{equation}\label{eqn:varphim-ij}
+\varphi_m(ij)=\begin{cases}\red&\text{$ij\in E_m$ and $\sigma_m(ij)=\red$}\\\green&\text{$ij\in E_m$ and $\sigma_m(ij)=\green$}\\\blue&\text{otherwise}\end{cases}\,.
+\end{equation}
+We have $\varphi_m\in\cC_k(q_m)$. Indeed, a forbidden pattern has a center and $k-1$ leaves, and all its pairs lie in $E_m$ because none is blue. It extends to a colored homomorphism from $K_{1,k}$ as follows. If some pattern leaf is green, duplicate that leaf. If all leaves and the center are blue, duplicate the center as one additional leaf; the red center--leaf pairs permit both required signs. If all leaves are blue and the center is green, map the source center and one leaf to a pattern leaf, and all remaining leaves to the pattern center. In each case \Cref{item:type-colored-homo} yields an induced $K_{1,k}$ in the host, a contradiction.
+
+Define $\tau\colon[0,1]\to\{0,p,1\}$ by
+$$\tau(t):=\begin{cases}
+0\,,&t<\delta\,,\\
+p\,,&\delta\leq t\leq1-\delta\,,\\
+1\,,&t>1-\delta\,.
+\end{cases}$$
+Since $\delta<\frac12\min\{p,1-p\}$, there exists a constant $C=C(p,\delta)$ such that $|\tau(t)-s|\leq C|t-s|$ for all $t\in[0,1]$ and $s\in\{0,p,1\}$.
+Hence if we define the graphon $G'_m:=\tau\circ W_m$ then
+$$\norm{G'_m-W}_1\leq C\norm{W_m-W}_1=o(1)\,.$$
+Let $G_m\in\cW$ be the graphon obtained from $\varphi_m$ defined by
+$$G_m:=\sum_{ij\in E_\red(\varphi_m)}p\,\bsone_{S^{q_m}_{ij}}+\sum_{ij\in E_\blue(\varphi_m)}\bsone_{S^{q_m}_{ij}}+\sum_{i=1}^{q_m}\bsone_{S^{q_m}_{ii}}\,,$$
+where $E_\red$ and $E_\blue$ are the red and blue edge sets of $\varphi_m$, respectively. Since $G_m$ and $G'_m$ differ only on diagonal squares and on irregular pairs of the type,
+$$\norm{G_m-G'_m}_1=O\!\left(\eta_m+\frac{1}{q_m}\right)=o(1)\,,$$
+and hence $\norm{G_m-W}_1=o(1)$. Because both $G_m$ and $W$ take values in $\{0,p,1\}$, we have $|R_{G_m}|=|R_W|+o(1)$ and $|O_{G_m}|=|O_W|+o(1)$. Since
+\begin{equation}\label{eqn:RGm-OGm-ana}
+|R_{G_m}|=\frac{2e_\red(\varphi_m)}{q_m^2}\qquad\text{and}\qquad|O_{G_m}|=\frac{2e_\blue(\varphi_m)}{q_m^2}+O\!\left(\frac{1}{q_m}\right)
+\end{equation}
+while \Cref{lemma:kthOrderMantel} gives $e_\red(\varphi_m)-\Delta e_\blue(\varphi_m)\leq\Delta q_m/2$, it follows that $|R_W|\leq \Delta|O_W|$.
+
+\smallskip
+\noindent\textbf{Proving $\cV_\gamma\subseteq\cX^\ast_\gamma$.}
+Let $x:=|O_W|$ and $y:=|R_W|$. Above we showed $0<y\leq\Delta x$, and we also have $0\leq y\leq 1-x$ and $0\leq\frac{\gamma-x}{y}\leq1$. Hence $(x,y)$ is feasible for \eqref{eqn:calculus-problem} and \Cref{lemma:k1k-calc-prob} implies $H(W)\leq \sE_k(\gamma)$. It is easy to calculate that every $W'\in\cV_\gamma$ satisfies $H(W')=\sE_k(\gamma)$, so $\cV_\gamma\subseteq\cX^\ast_\gamma$. In the remainder we prove $W\in\cX^\ast_\gamma$ is equivalent to a graphon in $\cV_\gamma$.
+
+\smallskip
+\noindent\textbf{Proving $\cX^\ast_\gamma\subseteq\cV_\gamma$ up to equivalence.} Since $H(W)=\sE_k(\gamma)$, \Cref{lemma:k1k-calc-prob} proves that the pair $(|O_W|,|R_W|)$ is given precisely by the right-hand side of \eqref{eqn:xsys-opt-coords}, which in particular gives $|R_W|=\Delta|O_W|$.
+Moreover, since $W$ takes the values $\{0,p,1\}$ almost everywhere and $t(K_2,W)=\gamma$, this means that for all $\gamma\in(0,\gamma_k)$ we have $p=p_k$, while for all $\gamma\in[\gamma_k,1)$ we have $p=\frac{(k-1)\gamma-1}{k-2}$.
+
+Combining the identities $|R_{G_m}|=|R_W|+o(1)$ and $|O_{G_m}|=|O_W|+o(1)$ proven above with \eqref{eqn:RGm-OGm-ana} and $|R_W|=\Delta|O_W|$ implies
+\begin{equation}\label{eqn:graphon-prob-near-extr}
+\Phi(\varphi_m)=e_\red(\varphi_m)-\Delta e_\blue(\varphi_m)=o(q_m^2)\,.
+\end{equation}
+Let $\epsilon>0$, and let $\delta_{\epsilon}>0$ be given by \Cref{thm:kth-order-stability}. Since $q_m=v(R_m)\to\infty$ by \Cref{lemma:UFHatGraphonSeq} and \eqref{eqn:graphon-prob-near-extr} gives $\Phi(\varphi_m)\geq-\delta_{\epsilon}q_m^2$ for all sufficiently large $m$, \Cref{thm:kth-order-stability} gives $d(\varphi_m,\cE_k(q_m))\leq\epsilon q_m^2$ for all sufficiently large $m$. Since $\epsilon>0$ was arbitrary, there exist colorings $\psi_m\in\cE_k(q_m)$, where $\cE_k$ is the extremal family defined in \Cref{dfn:k1k-extremal-fam}, satisfying
+$$d(\varphi_m,\psi_m)=o(q_m^2)\,.$$
+Similar to $G_m$ above, let $H_m\in\cW$ be the graphon obtained from $\psi_m$ by assigning the values $p$, $0$, and $1$ to red, green, and blue off-diagonal squares, respectively, and $1$ to diagonal squares. We then have
+$$\norm{H_m-G_m}_1\leq \frac{2\,d(\varphi_m,\psi_m)}{q_m^2}=o(1)\,,$$
+which implies $\norm{H_m-W}_1=o(1)$.
+
+By the definition of $\cE_k(q_m)$, there are disjoint core vertex sets $C_a^m$, each partitioned into $\ell_a^m$ parts $C_{a,i}^m$ whose sizes differ by at most one, with a connected $\Delta$-regular reduced graph $G_a^m$. Keep their original labels, and let $A_{a,i}^m\subseteq[0,1]$ be the union of the equal cells belonging to $C_{a,i}^m$. Write $\kappa_a^m:=|C_a^m|$ and $\alpha_a^m:=\kappa_a^m/q_m$. Within each union $A_a^m:=\bigcup_i A_{a,i}^m$, rebalance these measurable parts to sets of measure $\alpha_a^m/\ell_a^m$, moving at most $1/q_m$ from or to each part. Define $U_m$ on the balanced parts by the same reduced graph, with diagonal value one, edge value $p$, and zero elsewhere.
+
+The balancing changes $H_m$ by $O_k(\kappa_a^m/q_m^2)$ in $L^1$ on each core: every moved point affects only its old and new parts and their $\Delta$ neighboring parts, each of measure $O(\kappa_a^m/(\ell_a^m q_m))$. The uncovered diagonal cells contribute at most $1/q_m$. Summing gives
+$$\norm{U_m-H_m}_1=O_k(1/q_m)\,,\qquad \norm{U_m-W}_1=o(1)\,.$$
+Only after this comparison do we rearrange the balanced parts into consecutive component intervals; the resulting graphon is equivalent to $U_m$, and its distance to $W$ is measured in the cut metric.
+
+Suppose $\gamma\in(0,\gamma_k)$, so $p=p_k$. Order the component lengths $\alpha_i^m$ nonincreasingly. Passing to a subsequence, each length converges, and each reduced core is either eventually fixed up to isomorphism or has order tending to infinity. The latter components have $L^1$ mass tending to zero. Moreover, uniformly in $m$,
+$$\sum_{i>r}\int_{A_i^m\times A_i^m}U_m=\sum_{i>r}\frac{(1+\Delta p_k)(\alpha_i^m)^2}{v(G_i^m)}\leq\frac{1+\Delta p_k}{(\Delta+1)(r+1)}\,,$$
+since $\alpha_i^m\leq1/i$ and $\sum_i\alpha_i^m\leq1$. Discard the zero-length and diverging-order limits and arrange the remaining blocks consecutively. Finite truncation followed by this uniform tail bound proves cut convergence to the resulting $W_\blambda$, and also
+$$\sum_i\frac{(\lambda_i-\lambda_{i-1})^2}{v(G_i)}=\lim_m\sum_i\frac{(\alpha_i^m)^2}{v(G_i^m)}=\frac{\gamma}{1+\Delta p_k}\,.$$
+Thus $W_\blambda\in\cV_\gamma$ and $\delta_\square(W,W_\blambda)=0$, proving the required closure at the fixed interior density.
+
+If instead $\gamma\in[\gamma_k,1)$ then \eqref{eqn:xsys-opt-coords} gives $|O_W|+|R_W|=1$, so since $W$ takes only the values $\{p,1\}$, the zero area of $U_m$ is $o(1)$. Writing the nonzero component intervals of $U_m$ in nonincreasing order of length as $\alpha_i^m$, and writing $G_i^m$ for the connected $\Delta$-regular graph defining the corresponding component interval, we have
+$$1-o(1)=|O_{U_m}|+|R_{U_m}|=\sum_{i\geq1}\frac{(\Delta+1)(\alpha_i^m)^2}{v(G_i^m)}\leq \sum_i(\alpha_i^m)^2\leq1\,,$$
+because every connected $\Delta$-regular graph has at least $\Delta+1$ vertices. Hence $\sum_i(\alpha_i^m)^2\to1$, so $\alpha_1^m\to1$ and $\sum_{i\geq2}\alpha_i^m\to0$ as $m\to\infty$. It follows that
+$$\frac{(\Delta+1)(\alpha_1^m)^2}{v(G_1^m)}\to1\,,$$
+and therefore $v(G_1^m)=\Delta+1$ for all large $m$. It follows that $G_1^m=K_{\Delta+1}$ for all large $m$, and after a rearrangement of the vertex set, $U_m$ differs by $o(1)$ in $L^1$ from $W^\ast_\gamma$. Since also $\delta_\square(U_m,W)=o(1)$, we obtain $\delta_\square(W,W^\ast_\gamma)=0$, so $W$ is equivalent to $W^\ast_\gamma$.
+\end{proof}

@@ -1,0 +1,118 @@
+\subsection{Notation}
+We will write both $V(K_n)$ and $V$ for a vertex set of size $n$. The complement of a set or graph $X$ is denoted $X^c$. The base-2 logarithm is denoted $\log$ and the natural logarithm is denoted $\ln$. Induced subgraph containment is denoted $H\leq G$. For subsets $A,B\subseteq V$, we write $G[A,B]$ for the graph on $A\cup B$ containing all edges of $G$ with one endpoint in $A$ and another in $B$. To emphasize the underlying graph $G$, we write $e_G(\cdot)$, $d_G(\cdot)$, $N_G(\cdot)$, etc. We use the superscript $c$ to denote neighborhood and degree in the complementary graph $G^c$; for example, $N^c(v)=V\setminus(N(v)\cup\{v\})$, $N^c(v,A):=N^c(v)\cap A$, $d^c(v):=|N^c(v)|$, and $d^c(v,A):=|N^c(v,A)|$. For vertices $i,j$ we use the shorthand $ij:=\{i,j\}$. If $\cH$ is a collection of graphs then we write $\cH(n)$ for the set of $H\in\cH$ on $n$ vertices; conversely, if $\cH(n)$ is defined for various $n$ then we write $\cH:=\bigcup_{n\geq1}\cH(n)$.
+
+\subsection{Janson's inequality}
+The following version of Janson's inequality due to \citeauthor{riordan2015janson} \cite{riordan2015janson} applies to families of events that are positively correlated and plays an important role in this paper. On several occasions, we will define a family of copies of $K_{1,k}$ and use \Cref{thm:JansonsInequality} to bound the probability that none of these copies appears in a random graph.
+
+\begin{theorem}[\normalfont{\cite{riordan2015janson}}]\label{thm:JansonsInequality}
+Let $(\Omega,\cF,\bbP)$ be a probability space. Let $\cI\subseteq\cF$ be a family of events such that for all $A,B\in\cI$ we have $\bbP\{A\cap B\}\geq\bbP\{A\}\bbP\{B\}$, $A\cap B\in\cI$, and $A\cup B\in\cI$. Let $B_1,\dots,B_n\in\cI$ and define
+$$\mu:=\sum_{i=1}^n\bbP\{B_i\}\hspace{7mm}\text{and}\hspace{7mm}\Delta:=\sum_{i\sim j}\bbP\{B_i\cap B_j\}\,,$$
+the second sum being over unordered pairs $i\neq j$ such that $B_i$, $B_j$ are not independent. If $\mu>0$ then
+$$\bbP\!\left\{\bigcap_{i=1}^nB_i^c\right\}\leq\exp\!\left(-\min\left\{\frac{\mu}{2}\,,\,\frac{\mu^2}{4\Delta}\right\}\right)\,.$$
+Here the quotient is interpreted as $+\infty$ when $\Delta=0$; in that case the stronger bound $e^{-\mu}$ holds. If $\mu=0$ the trivial bound $1$ applies.
+\end{theorem}
+For independent Bernoulli coordinates, the increasing events satisfy these hypotheses. Mixed edge/nonedge events may therefore be used whenever one common complementation of coordinates makes every event increasing; the orientation must be consistent across the entire family.
+
+\subsection{Colored homomorphisms}\label{subsec:colored-graphs}
+Graph regularity and induced embeddings are important tools in our proofs. It is convenient and standard \cite{marchant2010extremal,marchant2011structure,bottcher2012perfect,martin2013edit} to work with vertex- and edge-colored graphs that encode which induced subgraphs can be embedded into a regular partition. We first introduce colored graphs and homomorphisms in this subsection, and then their applications to our setting in \Cref{subsec:regularity}.
+
+A \emph{colored graph} $J=(F,\sigma)$ is a graph $F$ with a 3-coloring $\sigma:V(F)\cup E(F)\to\{\red,\green,\blue\}$ of its vertices and edges such that $\sigma(V(F))\subseteq\{\green,\blue\}$. We write $V(J):=V(F)$ and $E(J):=E(F)$. Let $G$ be a graph and $J$ a colored graph. A \emph{colored homomorphism} from $G$ to $J$ is a mapping $\phi:V(G)\to V(J)$ such that the following conditions hold:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+    \item If $ij\in E(G)$ and $\phi(i)\neq\phi(j)$ then $\phi(i)\phi(j)\in E(J)$.
+    \item If $uv\in E(G)$ then either $\phi(u)\neq\phi(v)$ and $\sigma(\phi(u)\phi(v))\in\{\red,\blue\}$, or $\phi(u)=\phi(v)$ and $\sigma(\phi(u))=\blue$.
+    \item If $uv\not\in E(G)$ then either $\phi(u)\neq\phi(v)$ and $\sigma(\phi(u)\phi(v))\in\{\green,\red\}$, or $\phi(u)=\phi(v)$ and $\sigma(\phi(u))=\green$.
+\end{enumerate}
+In other words, edges (and only edges) are embedded into \blue, non-edges (and only non-edges) are embedded into \green, and both can be embedded into \red. We write $G\hookrightarrow J$ if there exists a colored homomorphism from $G$ to $J$. For example, $C_4\hookrightarrow\grg$ and $K_{1,3}\hookrightarrow\exampletriangle$.
+
+Let $\cC(n)$ be the set of colored graphs on $n$ vertices, and let
+$$\cC(n,G):=\{J\in\cC(n):G\nHookrightarrow J\}\,.$$
+An \emph{edge-colored graph} $J=(F,\tau)$ is a graph $F$ with a 3-coloring $\tau:E(F)\to\{\red,\green,\blue\}$ of its edges. Again, we write $V(J):=V(F)$ and $E(J):=E(F)$.
+
+\subsection{Graph regularity}\label{subsec:regularity}
+Here we introduce \emph{types}, which are regularity graphs used for subgraph embedding. We mostly follow the framework of \citeauthor{bottcher2012perfect} \cite{bottcher2012perfect}. To simplify the exposition, we instead directly define a type as a structure that satisfies the conclusions of the induced embedding lemma \cite[Lemma~2.9]{bottcher2012perfect}. In analogy with the regularity lemma, the results of \cite{bottcher2012perfect} imply such a structure always exists, as we show in \Cref{lemma:type-lemma}.
+
+A pair $A,B\subseteq V(G)$ is \emph{$\epsilon$-regular} in a graph $G$ if for all $A'\subseteq A$ and $B'\subseteq B$ such that $\abs{A'}\geq\epsilon\abs{A}$ and $\abs{B'}\geq\epsilon\abs{B}$, $\abs{d(A',B')-d(A,B)}\leq\epsilon$, where $d(X,Y):=\frac{e(X,Y)}{|X|\cdot|Y|}$. An \emph{$\epsilon$-regular partition} of $G$ is a partition $V(G)=V_0\cup V_1\cup\cdots\cup V_k$ such that $\abs{V_1}=\cdots=\abs{V_k}$, $\abs{V_0}\leq\epsilon\abs{V(G)}$, and all but at most $\epsilon\binom{k}{2}$ of the pairs $1\leq i<j\leq k$ are $\epsilon$-regular.
+
+\begin{definition}[Type]\label{dfn:type}
+Let $G$ be a graph on $n$ vertices, and let $\epsilon,\delta\in(0,\frac{1}{2})$ and $\ell\in\N$. An \emph{$(\epsilon,\delta,\ell)$-type} for $G$ is a pair $(P,R)$ where $P=\{V_0,V_1,\dots,V_k\}$ is an $\epsilon$-regular partition of $G$ and $R=([k],E_R,\sigma)$ is a colored graph such that the following conditions hold:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+    \item For all $1\leq i<j\leq k$, $ij\in E_R$ if and only if $\{V_i,V_j\}$ is $\epsilon$-regular in $G$.
+    \item For all $ij\in E_R$, we have $\sigma(ij)=\green$ if $d(V_i,V_j)<\delta$; $\sigma(ij)=\red$ if $d(V_i,V_j)\in[\delta,1-\delta]$; and $\sigma(ij)=\blue$ if $d(V_i,V_j)>1-\delta$.
+    \item\label{item:type-colored-homo} If $H$ is a graph on at most $\ell$ vertices and $H\hookrightarrow R$ then $H\leq G$.
+\end{enumerate}
+If all the above conditions hold then we say $G$ \emph{has} type $(P,R)$.
+\end{definition}
+
+
+\subsection{Graphons and entropy}\label{subsec:graphons}
+The \emph{entropy} of a graphon $W\in\cW$ is defined as
+$$H(W):=\int_{[0,1]^2}H(W(x,y))\,dx\,dy\,,$$
+and for all $p\in[0,1]$, the \emph{relative entropy} of $W$ is defined as
+$$I_p(W):=\int_{[0,1]^2}I_p(W(x,y))\,dx\,dy\,,$$
+The following lemmas, which are \cite[Propositions~2.10~\&~2.11]{perkins2025typical}, state that the entropy density and rate function for induced-$H$-freeness are given by variational problems over graphons. We write $t_\ind$ and $t$ for the induced and non-induced homomorphism densities; these are written explicitly in \eqref{eqn:var-prob-intro-gamma} in the case of $K_{1,k}$ and $K_2$, and we refer the reader to \cite{lovasz2012large} for the general definition. We also define
+$$\rand(W):=\abs{\{(x,y)\in[0,1]^2:0<W(x,y)<1\}}\,.$$
+
+\begin{lemma}\normalfont{(\cite{perkins2025typical})}\label{lemma:LDPforGNPkl}
+Let $p\in(0,1)$ be a constant and $G\sim G(n,p)$. If $H$ is a fixed graph and
+$$\cF:=\{W\in\cW:t_{\ind}(H,W)=0,\,\rand(W)>0\}$$
+is nonempty then
+$$\lim_{n\to\infty}\frac{1}{\binom{n}{2}}\log\bbP\{G\in\cF^\ast_n(H)\}=-\inf_{W\in\cF}I_p(W)\,.$$
+\end{lemma}
+The infimum is unchanged if the condition $\rand(W)>0$ is omitted. Indeed, fix $V\in\cF$ and any induced-$H$-free graphon $U$. Put copies of $U$ and $V$ on blocks of lengths $1-a$ and $a$, respectively, with cross value zero if $H$ is connected and one otherwise. In the latter case $H^c$ is connected, so the resulting graphon $U_a$ is induced-$H$-free in either case. Also $\rand(U_a)\geq a^2\rand(V)>0$ and $I_p(U_a)\to I_p(U)$ as $a\downarrow0$ by the two-block integral formula. This proves the equality of the two infima.
+
+\begin{lemma}\normalfont{(\cite{perkins2025typical})}\label{lemma:FnmGraphonOptAsymps}
+Let $\gamma\in(0,1)$, $n,m\in\N$, and $m\sim\gamma\binom{n}{2}$. If $H$ is a fixed graph and
+$$\cF_\gamma:=\{W\in\cW:t(K_2,W)=\gamma,\,t_{\ind}(H,W)=0,\,\rand(W)>0\}$$
+is nonempty then
+$$\lim_{n\to\infty}\frac{1}{\binom{n}{2}}\log|\cF^\ast_{n,m}(H)|=\sup_{W\in\cF_\gamma}H(W)\,.$$
+\end{lemma}
+
+We now define graphons naturally associated to matrices, graphs, and types. For integers $i,j\in[n]$, define
+\begin{equation}\label{dfn:snij}
+S^n_{ij}:=\left(\frac{i-1}{n},\frac{i}{n}\right)\times\left(\frac{j-1}{n},\frac{j}{n}\right)\cup\left(\frac{j-1}{n},\frac{j}{n}\right)\times\left(\frac{i-1}{n},\frac{i}{n}\right)\subseteq[0,1]^2\,.
+\end{equation}
+For a symmetric matrix $M\in\R^{n\times n}$, the graphon $W_M$ associated to $M$ is defined as
+$$W_M:=\sum_{1\leq i\leq j\leq n}M_{ij}\,\bsone_{S_{ij}^n}\,.$$
+If $G$ is either an unweighted or weighted graph on $n$ vertices with adjacency or weight matrix $A$ then we define the graphon $W_G:=W_A$.
+If a graph $G$ has the $(\epsilon,\delta,\ell)$-type $T=(P,R)$, where $P=\{V_0,V_1,\dots,V_k\}$, then the graphon $W_T$ associated with $T$ and $G$ is defined by
+$$W_T:=\sum_{1\leq i\leq j\leq k}d_G(V_i,V_j)\,\bsone_{S_{ij}^k}\,.$$
+Note that the exceptional set $V_0$ is not represented in the graphon $W_T$.
+
+The cut metric and related notions of distance between graphons are important tools in this paper. We record the necessary definitions here and refer the reader to \cite{lovasz2012large} for more details. The \emph{cut norm} of a graphon $W\in\cW$ is defined as
+$$\norm{W}_\square:=\sup_{S,T\subseteq[0,1]}\bigg|\int_{S\times T}W(x,y)\,dx\,dy\bigg|\,.$$
+For a graphon $W\in\cW$ and a map $\varphi:[0,1]\to[0,1]$, define the graphon $W^\varphi$ by $W^\varphi(x,y)=W(\varphi(x),\varphi(y))$. The \emph{cut metric} is a distance between graphons $W,W'\in\cW$ defined as
+$$\delta_\square(W,W'):=\inf_\varphi\,\norm{W^\varphi-W'}_\square\,,$$
+where the infimum is over measure-preserving bijections $\varphi$. The cut metric $\delta_\square$ is defined on pairs of graphons, (weighted or unweighted) graphs, and matrices, and any combination thereof by using the corresponding graphon associated to those objects (i.e.\ $W_G$ or $W_M$). The \emph{cut norm} of a real $n\times n$ matrix $A$ is defined as
+$$\norm{A}_\square:=\frac{1}{n^2}\,\max_{S,T\subseteq[n]}\Bigg|\sum_{i\in S,j\in T}A_{ij}\Bigg|\,.$$
+For weighted graphs $G$ and $H$ on $n$ vertices with adjacency matrices $A_G$ and $A_H$, we define the two notions of distance
+\begin{align*}
+d_\square(G,H) &:= \norm{A_G-A_H}_\square \,, \\[3pt]
+\widehat{\delta}_\square(G,H) &:= \min_P\,\norm{A_G-P^TA_HP}_\square \,,
+\end{align*}
+where the minimum is over $n\times n$ permutation matrices. Finally, the \emph{edit distance} between two graphs $G$ and $H$ is defined as
+$$d_1(G,H):=\frac{1}{n^2}\,|E(G)\,\triangle\,E(H)|\,,$$
+where $\triangle$ is the symmetric difference.
+
+The following lemma plays an important role in the solution to the graphon variational problem in \Cref{sec:graphon-prob}: it allows us to transfer from a graphon $W$ with zero induced $H$ density to a sequence of types that converge to $W$. The lemma is proven in \Cref{sec:deferred}.
+
+\begin{restatable}{lemma}{GraphonSeq}\label{lemma:UFHatGraphonSeq}
+Fix a graph $F$. For all $W\in\cW$ such that $t_{\ind}(F,W)=0$ and all $\delta\in(0,1/2)$, there exists a sequence $\{W_m\}_{m\in\N}$ of graphons such that the following conditions hold:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+	\item $\delta_\square(W_m,W)\to0$ as $m\to\infty$.
+    \item There exists a graphon $W'$ such that $\norm{W_m-W'}_1\to0$ as $m\to\infty$.
+	\item For all $m$ there exists $\eta_m>0$ such that $W_m$ is the graphon associated with an $(\eta_m,\delta,v(F))$-type $(P_m,R_m)$ of an induced-$F$-free graph.
+	\item $\eta_m\to0$ and $v(R_m)\to\infty$ as $m\to\infty$.
+\end{enumerate}
+\end{restatable}

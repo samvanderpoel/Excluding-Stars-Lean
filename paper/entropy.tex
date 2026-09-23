@@ -1,0 +1,58 @@
+In this section we prove \Cref{thm:main-entropy,thm:main-rate,thm:ent-graphons,thm:gnp-graphons} as well as rough structure of the conditional distribution in \Cref{lemma:rough-struc-fixed-g,lemma:rough-struc-gnp}.
+
+\begin{proof}[Proof of \Cref{thm:main-entropy}]
+Fix $\gamma\in(0,1)$. \Cref{prop:graphon-char-fixed-gamma} proves $\cX^\ast_\gamma=\cV_\gamma$ up to equivalence, so every graphon $W\in\cV_\gamma$ achieves $H(W)=\Phi_k(\gamma)$. From the definition of $\cV_\gamma$, it is easy to calculate that $H(W)=\sE_k(\gamma)$, where $\sE_k$ is defined in \eqref{eqn:entropy-dfn}. Combining with \Cref{lemma:FnmGraphonOptAsymps} now immediately implies the theorem.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:main-rate}]
+Let $\cF:=\{W\in\cW:t_\ind(K_{1,k},W)=0\}$.
+Exactly as in \cite[Eq.~17]{perkins2025typical}, we can write, for all fixed $p\in(0,1)$,
+\begin{equation}\label{eqn:sup-gamma-calc}
+\inf_{W\in\cF}I_p(W)=\inf_{0\leq\gamma\leq1}\left\{-\sE_k(\gamma)+\gamma\log\!\left(\frac{1-p}{p}\right)\right\}-\log(1-p)\,,
+\end{equation}
+where $\sE_k$ is defined in \eqref{eqn:entropy-dfn}. It remains to show the right-hand side equals $\sR_k(p)$.
+
+We solve the optimization of $N_p(\gamma):=-\sE_k(\gamma)+\gamma\log\big(\frac{1-p}{p}\big)$ over $0\leq\gamma\leq1$ as follows. First consider $0\leq\gamma\leq\gamma_k$. The identity $p_k=(1-p_k)^{k-1}$ directly implies
+$$H(p_k)=-(1+(k-2)p_k)\log(1-p_k)\,,$$
+and hence
+$$\frac{k-2}{1+(k-2)p_k}H(p_k)=-(k-2)\log(1-p_k)=\log\!\left(\frac{1-p_k}{p_k}\right)\,.$$
+It follows that
+$$N_p(\gamma)=\gamma\log\!\left(\frac{(1-p)p_k}{p(1-p_k)}\right)\,,$$
+so $N_p$ is increasing on $[0,\gamma_k]$ if $p<p_k$, constant if $p=p_k$, and decreasing if $p>p_k$.
+
+Now consider $\gamma_k\leq\gamma\leq1$, and write $x:=\frac{(k-1)\gamma-1}{k-2}\in[p_k,1]$.
+We then have
+$$N_p(\gamma)=-\frac{k-2}{k-1}H(x)+\frac{1+(k-2)x}{k-1}\log\!\left(\frac{1-p}{p}\right)\,,$$
+which is strictly convex in $x$ and has derivative
+$$\frac{k-2}{k-1}\left(-H'(x)+\log\!\left(\frac{1-p}{p}\right)\right)=\frac{k-2}{k-1}\log\!\left(\frac{x(1-p)}{(1-x)p}\right)\,.$$
+The derivative vanishes only at $x=p$ when this lies in $[p_k,1)$. Consequently, if $p<p_k$ then $N_p$ is increasing on $[\gamma_k,1]$, while if $p\geq p_k$ then the minimum on $[\gamma_k,1]$ is attained uniquely at $x=p$, which corresponds to $\gamma=\frac{1+(k-2)p}{k-1}$.
+
+Summarizing the above, if $p<p_k$ then $N_p$ is increasing on both pieces, so the unique minimizer is $\gamma=0$ and $\inf_\gamma N_p(\gamma)=0$. If $p=p_k$ then $N_p\equiv0$ on $[0,\gamma_k]$, and convexity on $[\gamma_k,1]$ shows that every $\gamma\in[0,\gamma_k]$ is optimal. If $p>p_k$ then the unique minimizer is $\gamma^*=\frac{1+(k-2)p}{k-1}$, and at this point, $N_p(\gamma^\ast)=\log(1-p)-\frac{1}{k-1}\log p$. Subtracting $\log(1-p)$ proves the right-hand side of \eqref{eqn:sup-gamma-calc} is $\sR_k(p)$. The full-domain form of \Cref{lemma:LDPforGNPkl}, justified immediately after its statement, now proves the theorem.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:ent-graphons}]
+This is an immediate consequence of \Cref{prop:graphon-char-fixed-gamma}.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:gnp-graphons}]
+The proof of \Cref{thm:main-rate} gave a characterization of the optimizers of \eqref{eqn:sup-gamma-calc}. Combining this characterization with \Cref{prop:graphon-char-fixed-gamma} directly implies that the set of optimizers $\cX^p_\ast$ of $\Psi_k(p)$ is given by
+\begin{equation}\label{eqn:CpStarFormalDef}
+\cX^p_\ast=\begin{cases}\{W_0\}&p\in(0,p_k)\\[5pt]\bigcup_{\gamma\in[0,\gamma_k]}\cV_\gamma&p=p_k\\[5pt]\cV_{\gamma_p}&p\in(p_k,1)\end{cases}\,,
+\end{equation}
+where $W_0\equiv0$ is the all-zero graphon and $\gamma_p:=\frac{1+(k-2)p}{k-1}$. The theorem follows immediately from \eqref{eqn:CpStarFormalDef}.
+\end{proof}
+
+\subsection{Rough structure from graphon optimizers}
+The following lemmas follow from the characterization of the optimizers of $\Phi_k(\gamma)$ and $\Psi_k(p)$ given in \Cref{prop:graphon-char-fixed-gamma} and \eqref{eqn:CpStarFormalDef}, respectively. See \cite[Propositions~3.8~\&~3.9]{perkins2025typical} for proofs, which are based on \citeauthor{chatterjee2011large} \cite[Theorem~3.1]{chatterjee2011large} and use a result of \citeauthor{hatami2018graph} \cite{hatami2018graph}.
+
+\begin{lemma}\label{lemma:rough-struc-fixed-g}
+Fix $k\geq3$ and $\gamma\in(0,1)$. Let $n,m\in\N$ and assume $m\sim\gamma\binom{n}{2}$. Let $G$ be the uniformly random element of $\cF^\ast_{n,m}(K_{1,k})$. For all $\epsilon>0$ and large enough $n$,
+$$\bbP\{\delta_\square(G,\cX^\ast_\gamma)\geq\epsilon\}\leq e^{-Cn^2}\,,$$
+where $C>0$ is a constant depending only on $k$, $\gamma$, and $\epsilon$.
+\end{lemma}
+
+\begin{lemma}\label{lemma:rough-struc-gnp}
+Let $p\in(0,1)$ be a constant and let $G\sim G(n,p)$. For all $\epsilon>0$ and large enough $n$,
+$$\bbP\{\delta_\square(G,\cX_\ast^p)\geq\epsilon\,|\,G\in\cF^\ast_n(K_{1,k})\}\leq e^{-Cn^2}\,,$$
+where $C>0$ is a constant depending only on $\epsilon$ and $p$.
+\end{lemma}

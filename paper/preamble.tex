@@ -1,0 +1,334 @@
+\usepackage[
+    paperwidth=8.5in,
+    paperheight=11in,
+    margin=1.25in,
+    marginparwidth=0.75in,
+    marginparsep=0.1in,
+    footskip=0.25in
+]{geometry}
+
+\renewcommand{\baselinestretch}{1.}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{2pt}
+\usepackage[shortlabels]{enumitem}
+\setlist{
+    itemsep=1ex,
+    listparindent=\parindent,
+    parsep=0em,
+    topsep=2ex,
+}
+\setcounter{tocdepth}{1}
+\allowdisplaybreaks[1]
+
+\usepackage{xpatch}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm,thmtools,thm-restate}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{calc}
+
+\usepackage{silence}
+\WarningFilter[pdftoc]{hyperref}{Token not allowed in a PDF string}
+
+\usepackage{caption}
+\captionsetup[figure]{skip=10pt, width=12.25cm}
+\captionsetup{width=11cm}
+
+\usepackage[
+    backend=biber,
+    style=numeric,
+    giveninits=true,
+    sorting=nyt,
+    maxnames=100,
+    backref=false,
+    doi=false,
+    url=false,
+    isbn=false,
+]{biblatex}
+\addbibresource{ref.bib}
+\renewcommand*{\bibfont}{\footnotesize}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat[
+	article,
+	inbook,
+	incollection,
+	inproceedings,
+	patent,
+	thesis,
+	unpublished
+]{title}{#1}
+
+\newcommand\linkcolor{black}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linktoc=all,
+    citecolor=black,
+    linkcolor=\linkcolor,
+    urlcolor=\linkcolor
+}
+\usepackage[capitalize,nameinlink,noabbrev]{cleveref}
+\crefname{claim}{Claim}{Claims}
+\crefname{fact}{Fact}{Facts}
+\crefname{inequality}{Inequality}{Inequalities}
+\creflabelformat{inequality}{#2(#1)#3}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{subsection}{Subsection}{Subsections}
+\newcommand{\creflastconjunction}{, and\nobreakspace}
+
+\makeatletter
+\def\cref@short@range@type{}
+\def\cref@lemma@type{lemma}
+\def\cref@section@type{section}
+\newcommand{\cref@reinsert@short@range}[1]{%
+  \cref@isstackfull{\cref@consecutive@stack}%
+  \@whilesw\if@cref@stackfull\fi{%
+    \edef\@tempa{\cref@stack@top{\cref@consecutive@stack}}%
+    \expandafter\cref@stack@push\expandafter{\@tempa}{#1}%
+    \cref@stack@pop{\cref@consecutive@stack}%
+    \cref@isstackfull{\cref@consecutive@stack}}}
+\xpatchcmd{\cref@processconsecutive}
+  {\let#4\relax%
+  #5=1\relax}
+  {\let#4\relax%
+  #5=1\relax%
+  \cref@stack@init{\cref@consecutive@stack}}
+  {}
+  {\PackageWarning{preamble}{Could not initialize cleveref range stack}}
+\xpatchcmd{\cref@processconsecutive}
+  {\advance#5 1\relax%
+      \let#4\@nextref%
+      \cref@stack@pop{#2}}
+  {\advance#5 1\relax%
+      \let#4\@nextref%
+      \expandafter\cref@stack@push\expandafter{\@nextref}{\cref@consecutive@stack}%
+      \cref@stack@pop{#2}}
+  {}
+  {\PackageWarning{preamble}{Could not record cleveref range members}}
+\xpatchcmd{\@cref}
+  {\ifnum\count@consecutive=2\relax%
+        \expandafter\cref@stack@push\expandafter{\@endref,}{\@refsubstack}%
+        \let\@endref\relax%
+        \count@consecutive=1\relax%
+      \fi}
+  {\ifnum\count@consecutive>1\relax%
+        \ifnum\count@consecutive=2\relax%
+          \cref@reinsert@short@range{\@refsubstack}%
+          \let\@endref\relax%
+          \count@consecutive=1\relax%
+        \else%
+          \ifnum\count@consecutive=3\relax%
+            \expandafter\cref@gettype\expandafter{\@beginref}{\cref@short@range@type}%
+            \ifx\cref@short@range@type\cref@lemma@type%
+              \cref@reinsert@short@range{\@refsubstack}%
+              \let\@endref\relax%
+              \count@consecutive=1\relax%
+            \else%
+              \ifx\cref@short@range@type\cref@section@type%
+                \cref@reinsert@short@range{\@refsubstack}%
+                \let\@endref\relax%
+                \count@consecutive=1\relax%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi}
+  {}
+  {\PackageWarning{preamble}{Could not adjust cleveref range threshold}}
+\makeatother
+
+\renewcommand\qedsymbol{$\blacksquare$}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand\E{{\mathbb E}}
+\newcommand\N{{\mathbb N}}
+\newcommand\bbP{{\mathbb P}}
+\newcommand\R{{\mathbb R}}
+\newcommand\Z{{\mathbb Z}}
+\newcommand\bsone{\boldsymbol{1}}
+\newcommand\cB{{\mathcal B}}
+\newcommand\cC{{\mathcal C}}
+\newcommand\cE{{\mathcal E}}
+\newcommand\cF{{\mathcal F}}
+\newcommand\cG{{\mathcal G}}
+\newcommand\cH{{\mathcal H}}
+\newcommand\cI{{\mathcal I}}
+\newcommand\cJ{{\mathcal J}}
+\newcommand\cK{{\mathcal K}}
+\newcommand\cM{{\mathcal M}}
+\newcommand\cN{{\mathcal N}}
+\newcommand\cP{{\mathcal P}}
+\newcommand\cR{{\mathcal R}}
+\newcommand\cS{{\mathcal S}}
+\newcommand\cT{{\mathcal T}}
+\newcommand\cV{{\mathcal V}}
+\newcommand\cW{{\mathcal W}}
+\newcommand\cX{{\mathcal X}}
+\newcommand\cY{{\mathcal Y}}
+\newcommand\cZ{{\mathcal Z}}
+\newcommand\frp{{\mathfrak p}}
+\newcommand\frP{{\mathfrak P}}
+\newcommand\frt{{\mathfrak t}}
+\newcommand\sB{{\mathscr B}}
+\newcommand\sD{{\mathscr D}}
+\newcommand\sE{{\mathscr E}}
+\newcommand\sP{{\mathscr P}}
+\newcommand\sR{{\mathscr R}}
+\newcommand{\red}{{\normalfont\texttt r}}
+\newcommand{\green}{{\normalfont\texttt g}}
+\newcommand{\blue}{{\normalfont\texttt b}}
+
+\newcommand\erdos{Erd\H{o}s}
+\newcommand\renyi{R\'enyi}
+\newcommand\erdosrenyi{\erdos--\renyi}
+
+\makeatletter
+\newcommand{\nHookrightarrow}{\mathrel{\mathpalette\@nHookrightarrow\relax}}
+\newcommand{\@nHookrightarrow}[2]{%
+  \begin{tikzpicture}[baseline={(H.base)}]
+    \node[inner sep=0pt, outer sep=0pt] (H) {$#1\hookrightarrow$};
+    \draw[line cap=round, line width=.07em]
+      ([xshift=.425em,yshift=.15ex]H.south west) --
+      ([xshift=-.525em,yshift=-.055ex]H.north east);
+  \end{tikzpicture}%
+}
+\makeatother
+
+\pgfmathsetmacro{\opacity}{50}
+\colorlet{lightred}{red!\opacity}
+\colorlet{lightgreen}{green!\opacity}
+\definecolor{lightblue}{RGB}{144,202,249}
+
+\newcommand{\grg}{\tikz[baseline=-.6ex,x=1em,y=1em]{%
+  \draw[lightred, line width=3pt,line cap=round] (0,0)--(1.25,0);
+  \fill[lightgreen] (0,0) circle (3pt);
+  \fill[lightgreen] (1.25,0) circle (3pt);
+}}
+
+\newcommand{\gbg}{\tikz[baseline=-.6ex,x=1em,y=1em]{%
+  \draw[lightblue, line width=3pt,line cap=round] (0,0)--(1.25,0);
+  \fill[lightgreen] (0,0) circle (3pt);
+  \fill[lightgreen] (1.25,0) circle (3pt);
+}}
+
+\newcommand{\brb}{\tikz[baseline=-.6ex,x=1em,y=1em]{%
+  \draw[lightred, line width=3pt,line cap=round] (0,0)--(1.25,0);
+  \fill[lightblue] (0,0) circle (3pt);
+  \fill[lightblue] (1.25,0) circle (3pt);
+}}
+
+\newcommand{\rrbtriangle}{\tikz[baseline=-0.15ex,x=1em,y=1em,scale=0.75]{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.25,0);
+  \coordinate (C) at (.625,1.08);
+  \draw[lightblue,line width=2.5pt,line cap=round] (A)--(B); % AB
+  \draw[lightred,line width=2.5pt,line cap=round] (B)--(C); % BC
+  \draw[lightred,line width=2.5pt,line cap=round] (C)--(A); % CA
+
+  \fill[lightblue] (C) circle (3pt);
+  \filldraw[fill=white, draw=black, very thin] (A) circle (3pt);
+  \filldraw[fill=white, draw=black, very thin] (B) circle (3pt);
+}}
+
+\newcommand{\rrgtriangle}{\tikz[baseline=-0.15ex,x=1em,y=1em,scale=0.75]{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.25,0);
+  \coordinate (C) at (.625,1.08);
+  \draw[lightgreen,line width=2.5pt,line cap=round] (A)--(B); % AB
+  \draw[lightred,line width=2.5pt,line cap=round] (B)--(C); % BC
+  \draw[lightred,line width=2.5pt,line cap=round] (C)--(A); % CA
+
+  \fill[lightgreen] (C) circle (3pt);
+  \filldraw[fill=white, draw=black, very thin] (A) circle (3pt);
+  \filldraw[fill=white, draw=black, very thin] (B) circle (3pt);
+}}
+
+\newcommand{\exampletriangle}{\tikz[baseline=-0.15ex,x=1em,y=1em,scale=0.75]{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.25,0);
+  \coordinate (C) at (.625,1.08);
+  \draw[lightred,line width=2.5pt,line cap=round] (A)--(B); % AB
+  \draw[lightred,line width=2.5pt,line cap=round] (B)--(C); % BC
+  \draw[lightred,line width=2.5pt,line cap=round] (C)--(A); % CA
+
+  \fill[lightgreen] (A) circle (3pt);
+  \fill[lightgreen] (B) circle (3pt);
+  \fill[lightblue] (C) circle (3pt);
+}}
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{3}}
+\makeatother
+
+\newcommand\blambda{{\boldsymbol{\lambda}}}
+\newcommand\bLambda{{\boldsymbol{\Lambda}}}
+\newcommand\bsa{\boldsymbol{a}}
+\newcommand\bsm{\boldsymbol{m}}
+\newcommand{\deltatilde}{\tilde{\delta}}
+
+\newcommand\close{{\hspace{0.2mm}\ensuremath{\mathsf{close}}}}
+\newcommand\far{{\hspace{0.2mm}\ensuremath{\mathsf{far}}}}
+\newcommand\high{{\hspace{0.2mm}\ensuremath{\mathsf{hi}}}}
+\newcommand\mat{{\hspace{0.2mm}\ensuremath{\mathsf{mat}}}}
+\newcommand\ind{{\hspace{0.2mm}\ensuremath{\mathrm{ind}}}}
+\newcommand\spl{\ensuremath{\mathrm{spl}}}
+\newcommand\degenerate{{\hspace{0.2mm}\ensuremath\mathsf{deg}}}
+\newcommand\med{{\hspace{0.2mm}\ensuremath\mathsf{med}}}
+\newcommand\res{{\hspace{0.2mm}\ensuremath\mathsf{res}}}
+\newcommand\prof{{\hspace{0.2mm}\ensuremath\mathsf{prof}}}
+\newcommand\nar{{\ensuremath\mathsf{nar}}}
+\renewcommand\root{{\ensuremath\mathsf{root}}}
+\newcommand\leftsf{{\hspace{0.2mm}\ensuremath\mathsf{left}}}
+\newcommand\insf{{\hspace{0.2mm}\ensuremath\mathsf{in}}}
+\newcommand\outsf{{\hspace{0.2mm}\ensuremath\mathsf{out}}}
+\newcommand\Tail{{\ensuremath\mathsf{Tail}}}
+\newcommand\Upper{{\ensuremath\mathsf{U}}}
+\newcommand\Lower{{\ensuremath\mathsf{L}}}
+\newcommand\bin{{\ensuremath\mathsf{bin}}}
+\newcommand\Ent{{\ensuremath\mathsf{Ent}}}
+\newcommand\Err{{\ensuremath\mathsf{Err}}}
+\newcommand\ret{{\ensuremath\mathsf{ret}}}
+\newcommand\matsf{{\ensuremath\mathsf{mat}}}
+\newcommand\lgsf{{\ensuremath\mathsf{lg}}}
+\newcommand\smsf{{\ensuremath\mathsf{sm}}}
+\newcommand\sparse{{\ensuremath\mathsf{sp}}}
+
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\image}{image}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\rand}{rand}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\renewcommand\geq{\geqslant}
+\renewcommand\leq{\leqslant}
+
+\newcommand{\clean}{{\mathrm{cl}}}
+\newcommand{\type}{{\mathrm{ty}}}

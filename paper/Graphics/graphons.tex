@@ -1,0 +1,729 @@
+\documentclass[tikz,border=2mm]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+
+\pgfmathsetmacro{\density}{1/10}
+\pgfmathsetmacro{\pEight}{0.203455645871543}
+\pgfmathsetmacro{\intensity}{100*\pEight}
+\pgfmathsetmacro{\cconst}{1+6*\pEight}
+\pgfmathsetmacro{\eps}{0.03}
+\pgfmathsetlengthmacro{\vsep}{5mm}
+
+\begin{tikzpicture}[baseline={(0,0)}]
+
+\tikzset{Kseven/.code={
+	\pgfkeys{/Kseven/.cd,
+		x/.initial=0,
+		y/.initial=0,
+		scale/.initial=1,
+		intensity/.initial=0
+	}
+	\pgfkeys{/Kseven/.cd, #1}
+	\def\xpos{\pgfkeysvalueof{/Kseven/x}}
+	\def\ypos{\pgfkeysvalueof{/Kseven/y}}
+	\def\scale{\pgfkeysvalueof{/Kseven/scale}}
+	\def\shade{\pgfkeysvalueof{/Kseven/intensity}}
+
+	\begin{scope}[shift={(\xpos,\ypos)}, scale=\scale]
+		\pgfmathtruncatemacro{\N}{7}
+		\clip (0,0) rectangle (1,-1);
+
+		\foreach \i in {0,...,6}{
+			\foreach \j in {0,...,6}{
+				\ifnum\i=\j\relax\else
+					\pgfmathsetmacro{\xL}{\j/\N}
+					\pgfmathsetmacro{\xR}{(\j+1)/\N}
+					\pgfmathsetmacro{\yT}{-(\i)/\N}
+					\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+					\fill[black!\shade] (\xL,\yT) rectangle (\xR,\yB);
+				\fi
+			}
+		}
+
+		\foreach \i in {0,...,6}{
+			\foreach \j in {0,...,5}{
+				\pgfmathtruncatemacro{\jp}{\j+1}
+				\ifnum\i=\j\relax\else
+				\ifnum\i=\jp\relax\else
+					\pgfmathsetmacro{\xM}{(\j+1)/\N}
+					\pgfmathsetmacro{\yT}{-(\i)/\N}
+					\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+					\fill[black!\shade] (\xM-\eps,\yT) rectangle (\xM+\eps,\yB);
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,5}{
+			\pgfmathtruncatemacro{\ip}{\i+1}
+			\foreach \j in {0,...,6}{
+				\ifnum\j=\i\relax\else
+				\ifnum\j=\ip\relax\else
+					\pgfmathsetmacro{\yM}{-(\i+1)/\N}
+					\pgfmathsetmacro{\xL}{\j/\N}
+					\pgfmathsetmacro{\xR}{(\j+1)/\N}
+					\fill[black!\shade] (\xL,\yM-\eps) rectangle (\xR,\yM+\eps);
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,6}{
+			\pgfmathsetmacro{\xL}{\i/\N}
+			\pgfmathsetmacro{\xR}{(\i+1)/\N}
+			\pgfmathsetmacro{\yT}{-(\i)/\N}
+			\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+			\fill[black] (\xL,\yT) rectangle (\xR,\yB);
+		}
+	\end{scope}
+}}
+
+\tikzset{Gwelve/.code={
+	\pgfkeys{/Gwelve/.cd,
+		x/.initial=0,
+		y/.initial=0,
+		scale/.initial=1
+	}
+	\pgfkeys{/Gwelve/.cd, #1}
+	\def\xpos{\pgfkeysvalueof{/Gwelve/x}}
+	\def\ypos{\pgfkeysvalueof{/Gwelve/y}}
+	\def\scale{\pgfkeysvalueof{/Gwelve/scale}}
+
+	\begin{scope}[shift={(\xpos,\ypos)}, scale=\scale]
+		\pgfmathtruncatemacro{\N}{12}
+		\def\permTwelve##1{\ifcase##1 7\or 2\or 11\or 4\or 0\or 9\or 1\or 6\or 10\or 3\or 8\or 5\fi}
+		\clip (0,0) rectangle (1,-1);
+
+		\foreach \i in {0,...,11}{
+			\edef\rLab{\permTwelve{\i}}
+			\foreach \j in {0,...,11}{
+				\ifnum\i=\j\relax\else
+					\edef\cLab{\permTwelve{\j}}
+					\pgfmathtruncatemacro{\d}{mod(\cLab-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\edge}{0}
+					\ifnum\d=1 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=2 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=3 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=9 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=10 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=11 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\edge=1\relax
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xL,\yT) rectangle (\xR,\yB);
+					\fi
+				\fi
+			}
+		}
+
+		\foreach \i in {0,...,11}{
+			\edef\rLab{\permTwelve{\i}}
+			\foreach \j in {0,...,10}{
+				\pgfmathtruncatemacro{\jpone}{\j+1}
+				\ifnum\i=\j\relax\else
+				\ifnum\i=\jpone\relax\else
+					\edef\cA{\permTwelve{\j}}
+					\edef\cB{\permTwelve{\jpone}}
+					\pgfmathtruncatemacro{\dA}{mod(\cA-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cB-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=2 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=3 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=9 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=10 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=11 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=2 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=3 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=9 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=10 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=11 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\xM}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xM-\eps,\yT) rectangle (\xM+\eps,\yB);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,10}{
+			\pgfmathtruncatemacro{\ipone}{\i+1}
+			\edef\rA{\permTwelve{\i}}
+			\edef\rB{\permTwelve{\ipone}}
+			\foreach \j in {0,...,11}{
+				\ifnum\j=\i\relax\else
+				\ifnum\j=\ipone\relax\else
+					\edef\cLab{\permTwelve{\j}}
+					\pgfmathtruncatemacro{\dA}{mod(\cLab-\rA+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cLab-\rB+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=2 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=3 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=9 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=10 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=11 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=2 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=3 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=9 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=10 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=11 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\yM}{-(\i+1)/\N}
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\fill[black!\intensity] (\xL,\yM-\eps) rectangle (\xR,\yM+\eps);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,11}{
+			\pgfmathsetmacro{\xL}{\i/\N}
+			\pgfmathsetmacro{\xR}{(\i+1)/\N}
+			\pgfmathsetmacro{\yT}{-(\i)/\N}
+			\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+			\fill[black] (\xL,\yT) rectangle (\xR,\yB);
+		}
+	\end{scope}
+}}
+
+\tikzset{Gthirteen/.code={
+	\pgfkeys{/Gthirteen/.cd,
+		x/.initial=0,
+		y/.initial=0,
+		scale/.initial=1
+	}
+	\pgfkeys{/Gthirteen/.cd, #1}
+	\def\xpos{\pgfkeysvalueof{/Gthirteen/x}}
+	\def\ypos{\pgfkeysvalueof{/Gthirteen/y}}
+	\def\scale{\pgfkeysvalueof{/Gthirteen/scale}}
+
+	\begin{scope}[shift={(\xpos,\ypos)}, scale=\scale]
+		\pgfmathtruncatemacro{\N}{13}
+		\def\permThirteen##1{\ifcase##1 9\or 2\or 12\or 4\or 0\or 11\or 6\or 1\or 8\or 3\or 10\or 5\or 7\fi}
+		\clip (0,0) rectangle (1,-1);
+
+		\foreach \i in {0,...,12}{
+			\edef\rLab{\permThirteen{\i}}
+			\foreach \j in {0,...,12}{
+				\ifnum\i=\j\relax\else
+					\edef\cLab{\permThirteen{\j}}
+					\pgfmathtruncatemacro{\d}{mod(\cLab-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\edge}{0}
+					\ifnum\d=1 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=3 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=4 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=9 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=10 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=12 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\edge=1\relax
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xL,\yT) rectangle (\xR,\yB);
+					\fi
+				\fi
+			}
+		}
+
+		\foreach \i in {0,...,12}{
+			\edef\rLab{\permThirteen{\i}}
+			\foreach \j in {0,...,11}{
+				\pgfmathtruncatemacro{\jpone}{\j+1}
+				\ifnum\i=\j\relax\else
+				\ifnum\i=\jpone\relax\else
+					\edef\cA{\permThirteen{\j}}
+					\edef\cB{\permThirteen{\jpone}}
+					\pgfmathtruncatemacro{\dA}{mod(\cA-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cB-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=3 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=4 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=9 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=10 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=12 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=3 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=4 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=9 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=10 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=12 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\xM}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xM-\eps,\yT) rectangle (\xM+\eps,\yB);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,11}{
+			\pgfmathtruncatemacro{\ipone}{\i+1}
+			\edef\rA{\permThirteen{\i}}
+			\edef\rB{\permThirteen{\ipone}}
+			\foreach \j in {0,...,12}{
+				\ifnum\j=\i\relax\else
+				\ifnum\j=\ipone\relax\else
+					\edef\cLab{\permThirteen{\j}}
+					\pgfmathtruncatemacro{\dA}{mod(\cLab-\rA+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cLab-\rB+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=3 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=4 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=9 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=10 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=12 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=3 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=4 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=9 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=10 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=12 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\yM}{-(\i+1)/\N}
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\fill[black!\intensity] (\xL,\yM-\eps) rectangle (\xR,\yM+\eps);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,12}{
+			\pgfmathsetmacro{\xL}{\i/\N}
+			\pgfmathsetmacro{\xR}{(\i+1)/\N}
+			\pgfmathsetmacro{\yT}{-(\i)/\N}
+			\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+			\fill[black] (\xL,\yT) rectangle (\xR,\yB);
+		}
+	\end{scope}
+}}
+
+\tikzset{Gfourteen/.code={
+	\pgfkeys{/Gfourteen/.cd,
+		x/.initial=0,
+		y/.initial=0,
+		scale/.initial=1
+	}
+	\pgfkeys{/Gfourteen/.cd, #1}
+	\def\xpos{\pgfkeysvalueof{/Gfourteen/x}}
+	\def\ypos{\pgfkeysvalueof{/Gfourteen/y}}
+	\def\scale{\pgfkeysvalueof{/Gfourteen/scale}}
+
+	\begin{scope}[shift={(\xpos,\ypos)}, scale=\scale]
+		\pgfmathtruncatemacro{\N}{14}
+		\def\permFourteen##1{\ifcase##1 10\or 3\or 13\or 5\or 0\or 12\or 7\or 1\or 9\or 4\or 11\or 2\or 6\or 8\fi}
+		\clip (0,0) rectangle (1,-1);
+
+		\foreach \i in {0,...,13}{
+			\edef\rLab{\permFourteen{\i}}
+			\foreach \j in {0,...,13}{
+				\ifnum\i=\j\relax\else
+					\edef\cLab{\permFourteen{\j}}
+					\pgfmathtruncatemacro{\d}{mod(\cLab-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\edge}{0}
+					\ifnum\d=1 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=2 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=5 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=9 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=12 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=13 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\edge=1\relax
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xL,\yT) rectangle (\xR,\yB);
+					\fi
+				\fi
+			}
+		}
+
+		\foreach \i in {0,...,13}{
+			\edef\rLab{\permFourteen{\i}}
+			\foreach \j in {0,...,12}{
+				\pgfmathtruncatemacro{\jpone}{\j+1}
+				\ifnum\i=\j\relax\else
+				\ifnum\i=\jpone\relax\else
+					\edef\cA{\permFourteen{\j}}
+					\edef\cB{\permFourteen{\jpone}}
+					\pgfmathtruncatemacro{\dA}{mod(\cA-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cB-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=2 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=5 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=9 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=12 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=13 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=2 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=5 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=9 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=12 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=13 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\xM}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xM-\eps,\yT) rectangle (\xM+\eps,\yB);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,12}{
+			\pgfmathtruncatemacro{\ipone}{\i+1}
+			\edef\rA{\permFourteen{\i}}
+			\edef\rB{\permFourteen{\ipone}}
+			\foreach \j in {0,...,13}{
+				\ifnum\j=\i\relax\else
+				\ifnum\j=\ipone\relax\else
+					\edef\cLab{\permFourteen{\j}}
+					\pgfmathtruncatemacro{\dA}{mod(\cLab-\rA+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cLab-\rB+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=2 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=5 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=9 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=12 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=13 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=2 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=5 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=9 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=12 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=13 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\yM}{-(\i+1)/\N}
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\fill[black!\intensity] (\xL,\yM-\eps) rectangle (\xR,\yM+\eps);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,13}{
+			\pgfmathsetmacro{\xL}{\i/\N}
+			\pgfmathsetmacro{\xR}{(\i+1)/\N}
+			\pgfmathsetmacro{\yT}{-(\i)/\N}
+			\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+			\fill[black] (\xL,\yT) rectangle (\xR,\yB);
+		}
+	\end{scope}
+}}
+
+\tikzset{Gnineteen/.code={
+	\pgfkeys{/Gnineteen/.cd,
+		x/.initial=0,
+		y/.initial=0,
+		scale/.initial=1
+	}
+	\pgfkeys{/Gnineteen/.cd, #1}
+	\def\xpos{\pgfkeysvalueof{/Gnineteen/x}}
+	\def\ypos{\pgfkeysvalueof{/Gnineteen/y}}
+	\def\scale{\pgfkeysvalueof{/Gnineteen/scale}}
+
+	\begin{scope}[shift={(\xpos,\ypos)}, scale=\scale]
+		\pgfmathtruncatemacro{\N}{19}
+		\def\permNineteen##1{\ifcase##1 12\or 3\or 17\or 6\or 0\or 14\or 9\or 1\or 16\or 5\or 18\or 2\or 15\or 7\or 11\or 4\or 13\or 8\or 10\fi}
+		\clip (0,0) rectangle (1,-1);
+
+		\foreach \i in {0,...,18}{
+			\edef\rLab{\permNineteen{\i}}
+			\foreach \j in {0,...,18}{
+				\ifnum\i=\j\relax\else
+					\edef\cLab{\permNineteen{\j}}
+					\pgfmathtruncatemacro{\d}{mod(\cLab-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\edge}{0}
+					\ifnum\d=1 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=4 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=7 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=12 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=15 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\d=18 \pgfmathtruncatemacro{\edge}{1}\fi
+					\ifnum\edge=1\relax
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xL,\yT) rectangle (\xR,\yB);
+					\fi
+				\fi
+			}
+		}
+
+		\foreach \i in {0,...,18}{
+			\edef\rLab{\permNineteen{\i}}
+			\foreach \j in {0,...,17}{
+				\pgfmathtruncatemacro{\jpone}{\j+1}
+				\ifnum\i=\j\relax\else
+				\ifnum\i=\jpone\relax\else
+					\edef\cA{\permNineteen{\j}}
+					\edef\cB{\permNineteen{\jpone}}
+					\pgfmathtruncatemacro{\dA}{mod(\cA-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cB-\rLab+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=4 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=7 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=12 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=15 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=18 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=4 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=7 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=12 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=15 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=18 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\xM}{(\j+1)/\N}
+						\pgfmathsetmacro{\yT}{-(\i)/\N}
+						\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+						\fill[black!\intensity] (\xM-\eps,\yT) rectangle (\xM+\eps,\yB);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,17}{
+			\pgfmathtruncatemacro{\ipone}{\i+1}
+			\edef\rA{\permNineteen{\i}}
+			\edef\rB{\permNineteen{\ipone}}
+			\foreach \j in {0,...,18}{
+				\ifnum\j=\i\relax\else
+				\ifnum\j=\ipone\relax\else
+					\edef\cLab{\permNineteen{\j}}
+					\pgfmathtruncatemacro{\dA}{mod(\cLab-\rA+\N,\N)}
+					\pgfmathtruncatemacro{\dB}{mod(\cLab-\rB+\N,\N)}
+					\pgfmathtruncatemacro{\eA}{0}
+					\pgfmathtruncatemacro{\eB}{0}
+
+					\ifnum\dA=1 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=4 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=7 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=12 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=15 \pgfmathtruncatemacro{\eA}{1}\fi
+					\ifnum\dA=18 \pgfmathtruncatemacro{\eA}{1}\fi
+
+					\ifnum\dB=1 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=4 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=7 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=12 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=15 \pgfmathtruncatemacro{\eB}{1}\fi
+					\ifnum\dB=18 \pgfmathtruncatemacro{\eB}{1}\fi
+
+					\ifnum\eA=1\relax\ifnum\eB=1\relax
+						\pgfmathsetmacro{\yM}{-(\i+1)/\N}
+						\pgfmathsetmacro{\xL}{\j/\N}
+						\pgfmathsetmacro{\xR}{(\j+1)/\N}
+						\fill[black!\intensity] (\xL,\yM-\eps) rectangle (\xR,\yM+\eps);
+					\fi\fi
+				\fi\fi
+			}
+		}
+
+		\foreach \i in {0,...,18}{
+			\pgfmathsetmacro{\xL}{\i/\N}
+			\pgfmathsetmacro{\xR}{(\i+1)/\N}
+			\pgfmathsetmacro{\yT}{-(\i)/\N}
+			\pgfmathsetmacro{\yB}{-(\i+1)/\N}
+			\fill[black] (\xL,\yT) rectangle (\xR,\yB);
+		}
+	\end{scope}
+}}
+
+\begin{scope}[yshift={6cm+\vsep}]
+	\begin{scope}[scale=3]
+		\begin{scope}[shift={(-2.375,0)}]
+			\pgfmathsetmacro{\gammaEight}{(1+6*\pEight)/7}
+			\pgfmathsetmacro{\crossdensity}{(7*\gammaEight-1)/6}
+			\pgfmathsetmacro{\rho}{100*\crossdensity}
+			\draw[Kseven={x=0, y=0, scale=1, intensity=\rho}];
+			\draw (0,0) rectangle (1,-1);
+		\end{scope}
+
+		\begin{scope}[shift={(-1.125,0)}]
+			\pgfmathsetmacro{\gammaVal}{1/2}
+			\pgfmathsetmacro{\crossdensity}{(7*\gammaVal-1)/6}
+			\pgfmathsetmacro{\rho}{100*\crossdensity}
+			\draw[Kseven={x=0, y=0, scale=1, intensity=\rho}];
+			\draw (0,0) rectangle (1,-1);
+		\end{scope}
+
+		\begin{scope}[shift={(0.125,0)}]
+			\pgfmathsetmacro{\gammaVal}{2/3}
+			\pgfmathsetmacro{\crossdensity}{(7*\gammaVal-1)/6}
+			\pgfmathsetmacro{\rho}{100*\crossdensity}
+			\draw[Kseven={x=0, y=0, scale=1, intensity=\rho}];
+			\draw (0,0) rectangle (1,-1);
+		\end{scope}
+
+		\begin{scope}[shift={(1.375,0)}]
+			\pgfmathsetmacro{\gammaVal}{5/6}
+			\pgfmathsetmacro{\crossdensity}{(7*\gammaVal-1)/6}
+			\pgfmathsetmacro{\rho}{100*\crossdensity}
+			\draw[Kseven={x=0, y=0, scale=1, intensity=\rho}];
+			\draw (0,0) rectangle (1,-1);
+		\end{scope}
+	\end{scope}
+\end{scope}
+
+\begin{scope}[scale=3]
+	\begin{scope}[shift={(-2.375,0)}]
+		\pgfmathsetmacro{\lambdaOne}{sqrt(7*\density/\cconst)}
+		\draw[Kseven={x=0, y=1, scale=\lambdaOne, intensity=\intensity}];
+		\draw (0,0) rectangle (1,1);
+	\end{scope}
+
+	\begin{scope}[shift={(-1.125,0)}]
+		\pgfmathsetmacro{\lambdaOne}{0.73}
+		\pgfmathsetmacro{\lambdaThree}{0.05}
+		\pgfmathsetmacro{\tOne}{0.02}
+		\pgfmathsetmacro{\tTwo}{0.013}
+		\pgfmathsetmacro{\tThree}{0.009}
+		\pgfmathsetmacro{\tFour}{0.006}
+		\pgfmathsetmacro{\tFive}{0.004}
+		\pgfmathsetmacro{\tSix}{0.003}
+		\pgfmathsetmacro{\tSeven}{0.002}
+		\pgfmathsetmacro{\lambdaTwo}{sqrt( ( \density/\cconst
+			- pow(\lambdaOne,2)/13
+			- pow(\lambdaThree,2)/14
+			- pow(\tOne,2)/7
+			- pow(\tTwo,2)/7
+			- pow(\tThree,2)/7
+			- pow(\tFour,2)/7
+			- pow(\tFive,2)/7
+			- pow(\tSix,2)/7
+			- pow(\tSeven,2)/7 )*7 )}
+
+		\draw[Gthirteen={x=0, y=1, scale=\lambdaOne}];
+		\draw[Kseven={x=\lambdaOne, y=1-\lambdaOne, scale=\lambdaTwo, intensity=\intensity}];
+		\draw[Gfourteen={x=\lambdaOne+\lambdaTwo, y=1-\lambdaOne-\lambdaTwo, scale=\lambdaThree}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree, y=1-\lambdaOne-\lambdaTwo-\lambdaThree, scale=\tOne, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree+\tOne, y=1-\lambdaOne-\lambdaTwo-\lambdaThree-\tOne, scale=\tTwo, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree+\tOne+\tTwo, y=1-\lambdaOne-\lambdaTwo-\lambdaThree-\tOne-\tTwo, scale=\tThree, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree+\tOne+\tTwo+\tThree, y=1-\lambdaOne-\lambdaTwo-\lambdaThree-\tOne-\tTwo-\tThree, scale=\tFour, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree+\tOne+\tTwo+\tThree+\tFour, y=1-\lambdaOne-\lambdaTwo-\lambdaThree-\tOne-\tTwo-\tThree-\tFour, scale=\tFive, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree+\tOne+\tTwo+\tThree+\tFour+\tFive, y=1-\lambdaOne-\lambdaTwo-\lambdaThree-\tOne-\tTwo-\tThree-\tFour-\tFive, scale=\tSix, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\lambdaThree+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix, y=1-\lambdaOne-\lambdaTwo-\lambdaThree-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix, scale=\tSeven, intensity=\intensity}];
+
+		\draw (0,0) rectangle (1,1);
+	\end{scope}
+
+	\begin{scope}[shift={(0.125,0)}]
+		\pgfmathsetmacro{\lambdaOne}{sqrt(19*\density/\cconst)}
+		\draw[Gnineteen={x=0, y=1, scale=\lambdaOne}];
+		\draw (0,0) rectangle (1,1);
+	\end{scope}
+
+	\begin{scope}[shift={(1.375,0)}]
+		\pgfmathsetmacro{\lambdaOne}{0.48}
+		\pgfmathsetmacro{\tOne}{0.07}
+		\pgfmathsetmacro{\tTwo}{0.05}
+		\pgfmathsetmacro{\tThree}{0.035}
+		\pgfmathsetmacro{\tFour}{0.025}
+		\pgfmathsetmacro{\tFive}{0.018}
+		\pgfmathsetmacro{\tSix}{0.013}
+		\pgfmathsetmacro{\tSeven}{0.009}
+		\pgfmathsetmacro{\tEight}{0.006}
+		\pgfmathsetmacro{\tNine}{0.004}
+		\pgfmathsetmacro{\tTen}{0.003}
+		\pgfmathsetmacro{\tEleven}{0.002}
+		\pgfmathsetmacro{\tTwelve}{0.0015}
+		\pgfmathsetmacro{\tThirteen}{0.001}
+		\pgfmathsetmacro{\tFourteen}{0.0007}
+		\pgfmathsetmacro{\tFifteen}{0.0005}
+		\pgfmathsetmacro{\tSixteen}{0.00035}
+		\pgfmathsetmacro{\tSeventeen}{0.00025}
+
+		\pgfmathsetmacro{\lambdaTwo}{sqrt( ( \density/\cconst
+			- pow(\lambdaOne,2)/7
+			- pow(\tOne,2)/7
+			- pow(\tTwo,2)/7
+			- pow(\tThree,2)/7
+			- pow(\tFour,2)/7
+			- pow(\tFive,2)/7
+			- pow(\tSix,2)/7
+			- pow(\tSeven,2)/7
+			- pow(\tEight,2)/7
+			- pow(\tNine,2)/7
+			- pow(\tTen,2)/7
+			- pow(\tEleven,2)/7
+			- pow(\tTwelve,2)/7
+			- pow(\tThirteen,2)/7
+			- pow(\tFourteen,2)/7
+			- pow(\tFifteen,2)/7
+			- pow(\tSixteen,2)/7
+			- pow(\tSeventeen,2)/7 )*7 )}
+
+		\draw[Kseven={x=0, y=1, scale=\lambdaOne, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne, y=1-\lambdaOne, scale=\lambdaTwo, intensity=\intensity}];
+
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo, y=1-\lambdaOne-\lambdaTwo, scale=\tOne, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne, y=1-\lambdaOne-\lambdaTwo-\tOne, scale=\tTwo, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo, scale=\tThree, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree, scale=\tFour, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour, scale=\tFive, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive, scale=\tSix, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix, scale=\tSeven, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven, scale=\tEight, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight, scale=\tNine, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine, scale=\tTen, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen, scale=\tEleven, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen+\tEleven, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen-\tEleven, scale=\tTwelve, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen+\tEleven+\tTwelve, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen-\tEleven-\tTwelve, scale=\tThirteen, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen+\tEleven+\tTwelve+\tThirteen, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen-\tEleven-\tTwelve-\tThirteen, scale=\tFourteen, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen+\tEleven+\tTwelve+\tThirteen+\tFourteen, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen-\tEleven-\tTwelve-\tThirteen-\tFourteen, scale=\tFifteen, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen+\tEleven+\tTwelve+\tThirteen+\tFourteen+\tFifteen, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen-\tEleven-\tTwelve-\tThirteen-\tFourteen-\tFifteen, scale=\tSixteen, intensity=\intensity}];
+		\draw[Kseven={x=\lambdaOne+\lambdaTwo+\tOne+\tTwo+\tThree+\tFour+\tFive+\tSix+\tSeven+\tEight+\tNine+\tTen+\tEleven+\tTwelve+\tThirteen+\tFourteen+\tFifteen+\tSixteen, y=1-\lambdaOne-\lambdaTwo-\tOne-\tTwo-\tThree-\tFour-\tFive-\tSix-\tSeven-\tEight-\tNine-\tTen-\tEleven-\tTwelve-\tThirteen-\tFourteen-\tFifteen-\tSixteen, scale=\tSeventeen, intensity=\intensity}];
+
+		\draw (0,0) rectangle (1,1);
+	\end{scope}
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}

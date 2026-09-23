@@ -1,0 +1,74 @@
+\documentclass[11pt,letterpaper]{amsart}
+\input{preamble}
+
+\title[Excluding an induced star in dense random graphs]{Excluding an induced star in dense random graphs}
+
+\author{Sam van~der~Poel}
+\address{Georgia Institute of Technology}
+\email{samvanderpoel@gatech.edu}
+
+\begin{document}
+
+\begin{abstract}
+For fixed $k\geq3$, we study the asymptotic number and typical structure of dense graphs with no induced copy of the star $K_{1,k}$. We solve the associated graphon variational problems both at fixed constant edge density $\gamma$ and for the conditioned Erd\H{o}s--R\'enyi random graph $G(n,p)$ for constant $p$. As consequences, we obtain explicit formulas for the entropy density of induced-$K_{1,k}$-free graphs with $\Theta(n^2)$ edges and for the large deviation rate function for the event that $G(n,p)$ is induced-$K_{1,k}$-free. The entropy density exhibits a second-order phase transition at an explicit critical density $\gamma_k$, while the rate function exhibits a first-order phase transition at a critical parameter $p_k$.
+
+We completely characterize the optimizers of both variational problems. Both models have parameter values for which there are infinitely many optimal graphons, but there is always a unique graphon that represents the typical structure in cut metric. We refine the graphon-level results by giving a detailed structural description of both models. For supercritical parameters, each random graph model is the complement of a $(k-1)$-partite graph with high probability. In the subcritical regime of the fixed-density model, the typical structure is the disjoint union of the complement of a $(k-1)$-partite graph, and a sparse remainder. In the subcritical regime of the conditioned Erd\H{o}s--R\'enyi random graph, a typical sample has $o(n^2)$ edges.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+\input{introduction}
+
+\section{Preliminaries}
+\label{sec:prelim}
+\input{preliminaries}
+
+\section{Solving the Graphon Variational Problem}
+\label{sec:graphon-prob}
+\input{graphon-problem}
+
+\section{Entropy Density, Rate Function, and Rough Structure}
+\label{sec:entropy}
+\input{entropy}
+
+\section{The Supercritical Regime}
+\label{sec:supercritical}
+\input{supercritical}
+
+\section{The Critical Density}
+\label{sec:critical}
+\input{critical}
+
+\section{The Subcritical Regime}
+\label{sec:subcritical}
+\input{subcritical}
+
+\section{The Conditional \erdosrenyi{} Random Graph}
+\label{sec:erdosrenyi}
+\input{gnp}
+
+\section{Extremal Structure and Stability of Edge Colorings}
+\label{sec:edge-coloring}
+\input{edge-coloring}
+
+\section*{Acknowledgments}
+The author is grateful to Will Perkins for many helpful conversations. The author is supported by an Algorithms and Randomness Center Fellowship and an NSF Graduate Research Fellowship.
+
+\printbibliography
+
+\appendix
+\markboth{APPENDIX}{APPENDIX}
+
+\section{Deferred Results}
+\label{sec:deferred}
+\input{deferred}
+
+\ActivateWarningFilters[pdftoc]
+\section{Induced-$C_4$-Free Graphs of Fixed Density}
+\DeactivateWarningFilters[pdftoc]
+\label{sec:c4-free}
+\input{c4-free}
+
+\end{document}

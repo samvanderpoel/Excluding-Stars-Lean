@@ -1,0 +1,99 @@
+import DenseGraph.Regularity
+import DenseGraph.Analysis.EntropyBoost
+import DenseGraph.Analysis.EntropyFeasibilityEnvelope
+import DenseGraph.Combinatorics.BinomialCapacity
+import DenseGraph.Combinatorics.BinomialEntropy
+import DenseGraph.Combinatorics.FeasibleEntropySlice
+import DenseGraph.Combinatorics.BinomialEntropyPerturbation
+import DenseGraph.Combinatorics.LogarithmicGain
+import DenseGraph.Combinatorics.MatchingCoefficientGrowth
+import DenseGraph.Combinatorics.RegularWeightedCapacity
+import DenseGraph.Combinatorics.BinomialJointShift
+import DenseGraph.Combinatorics.BinomialProfiles
+import DenseGraph.Combinatorics.BinomialLevelShift
+import DenseGraph.Combinatorics.SecondOrderBinomial
+import DenseGraph.Combinatorics.BinomialStirling
+import DenseGraph.Combinatorics.TwoSidedBinomial
+import DenseGraph.Combinatorics.ExponentialSums
+import DenseGraph.Combinatorics.ProfileSums
+import DenseGraph.Combinatorics.GaussianLattice
+import DenseGraph.Combinatorics.Matching
+import DenseGraph.Combinatorics.BoundedDegreeCounting
+import DenseGraph.Combinatorics.BoundedMatchingCounting
+import DenseGraph.FiniteModels.BalancedAssignments
+import DenseGraph.FiniteModels.PartitionImbalance
+import DenseGraph.FiniteModels.BalancedPartition
+import DenseGraph.FiniteModels.BernoulliProduct
+import DenseGraph.FiniteModels.BernoulliPolarity
+import DenseGraph.FiniteModels.BernoulliEvents
+import DenseGraph.FiniteModels.BernoulliTail
+import DenseGraph.FiniteModels.CoverUniqueness
+import DenseGraph.FiniteModels.ColorPartition
+import DenseGraph.FiniteModels.DefectFreeSelections
+import DenseGraph.FiniteModels.EdgeDensityNormalization
+import DenseGraph.FiniteModels.FixedCardinalityBlocks
+import DenseGraph.FiniteModels.FixedCardinalityContainment
+import DenseGraph.FiniteModels.FixedCardinalityTransport
+import DenseGraph.FiniteModels.ForcedGraphSlices
+import DenseGraph.FiniteModels.IsolatedSupport
+import DenseGraph.FiniteModels.ProportionalAllocation
+import DenseGraph.FiniteModels.GraphEdit
+import DenseGraph.FiniteModels.Janson
+import DenseGraph.FiniteModels.Multipartite
+import DenseGraph.FiniteModels.RestrictedPatternWitness
+import DenseGraph.FiniteModels.SplitGraphs
+import DenseGraph.FiniteModels.RegularCompletion
+import DenseGraph.FiniteModels.TuranRounding
+import DenseGraph.FiniteModels.WeightedGraph
+import DenseGraph.FiniteModels.WeightedRestriction
+import InducedStars.FiniteModels.ConditionalSupport
+import InducedStars.FiniteModels.EntropyAsymptotics
+import InducedStars.FiniteModels.GnpCore
+import InducedStars.FiniteModels.GnpFamilySlices
+import InducedStars.FiniteModels.GnpWRandom
+import InducedStars.FiniteModels.GraphFamiliesCore
+import InducedStars.FiniteModels.RepairCounting
+import InducedStars.FiniteModels.Shannon
+import InducedStars.FiniteModels.WRandomEvents
+
+/-!
+# Reusable finite graph probability models
+
+This layer exposes labeled induced-H-free families, exact Gnp and W-random
+laws, explicit finite Bernoulli products, independent fixed-cardinality block
+sampling and its exact conditioning comparison, the principal-upset Janson
+capability, compact-band, sharp joint-shift, and capacity-enlargement binomial comparisons,
+finite events and Shannon entropy, graph-edit balls, arbitrary-family edge
+slices, and finite maximum matchings with a fixed selector.  Star aliases
+remain in the historical compatibility modules and are intentionally absent
+from this import closure.
+-/
+
+namespace DenseGraph
+
+export InducedStars
+  (completeEdgeCount normalizedLogAtGraphOrder normalizedLogGraphCount
+    normalizedLogProbability HasAsymptoticEdgeDensity
+    card_edgeFinset_le_completeEdgeCount finiteGraphEdges_card_eq_edgeFinset_card
+    inducedFreeGraphFinset inducedFreeGraphFinsetWithEdges
+    inducedFreeGraphCountWithEdges gnpGraphWeight gnpGraphWeight_nonneg
+    gnpGraphWeight_pos gnpGraphWeight_eq_of_edgeCount_eq
+    gnpGraphWeight_sum_univ gnpGraphEventProbability
+    gnpGraphEventProbability_nonneg gnpGraphEventProbability_le_one
+    gnpGraphEventProbability_mono gnpGraphEventProbability_union
+    wRandomGraphMass_constantGraphon
+    wRandomGraphEventProbability_constantGraphon
+    gnpInducedFreeProbability normalizedLogGnpInducedFreeProbability
+    gnpInducedFreeSliceWeight gnpInducedFreeProbability_eq_sum_edgeCounts
+    graphFamilyEdgeSlice gnpGraphFamilySliceWeight
+    maximizingGraphFamilyEdgeCount maximalGnpGraphFamilySliceWeight
+    gnpGraphFamilyMaximumSlice_bounds wRandomConditionalWeight
+    wRandomGraphMass wRandomGraphEventProbability WRandomJointEvent
+    wRandomJointEventProbability wRandomLatentEventProbability
+    finiteEventMass finiteShannonEntropy finitePartialShannonEntropy
+    wRandomGraphEntropy labeledGraphFamilyLimitSet exactEdgeInducedFreeLimitSet
+    graphEditDistance graphHammingBall hammingBallVolume fractionalEditRadius
+    graphRepairFiber card_le_card_mul_hammingBallVolume_of_graphRepair
+    ae_conditionalSupport_inducedFree)
+
+end DenseGraph

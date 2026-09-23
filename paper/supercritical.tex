@@ -1,0 +1,284 @@
+In this section we prove \Cref{thm:main-almostall} \ref{item:thm:main-almostall-super}. We first introduce recurring parameters and definitions. Throughout this section, fix $k\geq3$, let $\Delta:=k-2$, fix $\gamma\in[\gamma_k,1)$, let $m\sim\gamma\binom{n}{2}$, and define
+$$\rho:=\frac{(k-1)\gamma-1}{k-2}\,.$$
+The local estimates and the cover-multiplicity lemma below apply to the full half-open interval $\gamma\in[\gamma_k,1)$, as the equality case $\gamma=\gamma_k$ is needed in \Cref{sec:critical}. The absorption estimate and the final proof require $\gamma\in(\gamma_k,1)$. Throughout the section, we write $C_k>0$ for a constant depending only on $k$ that may vary from line to line.
+
+The parameters below are chosen in the following order. First choose $0<\alpha<1/(100k)$ sufficiently small. The proof of \Cref{lemma:super-FPiT} below gives a constant $c_\mat=c_\mat(k,\gamma)>0$. Next choose $\delta>0$ sufficiently small so that
+\begin{equation}\label{eqn:super-parameter-alpha-delta-K1k}
+\delta<\frac{\alpha}{100}\,,\qquad C_k\bigl(H(3\alpha)+\delta\bigr)<\frac{c_\mat}{100}\,,\qquad \rho\pm3\delta\subseteq(0,1)\,.
+\end{equation}
+After $\alpha$ and $\delta$ are fixed, the proof of \Cref{lemma:super-FPiprime} gives a constant $c_\med=c_\med(k,\gamma,\alpha)>0$. Choose $\epsilon>0$ sufficiently small so that
+\begin{equation}\label{eqn:super-parameter-epsilon-K1k}
+C_k\bigl(H(\epsilon)+\delta\bigr)<\frac{c_\med}{100}\,,\qquad \epsilon=o(\alpha^k)\,.
+\end{equation}
+Finally define
+$$\tau:=\frac{1}{2}\left(\frac{\epsilon}{2^8k}\right)^3\,.$$
+
+For pairwise disjoint nonempty sets $P_1,\dots,P_{k-1}\subseteq V$, call
+$$\Pi=\{P_1,\dots,P_{k-1}\}$$
+a \emph{division} of $V$. For a division $\Pi$, write
+$$V(\Pi):=\bigcup_{P\in\Pi}P\,,\qquad \Pi_\sparse:=V\setminus V(\Pi)\,.$$
+Let $\sD$ denote the set of all divisions of $V$. For all $s\geq0$ define $\sD_s:=\{\Pi\in\sD:|\Pi_\sparse|=s\}$.
+For all $G\in\cF^\ast_{n,m}(K_{1,k})$ and divisions $\Pi=\{P_1,\dots,P_{k-1}\}\in\sD$, define the graph $T(G,\Pi)$ on the vertex set $V$ by
+$$E(T(G,\Pi)):=\bigcup_{i=1}^{k-1}E(G^c[P_i])\cup E(G[V(\Pi),\Pi_\sparse])\,.$$
+Define the quantity
+$$b(G,\Pi):=e(T(G,\Pi))+e(G[\Pi_\sparse])\,.$$
+Let $\Pi(G)$ denote a canonically chosen division minimizing $b(G,\cdot)$, and let us write $\Pi_\sparse(G)$ instead of $\Pi(G)_\sparse$. Define
+$$T(G):=T(G,\Pi(G))\,,\qquad b(G):=b(G,\Pi(G))\,.$$
+
+\subsection{Proof anatomy}
+Let $W^\ast:=W^\ast_\gamma$ be the unique optimal graphon in the supercritical regime defined in \eqref{eqn:opt-graphon-super}. Define the set of far graphs
+$$\cF^\far:=\{G\in\cF^\ast_{n,m}(K_{1,k}):\delta_\square(G,W^\ast)\geq\tau\}\,.$$
+For all $\Pi\in\sD$ define the sets of graphs
+$$\arraycolsep=1.4pt
+\begin{array}{ll}
+\cF_\Pi &:= \{G\in\cF^\ast_{n,m}(K_{1,k})\setminus\cF^\far:\Pi(G)=\Pi\,,\,e(T(G))\geq1\} \,, \\[5pt]
+\cF^\ast_\Pi &:= \{G\in\cF^\ast_{n,m}(K_{1,k})\setminus\cF^\far:\Pi(G)=\Pi\,,\,e(T(G))=0\} \,.
+\end{array}$$
+as well as
+$$\arraycolsep=1.4pt
+\begin{array}{ll}
+\cT_\Pi &:= \{T(G)\cup G[\Pi_\sparse]:G\in\cF_\Pi\} \,, \\[5pt]
+\cT^\ast_\Pi &:= \{G[\Pi_\sparse]:G\in\cF^\ast_\Pi\} \,.
+\end{array}$$
+Using the same degree trichotomy as in \cite{perkins2025typical}, for all $T\in\cT_\Pi$ and $P\in\Pi$ we say that $v$ has
+\begin{enumerate}[(\emph{\roman*})]
+	\item \emph{low degree in $P$}  if $d_T(v,P)<\alpha|P|$,
+    \item \emph{medium degree in $P$} if $\alpha|P|\leq d_T(v,P)\leq(1-\alpha)|P|$, or
+	\item \emph{high degree in $P$} if $d_T(v,P)>(1-\alpha)|P|$.
+\end{enumerate}
+If a vertex $v$ has medium degree in some $P\in\Pi$ with respect to $T\in\cT_\Pi$, we say that $v$ has $(\Pi,T)$-medium degree. For all $\Pi\in\sD$ and $T\in\cT_\Pi$ let
+$$\arraycolsep=1.4pt
+\begin{array}{ll}
+\cF'_\Pi &:= \{G\in\cF_\Pi:\text{there exists a vertex of $(\Pi,T(G))$-medium degree}\} \,, \\[5pt]
+\cF_{\Pi,T} &:= \{G\in\cF_\Pi\setminus\cF'_\Pi:T(G)\cup G[\Pi_\sparse]=T\} \,.
+\end{array}$$
+
+\begin{lemma}\label{lemma:SuperCloseStructureK1k}
+For large enough $n$, every graph $G\in\cF^\ast_{n,m}(K_{1,k})\setminus\cF^\far$ satisfies the following conditions:
+\begin{enumerate}[
+  label=\textit{(\roman*)},
+  ref=(\textit{\roman*}),
+  topsep=5pt
+]
+    \item\label{item:lemSuperK1ki} By editing at most $\epsilon n^2$ edges of $G$, one can obtain a co-$(k-1)$-partite graph.
+    \item\label{item:lemSuperK1kii} For all $P\in\Pi(G)$ it holds that $|P|\in\big(\frac{1}{k-1}\pm\delta\big)n$.
+    \item\label{item:lemSuperK1kiii} We have $|\Pi_\sparse(G)|\leq\delta n/2$.
+    \item\label{item:lemSuperK1kiv} For all distinct $P,Q\in\Pi(G)$ it holds that $|\rho-d_G(P,Q)|\leq\delta$.
+    \item\label{item:lemSuperK1kv} For every $v\in V$ and every $P\in\Pi(G)$, the vertex $v$ does not have high degree in $P$ with respect to $T(G)\cup G[\Pi_\sparse(G)]$.
+\end{enumerate}
+\end{lemma}
+
+For an integer $r\geq2$ let $\cC^r_{n,m}$ denote the set of co-$r$-partite graphs on $n$ vertices and $m$ edges. As a direct consequence of \Cref{lemma:SuperCloseStructureK1k}, we have
+\begin{equation}\label{eqn:union-bound-super}
+\cF^\ast_{n,m}(K_{1,k})\subseteq\cC^{k-1}_{n,m}\cup\bigcup_{s=1}^{\delta n/2}\bigcup_{\Pi\in\sD_s}\cF^\ast_\Pi\cup\bigcup_{\Pi\in\sD}\Bigg(\bigcup_{T\in\cT_\Pi}\cF_{\Pi,T}\cup\cF'_\Pi\Bigg)\cup\cF^\far\,.
+\end{equation}
+The proof of \Cref{thm:main-almostall} \ref{item:thm:main-almostall-super} in this section consists in establishing bounds for the cardinalities of the sets on the right-hand side of \eqref{eqn:union-bound-super}. To establish \Cref{lemma:SuperCloseStructureK1k}, we need the following definition, similar to that in \cite{perkins2025typical}.
+
+\begin{definition}[Discretization of a graphon]\label{def:DiscreteGraphon}
+For a graphon $W\in\cW$ and an integer $n$, define a weighted graph $H_n$ on vertex set $[n]$ by assigning weight $W(i/n,j/n)$ to the pair $ij$, and assigning weight $1$ to each vertex. The $n$th discretization of $W$ is the graphon $W_n:=W_{H_n}$, where the graphon $W_H$ associated with a weighted graph $H$ is defined in \Cref{subsec:graphons}.
+\end{definition}
+
+\begin{proof}[Proof of \Cref{lemma:SuperCloseStructureK1k}]
+Write $r:=k-1$. Choose a half-open representative of the $r$ blocks of $W^\ast$, and let $H_n$ be its weighted discretization, including diagonal weights $1$. Its blocks $B_1,\dots,B_r$ have sizes $n/r+O(1)$. Since $W_{H_n}\to W^\ast$ in $L^1$, the fixed-tolerance form of \cite[Theorem~2.3 and the remark on p.~1831]{borgs2008convergent}, together with \cite[Lemma~8.9]{lovasz2012large}, gives an aligning permutation for which
+$$d_\square(G,H_n)\leq32(2\tau)^{1/3}=\epsilon/(8k)$$
+for all sufficiently large $n$. We retain this labeling throughout. The discrepancy on $B_i\times B_i$ is $2e(G^c[B_i])+|B_i|$, so adding the missing edges inside these blocks proves \ref{item:lemSuperK1ki}. In particular, $b(G)\leq\epsilon n^2$.
+
+Write $\Pi:=\Pi(G)=\{P_1,\dots,P_r\}$, $S:=\Pi_\sparse$, and let $H$ be obtained from $G$ by adding the missing edges inside the $P_i$ and deleting all edges incident with $S$. Each edited edge changes two matrix entries, hence
+\begin{equation}\label{eqn:triangle-superK1k}
+d_\square(H,H_n)\leq d_\square(H,G)+d_\square(G,H_n)\leq2\epsilon+\epsilon/(8k)\,.
+\end{equation}
+On $S\times V$, the matrix of $H$ is zero and every reference weight is at least $\rho$. Thus $\rho|S|/n\leq3\epsilon$, proving \ref{item:lemSuperK1kiii}.
+
+We give the alignment argument for \ref{item:lemSuperK1kii} and \ref{item:lemSuperK1kiv}. Put $a_{ij}:=|P_i\cap B_j|$. The rectangle $P_i\times P_i$ gives
+$$(1-\rho)\left(|P_i|^2-\sum_j a_{ij}^2\right)\leq3\epsilon n^2+|P_i|\,.$$
+Fix an auxiliary $\zeta\ll\delta$, and take $\epsilon\ll\zeta^2$. Since $\sum_j a_{ij}^2\leq|P_i|\max_j a_{ij}$, every $P_i$ of size at least $\zeta n$ has all but $O_{k,\rho}(\epsilon n/\zeta+1)$ vertices in one reference block. Consequently $|P_i|\leq n/r+\zeta n$ for every $i$, after decreasing $\epsilon$. The sparse bound and $\sum_i|P_i|=n-|S|$ now give $|P_i|=n/r+O_k(\zeta n)$ for every $i$. Two parts cannot have the same dominant block, since together they would exceed its capacity $n/r+O(1)$. Relabeling the $P_i$ therefore gives $|P_i\triangle B_i|=O_k(\zeta n)$, proving \ref{item:lemSuperK1kii}. On $P_i\times P_j$, $i\neq j$, the reference weight is $\rho$ except on $O_k(\zeta n^2)$ entries, while $H$ agrees with $G$. Equation \eqref{eqn:triangle-superK1k} gives $|d_G(P_i,P_j)-\rho|=O_k(\epsilon+\zeta)<\delta$, proving \ref{item:lemSuperK1kiv}. The diagonal errors above are absorbed by the sufficiently-large-$n$ threshold.
+
+For \ref{item:lemSuperK1kv}, the changes in $b(G,\Pi)$ when moving $v$ from $P_i$ to $P_j$, from $P_i$ to $S$, and from $S$ to $P_i$ are, respectively,
+$$d_G^c(v,P_j)-d_G^c(v,P_i)\,,\qquad d_G(v,V(\Pi))-d_G^c(v,P_i)\,,\qquad d_G^c(v,P_i)-d_G(v,V(\Pi))\,.$$
+The source parts have linear size, so these moves are admissible. If $v\in P_i$ and $d_G^c(v,P_i)>(1-\alpha)|P_i|$, optimality of the first moves gives $d_G(v,P_j)\leq |P_j|-(1-\alpha)|P_i|$ for $j\neq i$, while $d_G(v,P_i)=|P_i|-1-d_G^c(v,P_i)$. Balance and $\delta\ll\alpha$ imply $d_G(v,V(\Pi))=O_k(\alpha n)$; the second move then strictly decreases $b(G,\Pi)$, a contradiction. If $v\in S$, optimality of the third move gives $|P_i|-d_G(v,P_i)\geq d_G(v,V(\Pi))\geq d_G(v,P_i)$. Hence $d_G(v,P_i)\leq|P_i|/2$, completing the proof.
+\end{proof}
+
+\subsection{The counting argument}
+For all $\Pi=\{P_1,\dots,P_{k-1}\}\in\sD$ and integers $t$, define
+$$\cM_{\Pi,t}:=
+\left\{\bsm\in\N^{\binom{k-1}{2}}:
+\begin{array}{l}
+\norm{\bsm}_1+e(\Pi^c)+t=m \text{ and } \\[8pt]
+\text{for all $1\leq i<j\leq k-1$,}~~\frac{\bsm_{ij}}{|P_i|\cdot|P_j|}\in \rho\pm\delta
+\end{array}\right\}\,,$$
+where $e(\Pi^c)=\sum_{i=1}^{k-1}\binom{|P_i|}{2}$. Let us also write
+$$\cM_\Pi:=\bigcup_{-\epsilon n^2\leq t\leq\epsilon n^2}\cM_{\Pi,t}\,.$$
+Thus an $\bsm\in\cM_{\Pi,t}$ assigns $\bsm_{ij}$ edges to the bipartite graph between $P_i$ and $P_j$, and $t$ records the net contribution of $E(T(G))$ and $E(G[\Pi_\sparse])$ to the edge count. For all $\Pi=\{P_1,\dots,P_{k-1}\}\in\sD$ and $\bsm\in\cM_\Pi$, let us define
+$$\binom{\Pi}{\bsm}:=\prod_{1\leq i<j\leq k-1}\binom{|P_i|\cdot|P_j|}{\bsm_{ij}}\,.$$
+For $T\in\cT_\Pi$, define
+$$\sigma_\Pi(T):=e_T(V(\Pi),\Pi_\sparse)+e(T[\Pi_\sparse])-e(T[V(\Pi)])\,,$$
+where $e_T(V(\Pi),\Pi_\sparse)$ denotes the number of edges of $T$ with one endpoint in $V(\Pi)$ and the other in $\Pi_\sparse$.
+
+\begin{lemma}\label{lemma:super-FPiprime}
+There exists $c_\med=c_\med(k,\gamma,\alpha)>0$ such that the following holds. For all $\Pi\in\sD$ and $\bsm\in\cM_\Pi$, we have
+$$\abs{\cF'_\Pi} \leq \binom{\Pi}{\bsm}\,e^{-c_\med n^2}\,.$$
+\end{lemma}
+\begin{proof}
+Let us write $\Pi=\{P_1,\dots,P_{k-1}\}$. For all $T\in\cT_\Pi$, $v\in V$, graphs $F$ on $P_1\cup\cdots\cup P_{k-1}\cup\{v\}$ whose edges are all incident with $v$, and $\bsm'\in\cM_\Pi$, let $\cF'_{\Pi,T,v,F,\bsm'}$ be the set of graphs $G\in\cF'_\Pi$ such that $T(G)\cup G[\Pi_\sparse]=T$, the vertex $v$ has $(\Pi,T)$-medium degree, the adjacencies between $v$ and $V(\Pi)$ are given by $F$, and $e_G(P_i,P_j)=\bsm'_{ij}$ for all $1\leq i<j\leq k-1$.
+Then
+\begin{equation}\label{eqn:super-medium-cover-K1k}
+\abs{\cF'_\Pi}\leq \sum_{T\in\cT_\Pi}\sum_{v\in V}\sum_F\sum_{\bsm'\in\cM_\Pi}\abs{\cF'_{\Pi,T,v,F,\bsm'}}\,.
+\end{equation}
+
+Fix $T,v,F,\bsm'$ such that $\cF'_{\Pi,T,v,F,\bsm'}$ is nonempty. Since defect edges lie either inside one of the sets $P\in\Pi$ or are incident with $\Pi_\sparse$, any vertex of $(\Pi,T)$-medium degree outside $\Pi_\sparse$ must lie in the unique set $P\in\Pi$ in which it has medium degree. After relabeling the sets in $\Pi$, we may therefore assume that $v$ has medium degree in $P_1$ and that $v\in P_1\cup\Pi_\sparse$.
+
+For all $G\in\cF'_{\Pi,T,v,F,\bsm'}$, \Cref{lemma:SuperCloseStructureK1k} gives $|P_i|\in(\frac{1}{k-1}\pm\delta)n$ for all $i\in[k-1]$. Write $a_i:=|P_i|$ and define
+$$N:=\begin{cases}\{x\in P_1\setminus\{v\}:vx\not\in E(F)\}&\text{if }v\in P_1\\[8pt]\{x\in P_1:vx\in E(F)\}&\text{if }v\in \Pi_\sparse
+\end{cases}\,.$$
+We then have $\alpha a_1\leq |N|\leq (1-\alpha)a_1$. If $j\geq2$ then optimality of $\Pi(G)$ gives a set $N_j\subseteq P_j$ such that $|N_j|\geq\alpha a_j/2$ and $vx\not\in E(F)$ for all $x\in N_j$. Indeed, if $v\in P_1$ then $d_G^c(v,P_j)\geq d_G^c(v,P_1)=|N|$, while if $v\in\Pi_\sparse$ then $d_G^c(v,P_j)\geq d_G(v,V(\Pi))\geq d_G(v,P_1)=|N|$.
+
+Let $Q_1:=P_1\setminus\{v\}$ if $v\in P_1$, and $Q_1:=P_1$ if $v\in\Pi_\sparse$. Also set $Q_i:=P_i$ for all $i\geq2$. Define integers $\widetilde{\bsm}_{ij}$ by setting $\widetilde{\bsm}_{ij}:=\bsm'_{ij}$ for all $2\leq i<j\leq k-1$, and also for all $1j$ if $v\in\Pi_\sparse$, while for $v\in P_1$ and $j\geq2$ we set
+$$\widetilde{\bsm}_{1j}:=\bsm'_{1j}-\abs{\{x\in P_j:vx\in E(F)\}}\,.$$
+Let $G=G_{\Pi,T,v,F,\bsm'}$ be the random graph on $V$ obtained by choosing, independently for $1\leq i<j\leq k-1$, a uniformly random $\widetilde{\bsm}_{ij}$-element subset $A_{ij}\subseteq E(K_{Q_i,Q_j})$, and setting
+\begin{equation}\label{eqn:super-fixed-model-medium-K1k}
+E(G):=\left(\bigcup_{i=1}^{k-1}\binom{P_i}{2}\cup E(F[V(\Pi)])\cup\bigcup_{1\leq i<j\leq k-1}A_{ij}\right)\triangle\,E(T)\,.
+\end{equation}
+Every graph in $\cF'_{\Pi,T,v,F,\bsm'}$ is an outcome of $G$, and $\prod_{1\leq i<j\leq k-1}\binom{|Q_i||Q_j|}{\widetilde{\bsm}_{ij}}\leq\binom{\Pi}{\bsm'}$. Combining this with \eqref{eqn:super-medium-cover-K1k} gives
+\begin{equation}\label{eqn:super-medium-counting-setup-K1k}
+\abs{\cF'_\Pi}\leq \sum_{T\in\cT_\Pi}\sum_{v\in V}\sum_F\sum_{\bsm'\in\cM_\Pi}\binom{\Pi}{\bsm'}\,\bbP\{G_{\Pi,T,v,F,\bsm'}\in\cF^\ast_{n,m}(K_{1,k})\}\,,
+\end{equation}
+where the summand is interpreted as $0$ if $\cF'_{\Pi,T,v,F,\bsm'}=\emptyset$.
+
+For $1\leq i<j\leq k-1$, set $q_{ij}:=\widetilde{\bsm}_{ij}/(|Q_i||Q_j|)$. The random graph $G^\bin=G^\bin_{\Pi,T,v,F,\bsm'}$ is defined in the same way as $G$, except that now each $A_{ij}$ is obtained by including every edge of $E(K_{Q_i,Q_j})$ independently with probability $q_{ij}$.
+Since $\cF'_{\Pi,T,v,F,\bsm'}$ is nonempty, all probabilities $q_{ij}$ lie in $\rho\pm2\delta$ for large enough $n$. Conditioning on the exact values $|A_{ij}|=\widetilde{\bsm}_{ij}$ for all $i<j$ recovers the random graph $G$. Since there are only $\binom{k-1}{2}$ pairs and the probabilities $q_{ij}$ are bounded away from $0$ and $1$, we have that for every event $\cE$, $\bbP\{G\in\cE\}\leq n^{O_k(1)}\bbP\{G^\bin\in\cE\}$.
+
+We now define a family $\cK$ of copies of $K_{1,k}$. If $v\in P_1$ then for $x\in N$, $z\in Q_1\setminus(N\cup\{x\})$, and $y_j\in N_j$ for $2\leq j\leq k-1$, let $K(x,z,y_2,\dots,y_{k-1})$ be the copy whose center is $z$ and whose leaves are $v,x,y_2,\dots,y_{k-1}$. If $v\in\Pi_\sparse$ then for $x\in N$, $z\in P_1\setminus(N\cup\{x\})$, and $y_j\in N_j$ for $2\leq j\leq k-1$, let $K(x,z,y_2,\dots,y_{k-1})$ be the copy whose center is $x$ and whose leaves are $v,z,y_2,\dots,y_{k-1}$. In both cases, discard every choice for which some deterministic adjacency required inside $P_1$ is an edge of $T$. Since $e(T)\leq\epsilon n^2$ and $\epsilon=o(\alpha^k)$, the number of discarded choices is $o(\alpha^k n^k)$, so $|\cK|\geq c\alpha^kn^k$ for a constant $c=c(k)>0$.
+
+For $K\in\cK$, let $A_K$ be the event that $K$ appears in $G^\bin$ as an induced copy of $K_{1,k}$. All random edges appearing in $A_K$ lie between distinct parts $Q_i$ and $Q_j$, and all probabilities $q_{ij}$ lie in $\rho\pm2\delta$. Therefore $\bbP\{A_K\}\geq c_1$ for a constant $c_1=c_1(k,\gamma)>0$, and hence
+$$\mu:=\sum_{K\in\cK}\bbP\{A_K\}\geq c_2\alpha^kn^k\,.$$
+If $A_K$ and $A_{K'}$ are dependent then the two copies share a random pair between two distinct parts of the partition $\{Q_1,\dots,Q_{k-1}\}$. For each fixed $K$, there are at most $C_kn^{k-2}$ possible choices of $K'$, and consequently
+$$\Delta:=\sum_{K\sim K'}\bbP\{A_K\cap A_{K'}\}\leq C_kn^{2k-2}\,.$$
+It follows that $\mu/2\geq c_3\alpha^kn^k$ and $\mu^2/(4\Delta)\geq c_3\alpha^{2k}n^2$. Put $Z:=Q_1\setminus N$. In the main-part case, orient the coordinates in $Z\times N_j$ as present and those in $N\times N_j$ and $N_j\times N_\ell$ as absent; in the sparse case, interchange $N$ and $Z$. These classes are disjoint, so one common complementation of the absent coordinates makes every $A_K$ increasing. By \Cref{thm:JansonsInequality} we obtain
+$$\bbP\!\left\{\bigcap_{K\in\cK}A_K^c\right\}\leq e^{-c_4\alpha^{2k}n^2}\,,$$
+where $\not\geq$ denotes exclusion as an induced subgraph. It follows that
+$$\bbP\{G\not\geq K_{1,k}\}\leq n^{O_k(1)}\bbP\{G^\bin\not\geq K_{1,k}\}\leq n^{O_k(1)}\bbP\!\left\{\bigcap_{K\in\cK}A_K^c\right\}\leq e^{-c_5\alpha^{2k}n^2}\,.$$
+Inserting this bound into \eqref{eqn:super-medium-counting-setup-K1k}, and using that every $T\in\cT_\Pi$ has at most $\epsilon n^2$ edges by \Cref{lemma:SuperCloseStructureK1k}, that there are at most $2^n$ possibilities for $F$, and that $|\cM_\Pi|=n^{O(1)}$, we obtain
+\begin{align*}
+\abs{\cF'_\Pi}&\leq \sum_{T\in\cT_\Pi}\sum_{v\in V}\sum_F\sum_{\bsm'\in\cM_\Pi}\binom{\Pi}{\bsm'}e^{-c_5\alpha^{2k}n^2} \\
+&\leq \max_{\bsm'\in\cM_\Pi}\binom{\Pi}{\bsm'}\exp\!\left(-c_5\alpha^{2k}n^2+C_kH(2\epsilon)n^2+O(n)\right).
+\end{align*}
+Finally, if $\bsm,\bsm'\in\cM_\Pi$ then the corresponding densities all lie in $\rho\pm\delta$, and Stirling's formula implies $\log\binom{\Pi}{\bsm'}-\log\binom{\Pi}{\bsm}=O(\delta n^2)$. The choice of $\epsilon$ and $\delta$ completes the proof, after setting $c_\med>0$ sufficiently small.
+\end{proof}
+
+For $T\in\cT_\Pi$, let $M(T)$ be a canonically chosen maximum matching in the graph $T[V(\Pi),V]$ and define $h(T):=|M(T)|$.
+
+\begin{lemma}\label{lemma:super-FPiT}
+There exists $c_\mat=c_\mat(k,\gamma)>0$ such that the following holds. Let $\Pi\in\sD$, $T\in\cT_\Pi$, and $\bsm\in\cM_{\Pi,\sigma_\Pi(T)}$. If we define
+$$\cF_{\Pi,T,\bsm}:=\left\{G\in\cF_{\Pi,T}:e_G(P_i,P_j)=\bsm_{ij}\text{ for all }1\leq i<j\leq k-1\right\}$$
+then we have
+$$\abs{\cF_{\Pi,T,\bsm}} \leq \binom{\Pi}{\bsm}\,e^{-c_\mat h(T)n}\,.$$
+\end{lemma}
+\begin{proof}
+If $\cF_{\Pi,T,\bsm}=\emptyset$ there is nothing to prove. Write $\Pi=\{P_1,\dots,P_{k-1}\}$ and $h:=h(T)$. By \Cref{lemma:SuperCloseStructureK1k} and the definition of $\cF_{\Pi,T}$, every vertex has low degree in every $P_i$ with respect to $T$. In particular, in the graph $T[V(\Pi),V]$, every neighborhood in one of the parts $P_i$ has size at most $\alpha|P_i|$.
+
+The matching $M(T)$ is partitioned into the $2(k-1)$ submatchings $M(T)[P_i]$ and $M(T)[P_i,\Pi_\sparse]$ for $i\in[k-1]$. Let $M_0$ be one such submatching with $|M_0|\geq h/(2(k-1))$, and let $M'\subseteq M_0$ be a submatching of size $\ceil*{|M_0|/2}$.
+
+Let $G=G_{\Pi,T,\bsm}$ be the random graph obtained as follows: inside each $P_i$ we put all edges except those in $T[P_i]$, between $V(\Pi)$ and $\Pi_\sparse$ and inside $\Pi_\sparse$ we put exactly the edges of $T$, and between each pair $P_i,P_j$ with $i<j$ we choose a uniformly random $\bsm_{ij}$-element subset of $E(K_{P_i,P_j})$, independently over all such pairs. Let $G^\bin$ be defined in the same way as $G$, except that each edge between $P_i$ and $P_j$ is included independently with probability $q_{ij}:=\bsm_{ij}/(|P_i||P_j|)\in\rho\pm\delta$. Conditioning $G^\bin$ on the events $|E(G^\bin[P_i,P_j])|=\bsm_{ij}$ for all $1\leq i<j\leq k-1$ recovers $G$. Since the probabilities $q_{ij}$ are bounded away from $0$ and $1$, Stirling's formula gives that the intersection of these events has probability at least $n^{-O_k(1)}$, and therefore $\bbP\{G\in\cE\}\leq n^{O_k(1)}\bbP\{G^\bin\in\cE\}$ for every event $\cE$.
+
+First suppose $M'\subseteq T[P_i]$. For every $xy\in M'$, let $\cK_{xy}$ be the family of copies of $K_{1,k}$ whose center is a vertex $z\in P_i\setminus V(M')$, whose leaves include $x$ and $y$, and whose remaining leaves consist of one vertex in each part $P_j$ with $j\neq i$. We discard choices for which $xz\in E(T)$ or $yz\in E(T)$; this discards only at most $O_k(\alpha n^{k-1})$ copies, since both $x$ and $y$ have low degree in $P_i$, and since $P_i\setminus V(M')$ and all other parts have size $\Omega_k(n)$. It follows that $|\cK_{xy}|\geq c_1n^{k-1}$ for every $xy\in M'$.
+
+Now suppose $M'\subseteq T[P_i,\Pi_\sparse]$, and let $X:=V(M')\cap P_i$. For every $xy\in M'$, with $x\in P_i$ and $y\in\Pi_\sparse$, let $\cK_{xy}$ be the family of copies of $K_{1,k}$ centered at $x$, whose leaves include $y$, one vertex $z\in P_i\setminus X$, and one vertex in each part $P_j$ with $j\neq i$. We discard choices in which $z$ is adjacent to $y$, some chosen vertex in $P_j$ is adjacent to $y$, or $xz\in E(T)$. Since $y$ has low degree into every $P_j$, $x$ has low degree in $P_i$, and $P_i\setminus X$ has size $\Omega_k(n)$, we again have $|\cK_{xy}|\geq c_1n^{k-1}$ for every $xy\in M'$.
+
+In either case, let $\cK:=\bigcup_{xy\in M'}\cK_{xy}$. For $K\in\cK$, let $A_K$ be the event that every adjacency and nonadjacency prescribed by the fixed copy $K$ occurs in $G^\bin$. Since $q_{ij}\in\rho\pm\delta$ for all $i,j$, we calculate that
+$$\mu:=\sum_{K\in\cK}\bbP\{A_K\}\geq c_2|M'|n^{k-1}\,.$$
+If $A_K$ and $A_{K'}$ are dependent then the two copies share a random pair between two distinct parts of $\Pi$. For a fixed $K$, after choosing such a shared pair, there are at most $C_kn^{k-2}+C_k|M'|n^{k-3}\leq C_kn^{k-2}$ choices for $K'$, hence
+$$\Delta:=\sum_{K\sim K'}\bbP\{A_K\cap A_{K'}\}\leq C_k|M'|n^{2k-3}\,.$$
+It follows that $\mu/2\geq c_3|M'|n$ and $\mu^2/(4\Delta)\geq c_3|M'|n$, after decreasing $c_3>0$. For the internal matching take $Z:=P_i\setminus V(M')$, and for the support--sparse matching take $Z:=X$. In every candidate the center is its only vertex in $Z$. Orient a cross coordinate as present exactly when it meets $Z$, and complement all other cross coordinates. This single orientation makes every $A_K$ increasing, so \Cref{thm:JansonsInequality} gives
+$$\bbP\!\left\{\bigcap_{K\in\cK}A_K^c\right\}\leq e^{-c_3|M'|n}\leq e^{-c_4hn}\,.$$
+Every graph in $\cF_{\Pi,T,\bsm}$ is an outcome of $G$, hence
+$$\abs{\cF_{\Pi,T,\bsm}}\leq \binom{\Pi}{\bsm}\bbP\{G\not\geq K_{1,k}\}\leq \binom{\Pi}{\bsm}n^{O(1)}e^{-c_4hn}\leq \binom{\Pi}{\bsm}e^{-c_\mat hn}$$
+for large enough $n$, after decreasing $c_\mat>0$.
+\end{proof}
+
+For $\Pi=\{P_1,\dots,P_{k-1}\}\in\sD$, put
+$$A_\Pi:=\sum_{i<j}|P_i||P_j|\,,\qquad Z_\Pi(t):=\binom{A_\Pi}{m-e(\Pi^c)-t}\,.$$
+If $H$ is a fixed graph on $\Pi_\sparse$ with $t$ edges, then $Z_\Pi(t)$ counts the graphs with $m$ edges obtained by making the $P_i$ cliques, putting $H$ on $\Pi_\sparse$, and choosing edges between distinct $P_i$.
+
+\begin{lemma}\label{lemma:super-fixed-remainder}
+There exists $c=c(k,\gamma)>0$ such that, for every $\Pi\in\sD$ and every graph $H$ on $\Pi_\sparse$,
+\begin{equation}\label{eqn:super-fixed-remainder}
+\big|\{G\in\cF_\Pi:G[\Pi_\sparse]=H\}\big|\leq e^{-cn}Z_\Pi(e(H))\,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+We may assume the class is nonempty. Write $t:=e(H)$ and $M:=m-e(\Pi^c)-t$. By \Cref{lemma:SuperCloseStructureK1k}, we have $t\leq\epsilon n^2$, and $M/A_\Pi$ lies in a fixed compact subinterval of $(0,1)$. After decreasing $\epsilon$, adjacent binomial ratios give
+\begin{equation}\label{eqn:super-fixed-remainder-shift}
+\binom{A_\Pi}{M-u}\leq e^{C|u|}\binom{A_\Pi}{M}\qquad(|u|\leq2\epsilon n^2)\,,
+\end{equation}
+where $C=C(k,\gamma)>0$.
+
+First consider graphs without a medium-degree vertex. Write $T_0:=T(G)$, let $h\geq1$ be its matching number, and put
+$$u:=e_{T_0}(V(\Pi),\Pi_\sparse)-e(T_0[V(\Pi)])\,.$$
+The endpoints of a maximum matching cover $T_0$. Their low-degree neighborhoods in the main parts and arbitrary neighborhoods in $\Pi_\sparse$ give
+\begin{align*}
+|u|&\leq e(T_0)\leq C_kh(\alpha+\delta)n\,,\\
+\#\{T_0:\text{matching number }h\}&\leq\exp\!\left(C_kh(H(3\alpha)+\delta)n+C_kh\log n\right)\,.
+\end{align*}
+For fixed $T_0$, \Cref{lemma:super-FPiT}, Vandermonde's identity, and \eqref{eqn:super-fixed-remainder-shift} imply
+$$\sum_{\bsm\in\cM_{\Pi,u+t}}|\cF_{\Pi,T_0\cup H,\bsm}|\leq e^{-c_\mat hn}\binom{A_\Pi}{M-u}\leq Z_\Pi(t)e^{-c_\mat hn+C|u|}\,.$$
+The choices of $\alpha$ and $\delta$ make the product of this count and $e^{C|u|}$ at most $e^{c_\mat hn/2}$. Summing over $h\geq1$ gives at most $e^{-c_1n}Z_\Pi(t)$ graphs.
+
+If the medium-degree class is nonempty, choose any $\bsm\in\cM_\Pi$. Its total differs from $M$ by at most $2\epsilon n^2$, so Vandermonde's identity and \eqref{eqn:super-fixed-remainder-shift} give $\binom{\Pi}{\bsm}\leq e^{C\epsilon n^2}Z_\Pi(t)$. By \Cref{lemma:super-FPiprime}, the number of such graphs is at most $e^{-c_\med n^2+C\epsilon n^2}Z_\Pi(t)$. Choosing $\epsilon$ sufficiently small completes the proof.
+\end{proof}
+
+For a full division $\Pi\in\sD_0$, write
+$$B_\Pi:=\binom{\binom n2-e(\Pi^c)}{m-e(\Pi^c)}\,,$$
+the number of $m$-edge graphs whose parts in $\Pi$ are cliques. We interpret infeasible binomial coefficients as zero.
+
+\begin{lemma}\label{lemma:balanced-cover-multiplicity-K1k}
+Fix $a,\eta>0$. For all sufficiently large $n$, consider a full division into $r:=k-1$ cliques, each of size at least $an$. If $M$ of its $N$ cross pairs are chosen uniformly, with $\eta\leq M/N\leq1-\eta$, then at most an $e^{-cn}$ proportion of the resulting graphs have a second unordered $r$-clique cover, where $c=c(k,a,\eta)>0$. The same conclusion holds when the counts $M_{ij}$ are fixed independently in each pair of parts and $\eta\leq M_{ij}/N_{ij}\leq1-\eta$ for every $i<j$. Consequently, for $\gamma\in[\gamma_k,1)$ and sufficiently small fixed $\delta>0$, if $\sB$ consists of the full divisions with $|P|\in(1/(k-1)\pm2\delta)n$ for every part, then
+$$\sum_{\Pi\in\sB}B_\Pi=O_k(C^{k-1}_{n,m})\,.$$
+\end{lemma}
+\begin{proof}
+Temporarily order the $r$ parts. Fix a full division $\Pi$ satisfying the stated size and density bounds. A second cover forces present every cross pair of $\Pi$ lying in one of its parts. If $f$ pairs are forced, their proportion in the fixed-$M$ fiber is
+$$\frac{\binom{N-f}{M-f}}{\binom NM}\leq(M/N)^f\,.$$
+With separate pair counts, the corresponding product is at most $(1-\eta)^f$, so the same argument applies.
+Align the covers by a permutation minimizing the number $t$ of moved vertices. For $t\leq an/2$, every moved vertex shares its new part with at least $an/2$ unmoved vertices from a different old part, so $f\geq atn/2$. For $t>an/2$, we have $f\geq c_{k,a}n^2$. Indeed, writing the overlap matrix columnwise and summing the vertices outside each dominant entry gives a total $u$ with $f\geq u^2/(2r)$. If $u$ is smaller than the smallest old part, every old part must occur as a dominant entry; these entries form a permutation and $t\leq u$. This proves the asserted dichotomy.
+
+There are at most $r!\binom nt r^t$ second covers at distance $t$. Summing the preceding containment estimate shows that, uniformly in the fixed cover, at most an $e^{-cn}$ fraction of its fiber has another cover not obtained by permuting the parts. For the asserted consequence, the balanced fibers satisfy the size and density bounds uniformly. Let $Q$ count their ordered-cover/graph pairs. Pairs with a unique unordered cover contribute at most $r!C^r_{n,m}$, and the remaining pairs at most $e^{-cn}Q$. Thus $Q\leq r!C^r_{n,m}+e^{-cn}Q$, proving the lemma.
+\end{proof}
+
+For $\Pi=\{P_1,\dots,P_{k-1}\}\in\sD_s$, choose $P_1$ of minimum size and put $\Pi_\ast:=\{P_1\cup\Pi_\sparse,P_2,\dots,P_{k-1}\}$.
+
+\begin{lemma}\label{lemma:super-Fstar}
+Assume $\gamma\in(\gamma_k,1)$. There are constants $\nu,C>0$, depending only on $k,\gamma$, such that for every division satisfying \Cref{lemma:SuperCloseStructureK1k} \ref{item:lemSuperK1kii}--\ref{item:lemSuperK1kiii} and every integer $|u|\leq\epsilon n^2$,
+\begin{equation}\label{eqn:fstarpim-enusn}
+\sum_{t=0}^{\binom s2}\binom{\binom s2}{t}\sum_{\bsm\in\cM_{\Pi,u+t}}\binom{\Pi}{\bsm}\leq B_{\Pi_\ast}\exp(-\nu sn+C|u|)\,.
+\end{equation}
+In particular, $|\cF^\ast_\Pi|\leq B_{\Pi_\ast}e^{-\nu sn}$.
+\end{lemma}
+\begin{proof}
+Write $a:=|P_1|$, $b:=n-s-a$, $q:=\binom s2$, and $N:=\sum_{i<j}|P_i||P_j|$. The old cross pairs and sparse pairs have combined capacity $A=N+q$. After absorption, the cross capacity is $B=N+sb$, and the forced internal count increases by $E=as+q$. With $L:=m-e(\Pi^c)$, the absorbed selected count is $L_\ast=L-E$. Vandermonde's identity bounds the left-hand side of \eqref{eqn:fstarpim-enusn} by $\binom A{L-u}$, whereas $B_{\Pi_\ast}=\binom B{L_\ast}$.
+
+For sufficiently small $\delta,\epsilon$, all these densities, including the intermediate adjacent-binomial ratios, lie in a fixed compact subinterval of $(0,1)$. Increasing capacity from $A$ to $B$ and then reducing the selected count from $L$ to $L-E$ gives
+\begin{align*}
+\ln\frac{\binom AL}{\binom B{L-E}}&\leq(B-A)\ln(1-\rho)+E\ln\frac{1-\rho}{\rho}+O_{k,\gamma}((\delta+o(1))sn)\\
+&=-\frac{sn}{k-1}\bigl(\ln\rho-(k-1)\ln(1-\rho)\bigr)+O_{k,\gamma}((\delta+o(1))sn)\,.
+\end{align*}
+The bracket is strictly positive because $\rho>p_k$ and $p_k=(1-p_k)^{k-1}$. This proves the unshifted bound. The adjacent ratios in the same compact density interval also give $\binom A{L-u}\leq\binom AL e^{C|u|}$, proving the signed version. When $s=0$ the unshifted comparison is an equality.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:main-almostall} \ref{item:thm:main-almostall-super}]
+Use the decomposition \eqref{eqn:union-bound-super}. Whenever a summand is nonempty, its division satisfies \Cref{lemma:SuperCloseStructureK1k}, and $\Pi_\ast$ belongs to the balanced family in \Cref{lemma:balanced-cover-multiplicity-K1k}. For fixed $\Pi_\ast$ and $s$, there are at most $k\binom ns$ possible original divisions. Hence \Cref{lemma:super-Fstar,lemma:balanced-cover-multiplicity-K1k} give
+$$\sum_{s=1}^{\delta n/2}\sum_{\Pi\in\sD_s}|\cF^\ast_\Pi|\leq O(C^{k-1}_{n,m})\sum_{s=1}^{\delta n/2}k\binom ns e^{-\nu sn}=o(C^{k-1}_{n,m})\,.$$
+
+For the nonclean term, fix $\Pi\in\sD_s$, write $T_0:=T[V(\Pi),V]$, and let $h=h(T)\geq1$. The endpoints of a maximum matching cover $T_0$. Their low neighborhoods in each main part and arbitrary neighborhoods in the sparse set give
+\begin{equation}\label{eqn:super-T0-edge-bound-K1k}
+e(T_0)\leq C_kh(\alpha+\delta)n\,,\qquad \#\{T_0:h(T)=h\}\leq e^{C_kh(H(3\alpha)+\delta)n+C_kh\log n}\,.
+\end{equation}
+Put $u:=e_{T_0}(V(\Pi),\Pi_\sparse)-e(T_0[V(\Pi)])$, so $|u|\leq C_kh(\alpha+\delta)n$ and $|u|\leq\epsilon n^2$. Summing first over the sparse graph $J$, \Cref{lemma:super-FPiT,lemma:super-Fstar} yield
+\begin{equation}\label{eqn:super-FPiT-summed-K1k}
+\sum_{J\subseteq\binom{\Pi_\sparse}{2}}\sum_{\bsm\in\cM_{\Pi,u+e(J)}}|\cF_{\Pi,T_0\cup J,\bsm}|\leq B_{\Pi_\ast}e^{-\nu sn-c_\mat hn+C|u|}\,.
+\end{equation}
+Choose $\alpha,\delta$ small enough that the shift cost and the entropy cost in \eqref{eqn:super-T0-edge-bound-K1k} use at most half the matching penalty. The remaining penalty absorbs the polynomial factors and the sum over $h\geq1$. Summing over $\Pi$ as above, now allowing $s=0$, gives
+$$\sum_{\Pi\in\sD}\sum_{T\in\cT_\Pi}|\cF_{\Pi,T}|\leq e^{-cn}C^{k-1}_{n,m}\,.$$
+
+For a nonempty medium-degree class, choose any $\bsm\in\cM_\Pi$ and its shift $|u|\leq\epsilon n^2$. Its binomial factor is bounded by the aggregate in \eqref{eqn:fstarpim-enusn}. The cost $e^{C\epsilon n^2}$ and the at most $k^n$ divisions are absorbed by the quadratic penalty in \Cref{lemma:super-FPiprime}, giving $\sum_\Pi|\cF'_\Pi|\leq e^{-cn^2}C^{k-1}_{n,m}$ after decreasing $\epsilon$. Finally, \Cref{lemma:rough-struc-fixed-g} gives $|\cF^\far|\leq e^{-Cn^2}N^\ast_{n,m}(K_{1,k})$. Consequently
+$$N^\ast_{n,m}(K_{1,k})\leq(1+o(1))C^{k-1}_{n,m}+e^{-Cn^2}N^\ast_{n,m}(K_{1,k})\,.$$
+Since every co-$(k-1)$-partite graph is induced-$K_{1,k}$-free, this proves the required enumeration and typical structure.
+\end{proof}

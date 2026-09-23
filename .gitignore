@@ -1,0 +1,32 @@
+# Local dependencies, caches, and compiled Lean artifacts
+.lake/
+*.olean
+*.olean.private
+*.olean.server
+*.ilean
+*.ir
+*.trace
+__pycache__/
+*.pyc
+
+# Optional manuscript build artifacts (the included PDFs remain tracked)
+paper/*.aux
+paper/*.bbl
+paper/*.bcf
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.run.xml
+paper/*.synctex.gz
+paper/*.toc
+paper/Graphics/*.aux
+paper/Graphics/*.log
+paper/Graphics/*-standalone.pdf
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+*~
